@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+		<title>广告启动页</title>
+		<style>
+			* {
+				margin: 0;
+			}
+
+			html,
+			body {
+				background-color: #429AF1;
+			}
+
+			.wrap {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				width: 100%;
+			}
+
+			.content {
+				width: 100%;
+				margin: 0 auto;
+				font-size: 40px;
+				text-align: center;
+				background: -webkit-linear-gradient(left, #147B96, #E6D205 25%, #147B96 50%, #E6D205 75%, #ffffff);
+				color: transparent;
+				-webkit-background-clip: text;
+				background-size: 200% 100%;
+				animation: masked-animation 1s infinite linear;
+				border-top: 1px solid white;
+				border-bottom: 1px solid white;
+				moz-user-select: -moz-none;
+				-moz-user-select: none;
+				-o-user-select:none;
+				-khtml-user-select:none;
+				-webkit-user-select:none;
+				-ms-user-select:none;
+				user-select:none;
+			}
+
+		
+
+			@-webkit-keyframes masked-animation {
+				0% {
+					background-position: 0 0;
+				}
+
+				100% {
+					background-position: -100% 0;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div class="wrap">
+			<div class="content">APS手机报工</div>
+		</div>
+	</body>
+</html>

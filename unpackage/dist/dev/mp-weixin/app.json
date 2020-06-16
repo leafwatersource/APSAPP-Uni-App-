@@ -1,0 +1,49 @@
+{
+  "pages": [
+    "pages/login/login",
+    "pages/main/main",
+    "pages/user/user",
+    "pages/workDetail/work",
+    "pages/selectRes/resList",
+    "pages/statisticsCenter/statisticsCenter",
+    "pages/downLoadWork/downLoadWork"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "white",
+    "navigationBarBackgroundColor": "#0faeff",
+    "backgroundColor": "#fbf9fe"
+  },
+  "tabBar": {
+    "color": "#7a7e83",
+    "selectedColor": "#303F9F",
+    "backgroundColor": "#fff",
+    "fontSize": "14px",
+    "height": "60px",
+    "list": [
+      {
+        "pagePath": "pages/main/main",
+        "text": "移动报工",
+        "iconPath": "static/img/pc.png",
+        "selectedIconPath": "static/img/pc-active.png"
+      },
+      {
+        "pagePath": "pages/statisticsCenter/statisticsCenter",
+        "text": "统计中心",
+        "iconPath": "static/img/statistics.png",
+        "selectedIconPath": "static/img/statistics-active.png"
+      },
+      {
+        "pagePath": "pages/user/user",
+        "text": "用户操作",
+        "iconPath": "static/img/user_1.png",
+        "selectedIconPath": "static/img/user-active.png"
+      }
+    ]
+  },
+  "networkTimeout": {
+    "request": 6000
+  },
+  "usingComponents": {},
+  "sitemapLocation": "sitemap30.json"
+}

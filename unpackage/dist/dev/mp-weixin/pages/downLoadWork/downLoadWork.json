@@ -1,0 +1,9 @@
+{
+  "navigationBarBackgroundColor": "#303F9F",
+  "navigationBarTitleText": "可拉取的工单",
+  "usingComponents": {
+    "uni-card": "/components/uni-card/uni-card",
+    "uni-fab": "/components/uni-fab/uni-fab",
+    "mx-date-picker": "/components/mx-datepicker/mx-datepicker"
+  }
+}

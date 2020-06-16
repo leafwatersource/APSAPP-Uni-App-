@@ -1,0 +1,119 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页,
+		{
+			"path": "pages/login/login",
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarBackgroundColor": "#429af1",
+				"app-plus": {
+					// 将回弹属性关掉
+					"bounce": "none"
+				}
+			}
+		},
+		{
+			"path": "pages/main/main",
+			"style": {
+				"navigationBarTextStyle": "white",
+				"navigationStyle": "custom",
+				"app-plus": {
+					"titleNView": false //去掉当前页的顶部导航栏
+				}
+				// "enablePullDownRefresh": true
+
+			}
+		}, {
+			"path": "pages/user/user",
+			"style": {
+				"navigationBarTitleText": "用户操作",
+				"navigationBarTextStyle": "white",
+				"navigationStyle": "custom",
+				"app-plus": {
+					// 将回弹属性关掉
+					"bounce": "none"
+				}
+			}
+		},
+		{
+			"path": "pages/workDetail/work",
+			"style": {
+				"navigationBarBackgroundColor": "#006dcb",
+				// "navigationBarTitleText":""
+				"navigationBarTitleText": "订单详情"
+			}
+		},
+		{
+			"path": "pages/selectRes/resList",
+			"style": {
+				"navigationBarBackgroundColor": "#006dcb",
+				// "navigationBarTitleText":""
+				"navigationBarTitleText": "设备列表"
+			}
+		},
+		{
+			"path": "pages/statisticsCenter/statisticsCenter",
+			"style": {
+				"navigationBarBackgroundColor": "#006dcb",
+				"navigationBarTextStyle": "white",
+				"navigationBarTitleText": "统计中心"
+			}
+		},
+		{
+			"path": "pages/downLoadWork/downLoadWork",
+			"style": {
+				"navigationBarBackgroundColor": "#006dcb",
+				"navigationBarTitleText": "可拉取的工单"
+			}
+		},
+		{
+			"path": "pages/userSetting/userSetting",
+			"style": {
+				"navigationBarBackgroundColor": "#006dcb",
+				"navigationBarTitleText": "个人信息"
+			}
+		},
+		{
+			"path": "pages/userSetting/changePass",
+			"style": {
+				"navigationBarBackgroundColor": "#006dcb",
+				"navigationBarTitleText": "设置密码"
+			}
+		},
+		{
+			"path": "pages/userSetting/settingMessage",
+			"style": {
+				"navigationBarBackgroundColor": "#006dcb",
+				"navigationBarTitleText": "设置用户信息",
+				"navigationStyle": "custom"
+			}
+		}
+	],
+	"tabBar": {
+		"color": "#7a7e83",
+		"selectedColor": "#006dcb",
+		"backgroundColor": "#fff",
+		"fontSize": "14px",
+		"height": "60px",
+		"list": [{
+			"pagePath": "pages/main/main",
+			"text": "移动报工",
+			"iconPath": "static/img/pc.png",
+			"selectedIconPath": "static/img/pc-active.png"
+		}, {
+			"pagePath": "pages/statisticsCenter/statisticsCenter",
+			"text": "统计中心",
+			"iconPath": "static/img/statistics.png",
+			"selectedIconPath": "static/img/statistics-active.png"
+		}, {
+			"pagePath": "pages/user/user",
+			"text": "用户操作",
+			"iconPath": "static/img/user_1.png",
+			"selectedIconPath": "static/img/user-active.png"
+		}]
+	},
+	"globalStyle": {
+		"navigationBarTextStyle": "white",
+		"navigationBarBackgroundColor": "#0faeff",
+		"backgroundColor": "#fbf9fe"
+	}
+}

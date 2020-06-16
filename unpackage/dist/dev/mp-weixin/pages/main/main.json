@@ -1,0 +1,8 @@
+{
+  "navigationBarTextStyle": "black",
+  "navigationStyle": "custom",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "uni-segmented-control": "/components/uni-segmented-control/uni-segmented-control"
+  }
+}
