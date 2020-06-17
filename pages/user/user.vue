@@ -61,6 +61,14 @@
 		},
 		onShow() {
 			this.userInfo = uni.getStorageSync("userInfo");
+			uni.setTabBarItem({
+				index: 1,
+				text: this.i18n.tabBar.statistics
+			});
+			uni.setTabBarItem({
+				index: 2,
+				text: this.i18n.tabBar.me
+			});
 		},
 		mounted() {
 			this.getSystemStatusBarHeight();

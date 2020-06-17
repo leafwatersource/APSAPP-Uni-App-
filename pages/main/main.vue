@@ -127,7 +127,7 @@ export default {
 			text: this.i18n.tabBar.statistics
 		});
 		uni.setTabBarItem({
-			index: 1,
+			index: 2,
 			text: this.i18n.tabBar.me
 		});
 		// 导航栏多语言
