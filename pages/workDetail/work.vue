@@ -288,6 +288,10 @@ export default {
 			}
 		},
 		parseBtn() {
+			const userInfo = uni.getStorageSync('userInfo');
+			this.workItem.mesOperator = userInfo['userName'];
+			this.workItem.mesOpName = this.workItem.pmOpName;
+			this.workItem.mesResName = this.workItem.pmResName;
 			this.pullData('PauseOrder', true);
 		},
 		pullData(type, parseState) {
