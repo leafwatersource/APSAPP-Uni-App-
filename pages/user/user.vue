@@ -8,34 +8,34 @@
 					<view class="user">
 						<text class="name">{{userInfo.userName}}</text>
 						<text class="userID">ID:{{userInfo.empID}}</text>
-						<text class="userPhone">手机号码:{{userInfo.phoneNumber}}</text>
+						<text class="userPhone">{{i18n.user.cellphoneNumber}}{{userInfo.phoneNumber}}</text>
 					</view>
 				</view>
 			</view>
 			<view class="menu">
 				<ul class="menuList">
 					<li @tap="userSetting">
-						<text class="icon fa fa-cog"></text>
-						<text>用户设置</text>
+						<text class="icon fa fa-address-card"></text>
+						<text>{{i18n.user.userSettings}}</text>
 						<text class="icon-right fa fa-angle-right"></text>
 					</li>
 					<li>
 						<text class="icon fa fa-cog"></text>
-						<text>系统设置</text>
+						<text>{{i18n.user.systemSettings}}</text>
 						<text class="icon-right fa fa-angle-right"></text>
 					</li>
 					<li>
 						<text class="icon fa fa-pencil-square"></text>
-						<text>用户操作记录</text>
+						<text>{{i18n.user.operationRecord}}</text>
 						<text class="icon-right fa fa-angle-right"></text>
 					</li>
 					<li @tap="changePass">
-						<text class="icon fa fa-address-card"></text>
-						<text>修改密码</text>
+						<text class="icon fa fa-key "></text>
+						<text>{{i18n.user.changePassword}}</text>
 						<text class="icon-right fa fa-angle-right"></text>
 					</li>
 				</ul>
-				<button @click="cancelLogin" hover-class="hoverBtn">退出登录</button>
+				<button @click="cancelLogin" hover-class="hoverBtn">{{i18n.user.signOut}}</button>
 			</view>
 		</view>
 	</view>
@@ -53,6 +53,11 @@
 				barHeight: 25,
 				userInfo:""
 			}
+		},
+		computed:{
+			i18n () {
+				return this.$t('message'); 
+			},
 		},
 		onShow() {
 			this.userInfo = uni.getStorageSync("userInfo");
@@ -78,8 +83,9 @@
 			cancelLogin(){
 				const _this = this;
 				uni.showModal({
-					title:"确定退出",
-					content:"是否退出程序",
+					title:this.i18n.user.cancelTitle,
+					cancelText:this.i18n.user.cancelText,
+					confirmText:this.i18n.user.confirmText,
 					success(data){
 						if(data.confirm){
 							console.log(_this.userInfo.empID)
@@ -95,8 +101,7 @@
 										url:"../login/login"
 									})
 								}
-							})
-							
+							});
 						}
 					}
 				})
@@ -199,14 +204,14 @@
 					
 				}
 				button{
-					background-color: $uni-btn-color;
+					background-color: $uni-btn-active-color;
 					color: $uni-text-color-white;
 					width: 90%;
 					margin: 20upx auto;
 					border-radius: 40upx;
 				}
 				.hoverBtn{
-					background-color: $uni-btn-active-color;
+					background-color: $uni-gb-color-blue;
 				}
 			}
 

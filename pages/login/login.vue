@@ -2,16 +2,18 @@
 	<view class="content">
 		<view class="contentBox">
 			<view class="logoBox"></view>
-			<text class="title">RateFactory 移动报工系统</text>
+			<text class="title">
+			{{i18n.login.title}}
+			</text>
 			<view class="inputBox">
-				<input id="userName" type="text" placeholder="请输入用户名" placeholder-class="inpCl" v-model="userName" />
-				<input type="password" placeholder="请输入密码" placeholder-class="inpCl" v-model="userPass" />
+				<input id="userName" type="text" :placeholder="i18n.login.userNamePlaceholder" placeholder-class="inpCl" v-model="userName" />
+				<input type="password" :placeholder="i18n.login.userPassPlaceholder" placeholder-class="inpCl" v-model="userPass" />
 			</view>
-			<button type="default" hover-class="btnClick" @tap="login">登录</button>
+			<button type="default" hover-class="btnClick" @tap="login">{{i18n.login.loginBtnText}}</button>
 		</view>
 		<view class="desc">
-			<text>深圳市瑞特科技有限公司版权所有</text>
-			<text>当前版本号:{{ version }}</text>
+			<text>{{i18n.login.desc}}</text>
+			<text>{{i18n.login.version}}{{ version }}</text>
 		</view>
 	</view>
 </template>
@@ -47,8 +49,15 @@ export default {
 		plus.runtime.getProperty(plus.runtime.appid, wgtinfo => {
 			this.version = wgtinfo.version;
 		});
+		
+		
 	},
-	computed: mapState(['forcedLogin', 'api', 'userGuid']),
+	computed:{
+		 ...mapState(['forcedLogin', 'api', 'userGuid']),
+			i18n () {  
+				return this.$t('message'); 
+			},
+	},
 	methods: {
 		login() {
 			console.log(this.api);

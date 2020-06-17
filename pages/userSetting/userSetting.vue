@@ -6,35 +6,35 @@
 				<text class="message"><text v-text="empId"></text></text>
 			</li>
 			<li @tap="canSetting('设置名字',name,'empName')">
-				<text class="name">名字</text>
+				<text class="name">{{i18n.userSetting.name}}</text>
 				<text class="message">
 					<text class="hasIcon" v-text="name"></text>
 					<text class="icon-right fa fa-angle-right"></text>
 				</text>
 			</li>
 			<li @tap="canSetting('设置电话',phone,'phoneNum')">
-				<text class="name">电话</text>
+				<text class="name">	{{i18n.userSetting.phone}}</text>
 				<text class="message">
 					<text class="hasIcon" v-text="phone"></text>
 					<text class="icon-right fa fa-angle-right"></text>
 				</text>
 			</li>
 			<li @tap="canSetting('设置邮箱',email,'email')">
-				<text class="name">邮箱</text>
+				<text class="name">{{i18n.userSetting.email}}</text>
 				<text class="message">
 					<text class="hasIcon" v-text="email"></text>
 					<text class="icon-right fa fa-angle-right"></text>
 				</text>
 			</li>
 			<li @tap="canSetting('用户描述',desc,'dept')">
-				<text class="name">用户描述</text>
+				<text class="name">{{i18n.userSetting.userDescription}}</text>
 				<text class="message">
 					<text class="hasIcon" v-text="desc"></text>
 					<text class="icon-right fa fa-angle-right"></text>
 				</text>
 			</li>
 			<li>
-				<text class="name">系统名称</text>
+				<text class="name">{{i18n.userSetting.system}}</text>
 				<text class="message"><text v-text="userSysName"></text></text>
 			</li>
 		</ul>
@@ -62,6 +62,11 @@ export default {
 		this.userSysName = userInfo.userSysName;
 		this.desc = userInfo.userDesc;
 		console.log(userInfo);
+	},
+	computed:{
+		i18n () {
+			return this.$t('message'); 
+		},
 	},
 	methods: {
 		canSetting(type,message,changeType){

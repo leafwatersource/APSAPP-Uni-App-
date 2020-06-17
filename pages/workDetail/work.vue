@@ -1,83 +1,83 @@
 <template>
 	<view class="content">
 		<view class="Main">
-			<text class="workId">工单号码:{{ workItem.workID }}</text>
+			<text class="workId">{{i18n.workDetail.workID}}{{ workItem.workID }}</text>
 			<view class="NumBox">
 				<view>
 					<text class="Number">{{ workItem.jobQty }}</text>
-					<text class="NumDesc">工单总数</text>
+					<text class="NumDesc">{{i18n.workDetail.total}}</text>
 				</view>
 				<view>
 					<text class="Number">{{ workItem.plannedqty }}</text>
-					<text class="NumDesc">计划数量</text>
+					<text class="NumDesc">{{i18n.workDetail.PlannedQuantity}}</text>
 				</view>
 				<view>
 					<text class="Number">{{ workItem.finishedQty }}</text>
-					<text class="NumDesc">设备完成数</text>
+					<text class="NumDesc">{{i18n.workDetail.EquipmentCompleted}}</text>
 				</view>
 				<view>
 					<text class="Number">{{ workItem.allFinishedQty }}</text>
-					<text class="NumDesc">累计完成数</text>
+					<text class="NumDesc">{{i18n.workDetail.CumulativeCompletions}}</text>
 				</view>
 			</view>
 			<view class="workItem">
 				<text class="name">
-					产品名称:
+					{{i18n.workDetail.productName}}
 					<text class="value">{{ workItem.productID }}</text>
 				</text>
 				<text class="name">
-					设备名称:
+					{{i18n.workDetail.resName}}
 					<text class="value">{{ workItem.pmResName }}</text>
 				</text>
 				<text class="name">
-					产品工序:
+					{{i18n.workDetail.Process}}
 					<text class="value">{{ workItem.pmOpName }}</text>
 				</text>
 				<text class="name">
-					工作班次:
+					{{i18n.workDetail.WorkShift}}
 					<text class="value">{{ workItem.dayShift }}</text>
 				</text>
 				<text class="name">
-					计划时间:
+					{{i18n.workDetail.PlanningTime}}
 					<text class="value">{{ workItem.planStartTime }} - {{ workItem.planendtime }}</text>
 				</text>
 				<text class="name">
-					工作时长:
+					{{i18n.workDetail.WorkTime}}
 					<text class="value">{{ workItem.workHours }}</text>
 				</text>
 				<text class="name">
-					BOM倍率:
+					{{i18n.workDetail.BOMRatio}}
 					<text class="value">{{ workItem.bomComused }}</text>
 				</text>
 				<text class="name">
-					产品描述:
+					{{i18n.workDetail.ProductDescription}}
 					<text class="value">{{ workItem.itemAttr1 }}</text>
 				</text>
 				<text class="name">
-					产品分类:
+					{{i18n.workDetail.ProductCategories}}
 					<text class="value">{{ workItem.itemAttr3 }}</text>
 				</text>
 			</view>
 
 			<view class="finishBox" v-if="workItem.taskFinishState == 2">
-				<text>完成数量:</text>
+				<text>{{i18n.workDetail.Finish}}</text>
 				<view class="uni-input-wrapper inputBox">
 					<input class="uni-input" type="number" placeholder="0" v-model="finishValue" @input="FinishClearInput" />
 					<icon class="uni-icon closeIcon" v-if="finishShowClearIcon" @click="finishClearIcon" type="clear" size="18" />
 				</view>
 			</view>
 			<view class="failBox" v-if="workItem.taskFinishState == 2">
-				<text>不良数量:</text>
+				<text>{{i18n.workDetail.Fail}}</text>
 				<view class="uni-input-wrapper inputBox">
 					<input class="uni-input" type="number" placeholder="0" v-model="failValue" @input="FailClearInput" />
 					<icon class="uni-icon closeIcon" v-if="failShowClearIcon" @click="failClearIcon" type="clear" size="18" />
 				</view>
 			</view>
 			<view class="selectTime" v-if="workItem.taskFinishState == 2">
-				<text class="timer">填报时间:</text>
+				<text class="timer">{{i18n.workDetail.ReportTime}}</text>
 				<view>
 					<text class="datetime">{{ datetime }}</text>
-					<text class="select" @click="onShowDatePicker('datetime')">选择</text>
+					<text class="select" @click="onShowDatePicker('datetime')">{{i18n.workDetail.select}}</text>
 				</view>
 			</view>
 			<mx-date-picker :show="showPicker" :type="type" :value="datetime" :show-tips="true" :show-seconds="false" @confirm="onSelected" @cancel="onSelected" />
@@ -90,7 +90,7 @@
 				:hover-class="{ hoverBtn: workItem.canReport }"
 				v-if="workItem.taskFinishState == 0"
 			>
-				开始切换
+			{{i18n.workDetail.change}}	
 			</button>
 			<button
 				type="default"
@@ -99,7 +99,7 @@
 				:hover-class="{ hoverBtn: workItem.canReport }"
 				v-else-if="workItem.taskFinishState == 1"
 			>
-				换线结束并生产
+			{{i18n.workDetail.Product}}	
 			</button>
 			<button
 				type="default"
@@ -108,7 +108,7 @@
 				:hover-class="{ hoverBtn: workItem.canReport }"
 				v-else-if="workItem.taskFinishState == 2"
 			>
-				报工
+				{{i18n.workDetail.Report}}
 			</button>
 			<button
 				type="default"
@@ -117,20 +117,20 @@
 				:hover-class="{ hoverBtn: workItem.canReport }"
 				v-else-if="workItem.taskFinishState == 3"
 			>
-				恢复生产
+					{{i18n.workDetail.resumeProduction}}
 			</button>
 			<view class="parseChangeBtn">
 				<view class="parseBox" @click="parseBtn">
 					<text class="fa fa-pause pause"></text>
-					<text class="parseText">暂停</text>
+					<text class="parseText">{{i18n.workDetail.pause}}</text>
 				</view>
 				<view class="parseBox">
 					<text class="fa fa-moon-o pause"></text>
-					<text class="parseText">换班</text>
+					<text class="parseText">{{i18n.workDetail.relieve}}</text>
 				</view>
 				<view class="changeResBox" @tap="changeRes">
 					<text class="fa fa-refresh change"></text>
-					<text class="changeText">切换设备</text>
+					<text class="changeText">{{i18n.workDetail.SwitchDevice}}</text>
 				</view>
 				<uni-drawer :visible="showLeft" mode="left" @close="closeDrawer()">
 					<uni-list><uni-list-item v-for="item in changeResArr" :title="item" note="" @tap="enterChangeRes(item)"></uni-list-item></uni-list>
@@ -180,6 +180,11 @@ export default {
 		// });
 		console.log(this.workItem);
 		this.datetime = this.getNowDateTime();
+	},
+	computed:{
+		i18n () {
+			return this.$t('message'); 
+		},
 	},
 	methods: {
 		closeDrawer() {
@@ -459,17 +464,16 @@ export default {
 
 			view {
 				float: right;
-				width: 70%;
+				width: 60%;
 			}
 
 			.select {
 				float: right;
 				color: #0faeff;
 			}
-
 			.timer {
 				float: left;
-				width: 30%;
+				width: 40%;
 			}
 		}
 	}
@@ -484,7 +488,7 @@ export default {
 		padding: 10upx 0;
 
 		.btnWork {
-			width: 50%;
+			width: 40%;
 			float: left;
 			background-color: $uni-btn-active-color;
 			color: $uni-text-color-white;
@@ -494,6 +498,7 @@ export default {
 			margin: auto 0;
 			margin-right: 20upx;
 			margin-left: 10upx;
+			font-size: 30upx;
 		}
 		.darkBtn {
 			background-color: #cccccc;

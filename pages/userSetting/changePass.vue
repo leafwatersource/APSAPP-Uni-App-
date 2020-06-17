@@ -2,23 +2,23 @@
 	<view class="content">
 		<ul>
 			<li class="disable">
-				<text>ID号</text>
+				<text>ID</text>
 				<input type="text" disabled v-model="empID" />
 			</li>
 			<li>
-				<text>旧密码</text>
-				<input type="text" placeholder-class="holder" placeholder="请填写旧密码" v-model="pass" />
+				<text>{{i18n.changePass.oldPass}}</text>
+				<input type="text" placeholder-class="holder" :placeholder="i18n.changePass.oldPassHolder" v-model="pass" />
 			</li>
 			<li>
-				<text>新密码</text>
-				<input type="text" placeholder-class="holder" placeholder="请输入新密码" v-model="newPass" />
+				<text>{{i18n.changePass.newPass}}</text>
+				<input type="text" placeholder-class="holder" :placeholder="i18n.changePass.newPassHolder" v-model="newPass" />
 			</li>
 			<li>
-				<text>确认密码</text>
-				<input type="text" placeholder-class="holder" placeholder="请再次输入新密码" v-model="enterPass" />
+				<text>{{i18n.changePass.enterPass}}</text>
+				<input type="text" placeholder-class="holder" :placeholder="i18n.changePass.enterPassHolder" v-model="enterPass" />
 			</li>
 		</ul>
-		<button class="finish" @tap="finish">完成</button>
+		<button class="finish" @tap="finish">{{i18n.changePass.finish}}</button>
 	</view>
 </template>
 
@@ -32,6 +32,11 @@ export default {
 			enterPass: ''
 		};
 	},
+	computed:{
+		i18n () {
+			return this.$t('message'); 
+		},
+	},
 	mounted() {
 		const userInfo = uni.getStorageSync('userInfo');
 		this.empID = userInfo.empID;
@@ -39,6 +44,24 @@ export default {
 	methods: {
 		finish() {
 			const _this = this;
+			if(this.pass == ""){
+				uni.showToast({
+					title:"请输入旧密码"
+				});
+				return
+			}
+			if(this.newPass == ""){
+				uni.showToast({
+					title:"请输入新密码"
+				});
+				return
+			}
+			if(this.enterPass == ""){
+				uni.showToast({
+					title:"请输入确认密码"
+				});
+				return
+			}
 			if(this.pass == this.newPass){
 				uni.showToast({
 					title:"新密码不能和旧密码一样",
@@ -101,11 +124,11 @@ export default {
 			padding: 20upx;
 			list-style: none;
 			text {
-				width: 20%;
+				width: 50%;
 				float: left;
 			}
 			input {
-				width: 70%;
+				width: 50%;
 				float: right;
 			}
 			.holder {
@@ -124,14 +147,14 @@ export default {
 		}
 	}
 	button {
-		background-color: $uni-btn-color;
+		background-color: $uni-btn-active-color;
 		color: $uni-text-color-white;
 		width: 90%;
 		margin: 40upx auto;
 		border-radius: 40upx;
 	}
 	.hoverBtn {
-		background-color: $uni-btn-active-color;
+		background-color: $uni-gb-color-blue;
 	}
 }
 </style>

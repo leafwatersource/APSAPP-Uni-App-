@@ -13,15 +13,15 @@
 						<ul>
 							<li @tap="scan">
 								<text class="fa fa-qrcode" @tap="selectRes"></text>
-								<text>扫一扫</text>
+								<text>{{i18n.main.Scancode}}</text>
 							</li>
 							<li @tap="selectRes">
 								<text class="fa fa-random"></text>
-								<text>切换设备</text>
+								<text>{{i18n.main.changeRes}}</text>
 							</li>
 							<li @tap="downLoadWork">
 								<text class="fa fa-download"></text>
-								<text>拉取工单</text>
+								<text>{{i18n.main.pullWork}}</text>
 							</li>
 						</ul>
 					</view>
@@ -30,7 +30,7 @@
 			<view class="tabBox">
 				<uni-segmented-control :current="current" :values="items" @clickItem="onClickItem" style-type="text" active-color="#006dcb" class="Tab"></uni-segmented-control>
 			</view>
-			<view class="searchBox"><input type="text" placeholder="输入工单号码或者产品搜索" placeholder-class="hoder-cls" v-model="searchWord" @input="search" /></view>
+			<view class="searchBox"><input type="text" :placeholder="i18n.main.serachHolder" placeholder-class="hoder-cls" v-model="searchWord" @input="search" /></view>
 		</view>
 		<view class="workBox" :style="{ paddingTop: barHeight + 'px' }">
 			<view class="TabContent">
@@ -52,10 +52,10 @@
 									</view>
 								</view>
 							</view>
-							<text class="productName">产品:{{ item.productID }}</text>
-							<text class="opname">工序:{{ item.pmOpName }}</text>
-							<text>执行时间:{{ item.planStartTime }} - {{ item.planendtime }}</text>
-							<text>描述:{{ item.itemDesp }}</text>
+							<text class="productName">{{i18n.main.productName}}{{ item.productID }}</text>
+							<text class="opname">{{i18n.main.Process}}{{ item.pmOpName }}</text>
+							<text>{{i18n.main.time}}{{ item.planStartTime }} - {{ item.planendtime }}</text>
+							<text>{{i18n.main.description}}{{item.itemDesp}}</text>
 						</view>
 						<view class="icon-right"><text class="icon-right fa fa-angle-right"></text></view>
 					</li>
@@ -73,10 +73,10 @@
 									</view>
 								</view>
 							</view>
-							<text class="productName">产品:{{ item.productID }}</text>
-							<text class="opname">工序:{{ item.pmOpName }}</text>
-							<text>执行时间:{{ item.planStartTime }} - {{ item.planendtime }}</text>
-							<text class="">描述:{{ item.itemDesp }}</text>
+							<text class="productName">{{i18n.main.productName}}{{ item.productID }}</text>
+							<text class="opname">{{i18n.main.Process}}{{ item.pmOpName }}</text>
+							<text>{{i18n.main.time}}:{{ item.planStartTime }} - {{ item.planendtime }}</text>
+							<text class="">{{i18n.main.description}}{{ item.itemDesp }}</text>
 						</view>
 						<view class="icon-right"><text class="icon-right fa fa-angle-right"></text></view>
 					</li>
@@ -102,7 +102,7 @@ export default {
 			undoneOrder: [],
 			doneOrder: [],
 			isRequest: true,
-			items: ['待生产', '已完成'],
+			items: [],
 			current: 0,
 			searchWord: '',
 			resCount: false
@@ -118,6 +118,22 @@ export default {
 	},
 	onShow() {
 		console.log(this.resName);
+		uni.setTabBarItem({
+			index: 0,
+			text: this.i18n.tabBar.main
+		});
+		uni.setTabBarItem({
+			index: 1,
+			text: this.i18n.tabBar.statistics
+		});
+		uni.setTabBarItem({
+			index: 1,
+			text: this.i18n.tabBar.me
+		});
+		// 导航栏多语言
+		uni.setNavigationBarTitle({
+			title: this.i18n.tabBar.home 
+		});
 		if (this.resName != '') {
 			this.isRequest = true;
 			this.GetUnstartList(this.resName['resourceName']);
@@ -126,11 +142,19 @@ export default {
 			this.searchWord = '';
 		}
 	},
-	computed: mapState(['forcedLogin', 'hasLogin', 'userName', 'api', 'userInfo']),
+	computed:{
+		...mapState(['forcedLogin', 'hasLogin', 'userName', 'api', 'userInfo']),
+		i18n () {
+			return this.$t('message'); 
+		},
+	}, 
 	mounted() {
 		this.getSystemStatusBarHeight();
+		this.items.push(this.i18n.main.produced);
+		this.items.push(this.i18n.main.completed);
 		this.HasLogin();
 		this.getResList();
+		
 	},
 	methods: {
 		scan() {
@@ -330,7 +354,6 @@ export default {
 					z-index: 101;
 					background-color: #4c4c4c;
 					border-radius: 20upx;
-					width: 260upx;
 					height: 0;
 					overflow: hidden;
 					transition: all 0.1s linear;
@@ -341,11 +364,13 @@ export default {
 							padding: 30upx;
 							border-bottom: 1upx solid #999;
 							text {
-								font-size: 30upx;
+								font-size: 26upx;
 								margin-right: 20upx;
 								color: $uni-text-color-white;
+								display: inline-block;
 							}
 						}
+						
 						li:last-child {
 							border: none;
 						}
@@ -417,6 +442,7 @@ export default {
 							font-size: 50upx;
 							text-align: center;
 							display: block;
+							
 						}
 					}
 					.itemBox {

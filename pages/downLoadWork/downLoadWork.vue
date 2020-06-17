@@ -138,7 +138,7 @@ export default {
 					console.log(_this.workList);
 				}
 			},fail=>{
-				console.log(fail);
+				console.log(fail.data)
 			});
 		},
 		downLoad(workItem) {
@@ -146,30 +146,39 @@ export default {
 			const _this = this;
 			const orderUID = workItem.orderUID;
 			console.log(this.resName.resourceName);
-			this.$HTTP({
-				url: 'BeginDown',
-				data: {
-					resName: this.resName.resourceName,
-					orderUID: orderUID,
-					dayshift:this.dayshift.toString()
-				}
-			}).then(status => {
-				console.log(status)
-				if (status.data) {
-					uni.showToast({
-						title: '工单拉取成功',
-						success() {
-							uni.navigateBack({
-								delta: 1,
-								animationType: 'pop-out',
-								animationDuration: 200
+			uni.showModal({
+				content:"是否要拉取工单号:"+workItem.workID,
+				success(res) {
+						if(res.confirm){
+							_this.$HTTP({
+								url: 'BeginDown',
+								data: {
+									resName: _this.resName.resourceName,
+									orderUID: orderUID,
+									dayshift:_this.dayshift.toString()
+								}
+							}).then(status => {
+								console.log(status)
+								if (status.data) {
+									uni.showToast({
+										title: '工单拉取成功',
+										success() {
+											uni.navigateBack({
+												delta: 1,
+												animationType: 'pop-out',
+												animationDuration: 200
+											});
+										}
+									});
+								}
+							},fail=>{
+								console.log(fail)
 							});
 						}
-					});
 				}
-			},fail=>{
-				console.log(fail)
-			});
+			})
+			
+			
 		},
 		trigger(e) {
 			if (e.index == 0) {

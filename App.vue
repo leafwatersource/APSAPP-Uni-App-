@@ -3,6 +3,13 @@
 		onLaunch: function() {
 			console.log('App Launch');
 			plus.screen.lockOrientation('portrait-primary');
+			const res = uni.getSystemInfoSync();
+			if(res.language.indexOf("en")!=-1){
+				this.$i18n.locale = "en-US";
+			}else{
+				this.$i18n.locale = res.language;
+			}
+			
 			var w = plus.webview.open(
 				'hybrid/html/animation/animation.html',
 				'本地地址',
@@ -14,6 +21,8 @@
 			setTimeout(function() {
 				plus.webview.close(w);
 			}, 4000);
+			
+			
 		},
 		onShow: function() {
 			console.log('App Show');
