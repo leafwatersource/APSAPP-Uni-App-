@@ -13,15 +13,15 @@
 						<ul>
 							<li @tap="scan">
 								<text class="fa fa-qrcode" @tap="selectRes"></text>
-								<text>{{i18n.main.Scancode}}</text>
+								<text>{{i18n.publicText.Scancode}}</text>
 							</li>
 							<li @tap="selectRes">
 								<text class="fa fa-random"></text>
-								<text>{{i18n.main.changeRes}}</text>
+								<text>{{i18n.publicText.ChangeRes_Title_ResName}}</text>
 							</li>
 							<li @tap="downLoadWork">
 								<text class="fa fa-download"></text>
-								<text>{{i18n.main.pullWork}}</text>
+								<text>{{i18n.publicText.Msg_DownOrder_Title}}</text>
 							</li>
 						</ul>
 					</view>
@@ -30,7 +30,7 @@
 			<view class="tabBox">
 				<uni-segmented-control :current="current" :values="items" @clickItem="onClickItem" style-type="text" active-color="#006dcb" class="Tab"></uni-segmented-control>
 			</view>
-			<view class="searchBox"><input type="text" :placeholder="i18n.main.serachHolder" placeholder-class="hoder-cls" v-model="searchWord" @input="search" /></view>
+			<view class="searchBox"><input type="text" :placeholder="i18n.publicText.Search_hint" placeholder-class="hoder-cls" v-model="searchWord" @input="search" /></view>
 		</view>
 		<view class="workBox" :style="{ paddingTop: barHeight + 'px' }">
 			<view class="TabContent">
@@ -52,10 +52,10 @@
 									</view>
 								</view>
 							</view>
-							<text class="productName">{{i18n.main.productName}}{{ item.productID }}</text>
-							<text class="opname">{{i18n.main.Process}}{{ item.pmOpName }}</text>
-							<text>{{i18n.main.time}}{{ item.planStartTime }} - {{ item.planendtime }}</text>
-							<text>{{i18n.main.description}}{{item.itemDesp}}</text>
+							<text class="productName">{{i18n.publicText.Workorder_Product}}{{ item.productID }}</text>
+							<text class="opname">{{i18n.publicText.Workorder_Operation}}{{ item.pmOpName }}</text>
+							<text>{{i18n.publicText.Workorder_Planstartendtime}}{{ item.planStartTime }} - {{ item.planendtime }}</text>
+							<text>{{i18n.publicText.Workorder_Description}}{{item.itemDesp}}</text>
 						</view>
 						<view class="icon-right"><text class="icon-right fa fa-angle-right"></text></view>
 					</li>
@@ -73,10 +73,10 @@
 									</view>
 								</view>
 							</view>
-							<text class="productName">{{i18n.main.productName}}{{ item.productID }}</text>
-							<text class="opname">{{i18n.main.Process}}{{ item.pmOpName }}</text>
-							<text>{{i18n.main.time}}:{{ item.planStartTime }} - {{ item.planendtime }}</text>
-							<text class="">{{i18n.main.description}}{{ item.itemDesp }}</text>
+							<text class="productName">{{i18n.publicText.Workorder_Product}}{{ item.productID }}</text>
+							<text class="opname">{{i18n.publicText.Workorder_Operation}}{{ item.pmOpName }}</text>
+							<text>{{i18n.publicText.Workorder_Planstartendtime}}{{ item.planStartTime }} - {{ item.planendtime }}</text>
+							<text>{{i18n.publicText.Workorder_Description}}{{item.itemDesp}}</text>
 						</view>
 						<view class="icon-right"><text class="icon-right fa fa-angle-right"></text></view>
 					</li>
@@ -150,8 +150,8 @@ export default {
 	}, 
 	mounted() {
 		this.getSystemStatusBarHeight();
-		this.items.push(this.i18n.main.produced);
-		this.items.push(this.i18n.main.completed);
+		this.items.push(this.i18n.publicText.Tab_unstart);
+		this.items.push(this.i18n.publicText.Tab_finished);
 		this.HasLogin();
 		this.getResList();
 		

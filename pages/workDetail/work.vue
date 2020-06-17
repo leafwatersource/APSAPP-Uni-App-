@@ -1,83 +1,87 @@
 <template>
 	<view class="content">
 		<view class="Main">
-			<text class="workId">{{i18n.workDetail.workID}}{{ workItem.workID }}</text>
+			<text class="workId">{{i18n.publicText.Workorder_Workid}}{{ workItem.workID }}</text>
 			<view class="NumBox">
 				<view>
 					<text class="Number">{{ workItem.jobQty }}</text>
-					<text class="NumDesc">{{i18n.workDetail.total}}</text>
+					<text class="NumDesc">{{i18n.publicText.Workorder_JobQty}}</text>
 				</view>
 				<view>
 					<text class="Number">{{ workItem.plannedqty }}</text>
-					<text class="NumDesc">{{i18n.workDetail.PlannedQuantity}}</text>
+					<text class="NumDesc">{{i18n.publicText.Workorder_PlannedQty}}</text>
 				</view>
 				<view>
 					<text class="Number">{{ workItem.finishedQty }}</text>
-					<text class="NumDesc">{{i18n.workDetail.EquipmentCompleted}}</text>
+					<text class="NumDesc">{{i18n.publicText.Workorder_FinishedQty}}</text>
 				</view>
 				<view>
 					<text class="Number">{{ workItem.allFinishedQty }}</text>
-					<text class="NumDesc">{{i18n.workDetail.CumulativeCompletions}}</text>
+					<text class="NumDesc">{{i18n.publicText.Workorder_AllFinishedQty}}</text>
 				</view>
 			</view>
 			<view class="workItem">
 				<text class="name">
-					{{i18n.workDetail.productName}}
+					{{i18n.publicText.Workorder_Product}}
 					<text class="value">{{ workItem.productID }}</text>
 				</text>
 				<text class="name">
-					{{i18n.workDetail.resName}}
+					{{i18n.publicText.Workorder_ResName}}
 					<text class="value">{{ workItem.pmResName }}</text>
 				</text>
 				<text class="name">
-					{{i18n.workDetail.Process}}
+					{{i18n.publicText.Workorder_Operation}}
 					<text class="value">{{ workItem.pmOpName }}</text>
 				</text>
 				<text class="name">
-					{{i18n.workDetail.WorkShift}}
+					{{i18n.publicText.Workorder_WorkHours}}
 					<text class="value">{{ workItem.dayShift }}</text>
 				</text>
 				<text class="name">
-					{{i18n.workDetail.PlanningTime}}
+					{{i18n.publicText.Workorder_Planstartendtime}}
 					<text class="value">{{ workItem.planStartTime }} - {{ workItem.planendtime }}</text>
 				</text>
 				<text class="name">
-					{{i18n.workDetail.WorkTime}}
+					{{i18n.publicText.Workorder_WorkHours}}
 					<text class="value">{{ workItem.workHours }}</text>
 				</text>
 				<text class="name">
-					{{i18n.workDetail.BOMRatio}}
+					{{i18n.publicText.Workorder_BomUsed}}
 					<text class="value">{{ workItem.bomComused }}</text>
 				</text>
 				<text class="name">
-					{{i18n.workDetail.ProductDescription}}
+					{{i18n.publicText.Workorder_ItemAttr1}}
 					<text class="value">{{ workItem.itemAttr1 }}</text>
 				</text>
 				<text class="name">
-					{{i18n.workDetail.ProductCategories}}
+					{{i18n.publicText.Workorder_ItemAttr2}}
+					<text class="value">{{ workItem.itemAttr2 }}</text>
+				</text>
+				<text class="name">
+					{{i18n.publicText.Workorder_ItemAttr3}}
 					<text class="value">{{ workItem.itemAttr3 }}</text>
 				</text>
 			</view>
 
 			<view class="finishBox" v-if="workItem.taskFinishState == 2">
-				<text>{{i18n.workDetail.Finish}}</text>
+				<text>{{i18n.publicText.Workorder_Inputfinishedqty}}</text>
 				<view class="uni-input-wrapper inputBox">
 					<input class="uni-input" type="number" placeholder="0" v-model="finishValue" @input="FinishClearInput" />
 					<icon class="uni-icon closeIcon" v-if="finishShowClearIcon" @click="finishClearIcon" type="clear" size="18" />
 				</view>
 			</view>
 			<view class="failBox" v-if="workItem.taskFinishState == 2">
-				<text>{{i18n.workDetail.Fail}}</text>
+				<text>{{i18n.publicText.Workorder_Inputfailqty}}</text>
 				<view class="uni-input-wrapper inputBox">
 					<input class="uni-input" type="number" placeholder="0" v-model="failValue" @input="FailClearInput" />
 					<icon class="uni-icon closeIcon" v-if="failShowClearIcon" @click="failClearIcon" type="clear" size="18" />
 				</view>
 			</view>
 			<view class="selectTime" v-if="workItem.taskFinishState == 2">
-				<text class="timer">{{i18n.workDetail.ReportTime}}</text>
+				<text class="timer">{{i18n.publicText.Workorder_InputReportTime}}</text>
 				<view>
 					<text class="datetime">{{ datetime }}</text>
-					<text class="select" @click="onShowDatePicker('datetime')">{{i18n.workDetail.select}}</text>
+					<text class="select" @click="onShowDatePicker('datetime')">{{i18n.publicText.datetime_select_date}}</text>
 				</view>
 			</view>
 			<mx-date-picker :show="showPicker" :type="type" :value="datetime" :show-tips="true" :show-seconds="false" @confirm="onSelected" @cancel="onSelected" />
@@ -90,7 +94,7 @@
 				:hover-class="{ hoverBtn: workItem.canReport }"
 				v-if="workItem.taskFinishState == 0"
 			>
-			{{i18n.workDetail.change}}	
+			{{i18n.publicText.Button_BeginChange}}	
 			</button>
 			<button
 				type="default"
@@ -99,7 +103,7 @@
 				:hover-class="{ hoverBtn: workItem.canReport }"
 				v-else-if="workItem.taskFinishState == 1"
 			>
-			{{i18n.workDetail.Product}}	
+			{{i18n.publicText.Button_EndChangeAndOutput}}	
 			</button>
 			<button
 				type="default"
@@ -108,7 +112,7 @@
 				:hover-class="{ hoverBtn: workItem.canReport }"
 				v-else-if="workItem.taskFinishState == 2"
 			>
-				{{i18n.workDetail.Report}}
+				{{i18n.publicText.Button_Report}}
 			</button>
 			<button
 				type="default"
@@ -117,20 +121,20 @@
 				:hover-class="{ hoverBtn: workItem.canReport }"
 				v-else-if="workItem.taskFinishState == 3"
 			>
-					{{i18n.workDetail.resumeProduction}}
+					{{i18n.publicText.Button_ResumeProduction}}
 			</button>
 			<view class="parseChangeBtn">
 				<view class="parseBox" @click="parseBtn">
 					<text class="fa fa-pause pause"></text>
-					<text class="parseText">{{i18n.workDetail.pause}}</text>
+					<text class="parseText">{{i18n.publicText.Button_OrderPause}}</text>
 				</view>
 				<view class="parseBox">
 					<text class="fa fa-moon-o pause"></text>
-					<text class="parseText">{{i18n.workDetail.relieve}}</text>
+					<text class="parseText">{{i18n.publicText.Button_EndWorking}}</text>
 				</view>
 				<view class="changeResBox" @tap="changeRes">
 					<text class="fa fa-refresh change"></text>
-					<text class="changeText">{{i18n.workDetail.SwitchDevice}}</text>
+					<text class="changeText">{{i18n.publicText.Button_Pushorder}}</text>
 				</view>
 				<uni-drawer :visible="showLeft" mode="left" @close="closeDrawer()">
 					<uni-list><uni-list-item v-for="item in changeResArr" :title="item" note="" @tap="enterChangeRes(item)"></uni-list-item></uni-list>
@@ -465,19 +469,20 @@ export default {
 			padding: 16upx 28upx;
 			color: #555555;
 			font-size: 18px;
-
+			
 			view {
 				float: right;
-				width: 60%;
+				width: 68%;
 			}
 
 			.select {
 				float: right;
 				color: #0faeff;
+				font-size: 28upx;
 			}
 			.timer {
 				float: left;
-				width: 40%;
+				width: 30%;
 			}
 		}
 	}
