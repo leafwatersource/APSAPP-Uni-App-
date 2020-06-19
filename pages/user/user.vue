@@ -62,12 +62,16 @@
 		onShow() {
 			this.userInfo = uni.getStorageSync("userInfo");
 			uni.setTabBarItem({
+				index: 0,
+				text: this.i18n.tabBar.Nav_Report
+			});
+			uni.setTabBarItem({
 				index: 1,
-				text: this.i18n.tabBar.statistics
+				text: this.i18n.tabBar.Nav_Dash
 			});
 			uni.setTabBarItem({
 				index: 2,
-				text: this.i18n.tabBar.me
+				text: this.i18n.tabBar.Nav_User
 			});
 		},
 		mounted() {

@@ -13,7 +13,8 @@ const i18n = new VueI18n({
 	// 引入语言文件
 	messages: {
 		'zh-Hans-CN': require('./static/locales/zh-CN.js').lang,
-		'en-US': require('./static/locales/en-US.js').lang
+		'en-US': require('./static/locales/en-US.js').lang,
+		'zh-Hant-CN':require('./static/locales/zh-Hant-CN.js').lang
 	}
 })
 Vue.prototype._i18n = i18n

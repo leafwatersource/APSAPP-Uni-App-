@@ -4,23 +4,28 @@
 			console.log('App Launch');
 			plus.screen.lockOrientation('portrait-primary');
 			const res = uni.getSystemInfoSync();
+			console.log(res.language);
 			if(res.language.indexOf("en")!=-1){
 				this.$i18n.locale = "en-US";
-			}else{
-				this.$i18n.locale = res.language;
+			}else if(res.language.indexOf("Hant") != -1){
+				this.$i18n.locale = "zh-Hant-CN";
+			}
+			else{
+				// this.$i18n.locale = res.language;
+				this.$i18n.locale = "zh-Hans-CN";
 			}
 			
-			var w = plus.webview.open(
-				'hybrid/html/animation/animation.html',
-				'本地地址',
-				{ top: 0, bottom: 0, zindex: 999 },
-				'fade-in',
-				500
-			);
-			//设置定时器，4s后关闭启动广告页
-			setTimeout(function() {
-				plus.webview.close(w);
-			}, 4000);
+			// var w = plus.webview.open(
+			// 	'hybrid/html/animation/animation.html',
+			// 	'本地地址',
+			// 	{ top: 0, bottom: 0, zindex: 999 },
+			// 	'fade-in',
+			// 	500
+			// );
+			// //设置定时器，4s后关闭启动广告页
+			// setTimeout(function() {
+			// 	plus.webview.close(w);
+			// }, 4000);
 			
 			
 		},

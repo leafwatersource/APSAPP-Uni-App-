@@ -1,9 +1,9 @@
 export const lang = {
 	message: {
 		tabBar: {
-			main: '移动报工',
-			statistics: '统计中心',
-			me: '用户操作'
+			"Nav_Report": "移动报工",
+			"Nav_Dash": "统计中心",
+			"Nav_User": "用户操作",
 		},
 		publicText: {
 			"app_name": "移动报工",
@@ -20,9 +20,6 @@ export const lang = {
 			"Button_OK": "确定",
 			"Button_Cancel": "取消",
 			"Login_noPermission": "当前账号没有报工权限.",
-			"Nav_Report": "移动报工",
-			"Nav_Dash": "统计中心",
-			"Nav_User": "用户操作",
 			"Tab_unstart": "待生产",
 			"Tab_finished": "已完成",
 			"Search_hint": "输入工单号码或产品搜索",
@@ -81,6 +78,40 @@ export const lang = {
 			"Msg_OrderDetail_pause_failed": "订单暂停失败.",
 			"Msg_OrderDetail_push_failed": "订单推送失败.",
 			"Button_Unable": "不可操作"
+		},
+		
+		pageTitle:{
+			"User_Setting":"用户设置",
+			"Change_PassWorld" :"修改密码",
+			"Person_Message":"个人信息",
+			"Statistics_Center":"统计中心"
+		},
+		user:{
+			cellphoneNumber:'手机号码:',
+			userSettings:'用户设置',
+			systemSettings:'系统设置',
+			operationRecord:'用户操作记录',
+			changePassword:'修改密码',
+			signOut:'退出登录',
+			cancelTitle:'确定退出',
+			cancelText:'取消',
+			confirmText:'确定'
+		},
+		changePass:{
+			oldPass:'旧密码',
+			oldPassHolder:'请填写旧密码',
+			newPass:'新密码',
+			newPassHolder:'请输入新密码',
+			enterPass:'确认密码',
+			enterPassHolder:'请再次输入新密码',
+			finish:'完成'
+		},
+		userSetting:{
+			name:'名字',
+			phone:'电话',
+			email:'邮箱',
+			userDescription:'用户描述',
+			system:'系统名称',
 		}
 	}
 }

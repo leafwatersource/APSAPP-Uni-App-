@@ -1,87 +1,87 @@
 <template>
 	<view class="content">
 		<view class="Main">
-			<text class="workId">{{i18n.publicText.Workorder_Workid}}{{ workItem.workID }}</text>
+			<text class="workId">{{ i18n.publicText.Workorder_Workid }}{{ workItem.workID }}</text>
 			<view class="NumBox">
 				<view>
 					<text class="Number">{{ workItem.jobQty }}</text>
-					<text class="NumDesc">{{i18n.publicText.Workorder_JobQty}}</text>
+					<text class="NumDesc">{{ i18n.publicText.Workorder_JobQty }}</text>
 				</view>
 				<view>
 					<text class="Number">{{ workItem.plannedqty }}</text>
-					<text class="NumDesc">{{i18n.publicText.Workorder_PlannedQty}}</text>
+					<text class="NumDesc">{{ i18n.publicText.Workorder_PlannedQty }}</text>
 				</view>
 				<view>
 					<text class="Number">{{ workItem.finishedQty }}</text>
-					<text class="NumDesc">{{i18n.publicText.Workorder_FinishedQty}}</text>
+					<text class="NumDesc">{{ i18n.publicText.Workorder_FinishedQty }}</text>
 				</view>
 				<view>
 					<text class="Number">{{ workItem.allFinishedQty }}</text>
-					<text class="NumDesc">{{i18n.publicText.Workorder_AllFinishedQty}}</text>
+					<text class="NumDesc">{{ i18n.publicText.Workorder_AllFinishedQty }}</text>
 				</view>
 			</view>
 			<view class="workItem">
-				<text class="name">
-					{{i18n.publicText.Workorder_Product}}
+				<view class="item">
+					<text class="name">{{ i18n.publicText.Workorder_Product }}</text>
 					<text class="value">{{ workItem.productID }}</text>
-				</text>
-				<text class="name">
-					{{i18n.publicText.Workorder_ResName}}
+				</view>
+				<view class="item">
+					<text class="name">{{ i18n.publicText.Workorder_ResName }}</text>
 					<text class="value">{{ workItem.pmResName }}</text>
-				</text>
-				<text class="name">
-					{{i18n.publicText.Workorder_Operation}}
+				</view>
+				<view class="item">
+					<text class="name">{{ i18n.publicText.Workorder_Operation }}</text>
 					<text class="value">{{ workItem.pmOpName }}</text>
-				</text>
-				<text class="name">
-					{{i18n.publicText.Workorder_WorkHours}}
+				</view>
+				<view class="item">
+					<text class="name">{{ i18n.publicText.Workorder_WorkHours }}</text>
 					<text class="value">{{ workItem.dayShift }}</text>
-				</text>
-				<text class="name">
-					{{i18n.publicText.Workorder_Planstartendtime}}
+				</view>
+				<view class="item">
+					<text class="name">{{ i18n.publicText.Workorder_Planstartendtime }}</text>
 					<text class="value">{{ workItem.planStartTime }} - {{ workItem.planendtime }}</text>
-				</text>
-				<text class="name">
-					{{i18n.publicText.Workorder_WorkHours}}
+				</view>
+				<view class="item">
+					<text class="name">{{ i18n.publicText.Workorder_WorkHours }}</text>
 					<text class="value">{{ workItem.workHours }}</text>
-				</text>
-				<text class="name">
-					{{i18n.publicText.Workorder_BomUsed}}
+				</view>
+				<view class="item">
+					<text class="name">{{ i18n.publicText.Workorder_BomUsed }}</text>
 					<text class="value">{{ workItem.bomComused }}</text>
-				</text>
-				<text class="name">
-					{{i18n.publicText.Workorder_ItemAttr1}}
+				</view>
+				<view class="item">
+					<text class="name">{{ i18n.publicText.Workorder_ItemAttr1 }}</text>
 					<text class="value">{{ workItem.itemAttr1 }}</text>
-				</text>
-				<text class="name">
-					{{i18n.publicText.Workorder_ItemAttr2}}
+				</view>
+				<view class="item">
+					<text class="name">{{ i18n.publicText.Workorder_ItemAttr2 }}</text>
 					<text class="value">{{ workItem.itemAttr2 }}</text>
-				</text>
-				<text class="name">
-					{{i18n.publicText.Workorder_ItemAttr3}}
+				</view>
+				<view class="item">
+					<text class="name">{{ i18n.publicText.Workorder_ItemAttr3 }}</text>
 					<text class="value">{{ workItem.itemAttr3 }}</text>
-				</text>
+				</view>
 			</view>
 
 			<view class="finishBox" v-if="workItem.taskFinishState == 2">
-				<text>{{i18n.publicText.Workorder_Inputfinishedqty}}</text>
+				<view class="name">{{ i18n.publicText.Workorder_Inputfinishedqty }}</view>
 				<view class="uni-input-wrapper inputBox">
 					<input class="uni-input" type="number" placeholder="0" v-model="finishValue" @input="FinishClearInput" />
 					<icon class="uni-icon closeIcon" v-if="finishShowClearIcon" @click="finishClearIcon" type="clear" size="18" />
 				</view>
 			</view>
 			<view class="failBox" v-if="workItem.taskFinishState == 2">
-				<text>{{i18n.publicText.Workorder_Inputfailqty}}</text>
+				<view class="name">{{ i18n.publicText.Workorder_Inputfailqty }}</view>
 				<view class="uni-input-wrapper inputBox">
 					<input class="uni-input" type="number" placeholder="0" v-model="failValue" @input="FailClearInput" />
 					<icon class="uni-icon closeIcon" v-if="failShowClearIcon" @click="failClearIcon" type="clear" size="18" />
 				</view>
 			</view>
 			<view class="selectTime" v-if="workItem.taskFinishState == 2">
-				<text class="timer">{{i18n.publicText.Workorder_InputReportTime}}</text>
+				<text class="timer">{{ i18n.publicText.Workorder_InputReportTime }}</text>
 				<view>
 					<text class="datetime">{{ datetime }}</text>
-					<text class="select" @click="onShowDatePicker('datetime')">{{i18n.publicText.datetime_select_date}}</text>
+					<text class="select" @click="onShowDatePicker('datetime')">{{ i18n.publicText.datetime_select_date }}</text>
 				</view>
 			</view>
 			<mx-date-picker :show="showPicker" :type="type" :value="datetime" :show-tips="true" :show-seconds="false" @confirm="onSelected" @cancel="onSelected" />
@@ -94,7 +94,7 @@
 				:hover-class="{ hoverBtn: workItem.canReport }"
 				v-if="workItem.taskFinishState == 0"
 			>
-			{{i18n.publicText.Button_BeginChange}}	
+				{{ i18n.publicText.Button_BeginChange }}
 			</button>
 			<button
 				type="default"
@@ -103,7 +103,7 @@
 				:hover-class="{ hoverBtn: workItem.canReport }"
 				v-else-if="workItem.taskFinishState == 1"
 			>
-			{{i18n.publicText.Button_EndChangeAndOutput}}	
+				{{ i18n.publicText.Button_EndChangeAndOutput }}
 			</button>
 			<button
 				type="default"
@@ -112,7 +112,7 @@
 				:hover-class="{ hoverBtn: workItem.canReport }"
 				v-else-if="workItem.taskFinishState == 2"
 			>
-				{{i18n.publicText.Button_Report}}
+				{{ i18n.publicText.Button_Report }}
 			</button>
 			<button
 				type="default"
@@ -121,20 +121,20 @@
 				:hover-class="{ hoverBtn: workItem.canReport }"
 				v-else-if="workItem.taskFinishState == 3"
 			>
-					{{i18n.publicText.Button_ResumeProduction}}
+				{{i18n.publicText.Button_ResumeProduction}}
 			</button>
 			<view class="parseChangeBtn">
 				<view class="parseBox" @click="parseBtn">
 					<text class="fa fa-pause pause"></text>
-					<text class="parseText">{{i18n.publicText.Button_OrderPause}}</text>
+					<text class="parseText">{{ i18n.publicText.Button_OrderPause }}</text>
 				</view>
-				<view class="parseBox">
+				<view class="parseBox" @tap="changeDayShift">
 					<text class="fa fa-moon-o pause"></text>
-					<text class="parseText">{{i18n.publicText.Button_EndWorking}}</text>
+					<text class="parseText">{{ i18n.publicText.Button_EndWorking }}</text>
 				</view>
 				<view class="changeResBox" @tap="changeRes">
 					<text class="fa fa-refresh change"></text>
-					<text class="changeText">{{i18n.publicText.Button_Pushorder}}</text>
+					<text class="changeText">{{ i18n.publicText.Button_Pushorder }}</text>
 				</view>
 				<uni-drawer :visible="showLeft" mode="left" @close="closeDrawer()">
 					<uni-list><uni-list-item v-for="item in changeResArr" :title="item" note="" @tap="enterChangeRes(item)"></uni-list-item></uni-list>
@@ -162,6 +162,11 @@ export default {
 			console.log(option);
 		}
 	},
+	onShow() {
+		uni.setNavigationBarTitle({
+			title: this.i18n.publicText.Workorder_Title_OrderDetail
+		});
+	},
 	data() {
 		return {
 			workItem: null,
@@ -177,18 +182,13 @@ export default {
 		};
 	},
 	mounted() {
-		// plus.nativeUI.setUiStyle("dark");
-		// console.log(plus.navigator.getUiStyle())
-		// uni.onUIStyleChange(function (res) {
-		//     console.log(res);
-		// });
 		console.log(this.workItem);
 		this.datetime = this.getNowDateTime();
 	},
-	computed:{
-		i18n () {
-			return this.$t('message'); 
-		},
+	computed: {
+		i18n() {
+			return this.$t('message');
+		}
 	},
 	methods: {
 		closeDrawer() {
@@ -347,6 +347,21 @@ export default {
 					});
 				}
 			});
+		},
+		changeDayShift(){
+			const _this = this;
+			uni.showModal({
+				content:"此版本没有功能?",
+				confirmText: this.i18n.publicText.datetime_confirm,
+				cancelText:this.i18n.publicText.datetime_cancel,
+				confirmColor:'green',
+				success(res){
+					if(res.confirm){
+						console.log("开始调用api接口");
+						uni.navigateBack()
+					}					
+				}
+			})
 		}
 	}
 };
@@ -411,65 +426,59 @@ export default {
 
 		.workItem {
 			border-bottom: 1px solid #ccc;
-			padding: 20upx 0;
-			text {
+			.item {
+				display: flex;
+				border-bottom: 1upx solid #cccccc;
 				color: #999;
-				padding: 10upx 30upx;
 				font-size: 30upx;
+				padding: 10upx 20upx;
+				.value {
+					flex-grow: 1;
+					text-align: right;
+				}
 			}
-			.name {
-				box-sizing: border-box;
-				display: block;
-				border-bottom: 1upx solid #CCCCCC;
-				width: 100%;
-			}
-			.name:last-child{
+			.name:last-child {
 				border: none;
-			}
-			.value {
-				padding: 0;
-				display: inline-block;
-				float: right;
 			}
 		}
 
 		.finishBox,
 		.failBox {
-			position: relative;
+			display: flex;
 			margin: 1upx 0;
 			background-color: $uni-bg-color;
-			padding: 16upx 28upx;
+			padding: 16upx 20upx;
 			font-size: 18px;
 			color: #555555;
 
-			text {
-				width: 30%;
+			.name {
+				display: inline-block;
+				white-space:nowrap;
 			}
-
 			.inputBox {
-				position: absolute;
-				width: 70%;
-				right: 0;
-				top: 50%;
-				transform: translateY(-50%);
+				position: relative;
+				input{
+					padding:  0 10upx;
+				}
+				.closeIcon {
+					position: absolute;
+					right: 20upx;
+					top: 50%;
+					transform: translateY(-50%);
+				}
 			}
 
-			.closeIcon {
-				position: absolute;
-				top: 50%;
-				right: 28upx;
-				transform: translateY(-50%);
-			}
+			
 		}
 
 		.selectTime {
 			margin: 1upx 0;
-			margin-bottom: 200upx;
+			margin-bottom: 260upx;
 			background-color: $uni-bg-color;
 			padding: 16upx 28upx;
 			color: #555555;
 			font-size: 18px;
-			
+
 			view {
 				float: right;
 				width: 68%;
@@ -492,13 +501,13 @@ export default {
 		position: fixed;
 		bottom: 0;
 		width: 100%;
-		height: 120upx;
+		min-height: 120upx;
 		background-color: $uni-text-color-white;
 		padding: 10upx 0;
-
+		display: flex;
+		align-items: center;
 		.btnWork {
-			width: 40%;
-			float: left;
+			min-width: 40%;
 			background-color: $uni-btn-active-color;
 			color: $uni-text-color-white;
 			border-radius: 60upx;
@@ -515,15 +524,13 @@ export default {
 		.hoverBtn {
 			background-color: $uni-gb-color-blue;
 		}
-
 		.parseChangeBtn {
+			flex-grow: 1;
 			display: flex;
 			justify-content: space-around;
 			height: 100%;
-
 			view {
 				text-align: center;
-
 				.pause,
 				.change {
 					color: $uni-btn-active-color;

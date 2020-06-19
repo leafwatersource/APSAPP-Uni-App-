@@ -120,19 +120,15 @@ export default {
 		console.log(this.resName);
 		uni.setTabBarItem({
 			index: 0,
-			text: this.i18n.tabBar.main
+			text: this.i18n.tabBar.Nav_Report
 		});
 		uni.setTabBarItem({
 			index: 1,
-			text: this.i18n.tabBar.statistics
+			text: this.i18n.tabBar.Nav_Dash
 		});
 		uni.setTabBarItem({
 			index: 2,
-			text: this.i18n.tabBar.me
-		});
-		// 导航栏多语言
-		uni.setNavigationBarTitle({
-			title: this.i18n.tabBar.home 
+			text: this.i18n.tabBar.Nav_User
 		});
 		if (this.resName != '') {
 			this.isRequest = true;
@@ -153,8 +149,7 @@ export default {
 		this.items.push(this.i18n.publicText.Tab_unstart);
 		this.items.push(this.i18n.publicText.Tab_finished);
 		this.HasLogin();
-		this.getResList();
-		
+		this.getResList(); 
 	},
 	methods: {
 		scan() {
@@ -236,7 +231,7 @@ export default {
 		},
 		selectRes() {
 			uni.navigateTo({
-				url: '../selectRes/resList?resList=' + JSON.stringify(this.resList)
+				url: '../selectRes/resList?resLssist=' + JSON.stringify(this.resList)
 			});
 		},
 		work(workItem) {

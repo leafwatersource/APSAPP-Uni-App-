@@ -98,8 +98,10 @@ export default {
 								uni.hideLoading();
 								//需要强制登陆
 								uni.showModal({
-									title: '是否强制登陆',
+									title: this.i18n.publicText.Login_forceOut,
 									content: loginStatus.data['message'],
+									confirmText:this.i18n.publicText.Button_OK,
+									cancelText:this.i18n.publicText.Button_Cancel,
 									success(data) {
 										if (data.confirm) {
 											_this.ForceOut();
@@ -185,29 +187,26 @@ export default {
 					});
 					// _this.StartSocket();
 				} else {
-					uni.showToast({
-						title: '获取用户信息失败',
-						icon: 'none'
-					});
+
 				}
 			});
 		},
 		StartSocket() {
-			const guid = uni.getStorageSync('UserGuid');
-			uni.request({
-				url: this.api + 'Socket',
-				method: 'POST',
-				data: {
-					empId: this.userName,
-					userGuid: guid
-				},
-				header: {
-					'Content-type': 'application/x-www-form-urlencoded'
-				},
-				success(data) {
-					console.log(data);
-				}
-			});
+			// const guid = uni.getStorageSync('UserGuid');
+			// uni.request({
+			// 	url: this.api + 'Socket',
+			// 	method: 'POST',
+			// 	data: {
+			// 		empId: this.userName,
+			// 		userGuid: guid
+			// 	},
+			// 	header: {
+			// 		'Content-type': 'application/x-www-form-urlencoded'
+			// 	},
+			// 	success(data) {
+			// 		console.log(data);
+			// 	}
+			// });
 			// console.log("diaoyongsocket")
 			// ws = new WebSocket("ws://pmser.szratetec.com:8865/");
 			// ws.onopen = function() {

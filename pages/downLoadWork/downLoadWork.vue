@@ -5,11 +5,11 @@
 				<view class="content-box">
 					<ul>
 						<li>
-							<text>工单号:</text>
+							<text>{{i18n.publicText.Workorder_Workid}}</text>
 							<input type="text" value="" placeholder="请输入" v-model="searchWorkId" />
 						</li>
 						<li>
-							<text>工序:</text>
+							<text>{{i18n.publicText.Workorder_Operation}}</text>
 							<input type="text" value="" placeholder="请输入" v-model="searchOpName" />
 						</li>
 						<li>
@@ -34,33 +34,33 @@
 			<li class="work" v-for="(item, index) in workList" :key="index" v-if="workList.length != 0" @tap="downLoad(item)">
 				<view class="workIDBox">
 					<text class="br">|</text>
-					<text>工单号码</text>
+					<text>{{i18n.publicText.Workorder_Workid}}</text>
 					<text class="workId">
 						{{item.workID}}
 					</text>
 				</view>
 				<view>
-					<text class="name">设备名称</text>
+					<text class="name">{{i18n.publicText.Workorder_ResName}}</text>
 					<text class="value">{{item.pmResName}}</text>
 				</view>
 				<view>
-					<text class="name">产品</text>
+					<text class="name">{{i18n.publicText.Workorder_Product}}</text>
 					<text class="value">{{item.productID}}</text>
 				</view>
 				<view>
-					<text class="name">工序</text>
+					<text class="name">{{i18n.publicText.Workorder_Operation}}</text>
 					<text class="value">{{item.pmOpName}}</text>
 				</view>
 				<view>
-					<text class="name">数量</text>
+					<text class="name">{{i18n.publicText.Workorder_PlannedQty}}</text>
 					<text class="value">{{item.jobQty}}</text>
 				</view>
 				<view>
-					<text class="name">执行时间</text>
+					<text class="name">{{i18n.publicText.Workorder_Planstartendtime}}</text>
 					<text class="value">{{item.planStartTime}} - {{item.planendtime}}</text>
 				</view>
 				<view>
-					<text class="name">描述</text>
+					<text class="name">{{i18n.publicText.Workorder_Description}}</text>
 					<text class="value">{{item.itemDesp}}</text>
 				</view>
 			</li>
@@ -112,11 +112,21 @@ export default {
 			searchStartTime: ''
 		};
 	},
+	computed:{
+		i18n () {
+			return this.$t('message'); 
+		},
+	}, 
 	onLoad(option) {
 		console.log(option);
 		this.resName = JSON.parse(option.resName);
 		this.dayshift = option.dayshift;
 		console.log(this.resName)
+	},
+	onShow() {
+		uni.setNavigationBarTitle({
+			title: this.i18n.publicText.Msg_DownOrder_Title 
+		});
 	},
 	mounted() {
 		this.getWorkPlan();
@@ -147,7 +157,9 @@ export default {
 			const orderUID = workItem.orderUID;
 			console.log(this.resName.resourceName);
 			uni.showModal({
-				content:"是否要拉取工单号:"+workItem.workID,
+				content: this.i18n.publicText.Msg_DownOrder_Message+workItem.workID,
+				confirmText:this.i18n.publicText.datetime_confirm,
+				cancelText:this.i18n.publicText.datetime_cancel,
 				success(res) {
 						if(res.confirm){
 							_this.$HTTP({
@@ -288,9 +300,9 @@ export default {
 		padding: 0;
 		li{
 			list-style: none;
-			padding:0  20upx;
 			background-color: $uni-text-color-white;
 			border-bottom: 3upx solid #999;
+			padding: 0 20upx;
 			.workIDBox{
 				border-bottom: 1upx solid $uni-btn-color;
 				color: $uni-btn-active-color;
@@ -298,24 +310,27 @@ export default {
 				font-weight: 600;
 				height: 100%;
 				box-sizing: content-box;
+				display: flex;
 				.br{
 					font-weight: bolder;
 					margin-right: 20upx;
 				}
 				.workId{
-					float: right;
+					flex-grow: 1;
+					text-align: right;
 				}
 			}
 			view{
-				padding: 5upx 0;
 				color: #999999;
 				border-bottom: 1upx solid #999999;
+				display: flex;
 				.name{
 					font-size: 30upx;
 				}
 				.value{
 					font-size: 30upx;
-					float: right;
+					text-align: right;
+					flex-grow:1;
 				}
 			}
 			view:last-child{
