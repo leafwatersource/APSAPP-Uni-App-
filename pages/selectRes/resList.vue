@@ -12,7 +12,9 @@
 <script>
 	export default {
 		onLoad(options) {
-			this.resList = JSON.parse(decodeURIComponent(options.resList));
+			console.log(JSON.parse(options.resList));
+			this.resList = JSON.parse(options.resList);
+			console.log(this.resList)
 		},
 		data(){
 			return {

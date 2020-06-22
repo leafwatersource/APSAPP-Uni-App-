@@ -230,8 +230,9 @@ export default {
 			this.resCount = this.resCount == true ? false : true;
 		},
 		selectRes() {
+			console.log(JSON.stringify(this.resList))
 			uni.navigateTo({
-				url: '../selectRes/resList?resLssist=' + JSON.stringify(this.resList)
+				url: '../selectRes/resList?resList=' + JSON.stringify(this.resList)
 			});
 		},
 		work(workItem) {
