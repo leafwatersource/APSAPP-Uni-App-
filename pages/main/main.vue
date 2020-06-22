@@ -231,7 +231,7 @@ export default {
 		},
 		selectRes() {
 			uni.navigateTo({
-				url: '../selectRes/resList?resLssist=' + JSON.stringify(this.resList)
+				url: '../selectRes/resList?resList=' + JSON.stringify(this.resList)
 			});
 		},
 		work(workItem) {
@@ -254,6 +254,7 @@ export default {
 					usersysid: this.userInfo['userSysID']
 				}
 			}).then(resList => {
+				console.log(resList);
 				_this.resList.push(...resList.data);
 				if (_this.isRequest) {
 					_this.resName = resList.data[0];
@@ -275,6 +276,7 @@ export default {
 					}
 				}).then(UnstartList => {
 					console.log(UnstartList);
+					uni.hideLoading();
 					if (UnstartList.data.length > 0) {
 						UnstartList.data.forEach(item => {
 							if (item.taskFinishState == 2) {

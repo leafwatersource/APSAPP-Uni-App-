@@ -79,7 +79,7 @@ export default {
 			}).then(status => {
 				console.log(status);
 				if (status.data) {
-					console.log('没人登录你的账号');
+					console.log('账号没有在别的设备登录过');
 					_this.ForceOut();
 				} else {
 					console.log(_this.userName, _this.userPass);

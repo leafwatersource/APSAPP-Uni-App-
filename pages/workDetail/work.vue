@@ -136,8 +136,8 @@
 					<text class="fa fa-refresh change"></text>
 					<text class="changeText">{{ i18n.publicText.Button_Pushorder }}</text>
 				</view>
-				<uni-drawer :visible="showLeft" mode="left" @close="closeDrawer()">
-					<uni-list><uni-list-item v-for="item in changeResArr" :title="item" note="" @tap="enterChangeRes(item)"></uni-list-item></uni-list>
+				<uni-drawer :visible="showLeft" mode="left" @close="closeDrawer()" class="drawerWrap">
+					<uni-list class="drawer"><uni-list-item v-for="item in changeResArr" :title="item" note="" @tap="enterChangeRes(item)"></uni-list-item></uni-list>
 				</uni-drawer>
 			</view>
 		</view>
@@ -156,10 +156,7 @@ export default {
 		console.log(option);
 		if (option.workItem) {
 			this.workItem = JSON.parse(decodeURIComponent(option.workItem));
-			this.finishValue = this.workItem.canReportQty;
-			console.log(this.workItem);
-		} else if (option.res) {
-			console.log(option);
+			this.finishValue = parseFloat(this.workItem.canReportQty)<parseFloat(this.workItem.plannedqty)?this.workItem.canReportQty:this.workItem.plannedqty;
 		}
 	},
 	onShow() {
@@ -544,6 +541,14 @@ export default {
 					color: $uni-btn-active-color;
 				}
 			}
+			.drawerWrap{
+				overflow: hidden;
+				.drawer{
+					overflow-y: scroll;
+					height: 100%;
+				}
+			}
+			
 		}
 	}
 }

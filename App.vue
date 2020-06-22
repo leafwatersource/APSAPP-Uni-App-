@@ -3,18 +3,18 @@
 		onLaunch: function() {
 			console.log('App Launch');
 			plus.screen.lockOrientation('portrait-primary');
+			
 			const res = uni.getSystemInfoSync();
-			console.log(res.language);
 			if(res.language.indexOf("en")!=-1){
 				this.$i18n.locale = "en-US";
 			}else if(res.language.indexOf("Hant") != -1){
 				this.$i18n.locale = "zh-Hant-CN";
-			}
-			else{
-				// this.$i18n.locale = res.language;
+			}else if(res.language.indexOf("Hans") != -1){
 				this.$i18n.locale = "zh-Hans-CN";
 			}
-			
+			else{
+				this.$i18n.locale = "zh-Hans-CN";
+			}
 			// var w = plus.webview.open(
 			// 	'hybrid/html/animation/animation.html',
 			// 	'本地地址',
@@ -26,8 +26,43 @@
 			// setTimeout(function() {
 			// 	plus.webview.close(w);
 			// }, 4000);
-			
-			
+			plus.runtime.getProperty(plus.runtime.appid, wgtinfo => {
+				console.log(wgtinfo);
+				console.log(plus.runtime.appid);
+			});
+			//检测用户是否是最新的版本软件，传入appid,version,imei
+			//数据库必须存入软件的最新版本的版本号,和最新版本的地址
+			// uni.request({
+			//     url: 'update', //检查更新的服务器地址
+			//     data: {
+			//         appid: plus.runtime.appid,
+			//         version: plus.runtime.version,
+			//         imei: plus.device.imei
+			//     },
+			//     success: (res) => {
+			// 		console.log(res)
+			//         if (res.statusCode == 200 && res.data.isUpdate) {
+			//             let openUrl = plus.os.name === 'iOS' ? res.data.iOS : res.data.Android;
+			//             // 提醒用户更新
+			//             uni.showModal({
+			//                 title: '更新提示',
+			// 				showCancel:false,
+			//                 content: res.data.note ? res.data.note : '是否选择更新',
+			//                 success: (showResult) => {
+			//                     if (showResult.confirm) {
+			//                         plus.runtime.openURL(openUrl);
+			//                     }
+			//                 }
+			//             })
+			//         }else if(res.statusCode == 200 &&  !res.data.isUpdate){
+			// 			uni.showToast({
+			// 				title:"当前已是最新版本",
+			// 				icon:"none",
+			// 				duration:2000
+			// 			})
+			// 		}
+			//     }
+			// })
 		},
 		onShow: function() {
 			console.log('App Show');
