@@ -2,7 +2,9 @@
 	<view>
 		<uni-nav-bar :title="type" class="header" color="#ffffff" background-color="#006dcb" @clickLeft="back" @clickRight="finish" status-bar="true" fixed="true">
 			<view slot="left" class="left">取消</view>
-			<view slot="right" class="right"><button type="success">完成</button></view>
+			<view slot="right" class="right">
+				<text>完成</text>
+			</view>
 		</uni-nav-bar>
 		<view class="content"><input type="text" v-model="message" /></view>
 	</view>
@@ -59,6 +61,7 @@ export default {
 				email: this.email
 			};
 			userobj[this.changeType] = this.message;
+			console.log("完成");
 			this.$HTTP({
 				url: 'ChangeUserMessage',
 				data: {
@@ -115,15 +118,7 @@ view {
 			padding-left: 20upx;
 		}
 		.right {
-			button {
-				height: 60upx;
-				line-height: 60upx;
-				background-color: transparent;
-				color: $uni-text-color-white;
-				font-size: 30upx;
-				text-align: center;
-				margin: 0;
-			}
+			text-align: right;
 		}
 	}
 	.content {

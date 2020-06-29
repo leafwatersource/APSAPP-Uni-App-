@@ -5,36 +5,37 @@
 				<text class="name">ID</text>
 				<text class="message"><text v-text="empId"></text></text>
 			</li>
-			<li @tap="canSetting('设置名字',name,'empName')">
-				<text class="name">{{i18n.userSetting.name}}</text>
-				<text class="message">
-					<text class="hasIcon" v-text="name"></text>
-					<text class="icon-right fa fa-angle-right"></text>
-				</text>
+			<li>
+				<text class="name">{{ i18n.userSetting.name }}</text>
+				<text class="message" v-text="name"></text>
 			</li>
-			<li @tap="canSetting('设置电话',phone,'phoneNum')">
-				<text class="name">	{{i18n.userSetting.phone}}</text>
+			<li @tap="canSetting('设置电话', phone, 'phoneNum')">
+				<text class="name">{{ i18n.userSetting.phone }}</text>
 				<text class="message">
 					<text class="hasIcon" v-text="phone"></text>
 					<text class="icon-right fa fa-angle-right"></text>
 				</text>
 			</li>
-			<li @tap="canSetting('设置邮箱',email,'email')">
-				<text class="name">{{i18n.userSetting.email}}</text>
+			<li @tap="canSetting('设置电话', phone, 'phoneNum')">
+				<text class="name">可报工设备</text>
+				<text class="message">
+					<text class="hasIcon" v-text="phone"></text>
+					<text class="icon-right fa fa-angle-right"></text>
+				</text>
+			</li>
+			<li @tap="canSetting('设置邮箱', email, 'email')">
+				<text class="name">{{ i18n.userSetting.email }}</text>
 				<text class="message">
 					<text class="hasIcon" v-text="email"></text>
 					<text class="icon-right fa fa-angle-right"></text>
 				</text>
 			</li>
-			<li @tap="canSetting('用户描述',desc,'dept')">
-				<text class="name">{{i18n.userSetting.userDescription}}</text>
-				<text class="message">
-					<text class="hasIcon" v-text="desc"></text>
-					<text class="icon-right fa fa-angle-right"></text>
-				</text>
+			<li>
+				<text class="name">{{ i18n.userSetting.userDescription }}</text>
+				<text class="message" v-text="desc"></text>
 			</li>
 			<li>
-				<text class="name">{{i18n.userSetting.system}}</text>
+				<text class="name">{{ i18n.userSetting.system }}</text>
 				<text class="message"><text v-text="userSysName"></text></text>
 			</li>
 		</ul>
@@ -63,20 +64,25 @@ export default {
 		this.desc = userInfo.userDesc;
 		console.log(userInfo);
 	},
-	computed:{
-		i18n () {
-			return this.$t('message'); 
-		},
+	computed: {
+		i18n() {
+			return this.$t('message');
+		}
 	},
 	methods: {
-		canSetting(type,message,changeType){
-			console.log(type,message);
+		canSetting(type, message, changeType) {
+			console.log(type, message);
 			uni.navigateTo({
-			    url: './settingMessage?type='+type+"&message="+message+"&changeType="+changeType,
-			    animationType: 'slide-in-bottom',
-			    animationDuration: 300
+				url: './settingMessage?type=' + type + '&message=' + message + '&changeType=' + changeType,
+				animationType: 'slide-in-bottom',
+				animationDuration: 300
 			});
 		},
+		// GetCanChangeResList(){
+		// 	this.$HTTP({
+		// 		url:""
+		// 	})
+		// },
 	}
 };
 </script>

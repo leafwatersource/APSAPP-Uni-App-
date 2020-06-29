@@ -43,6 +43,7 @@ export default {
 	},
 	methods: {
 		finish() {
+			console.log(this.empID);
 			const _this = this;
 			if(this.pass == ""){
 				uni.showToast({
@@ -75,9 +76,11 @@ export default {
 				});
 				return;
 			}
+			
 			this.$HTTP({
 				url: 'ChangePass',
 				data: {
+					empid:this.empID,
 					oldPass: this.pass,
 					newPass: this.enterPass
 				}

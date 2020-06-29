@@ -136,8 +136,8 @@
 					<text class="fa fa-refresh change"></text>
 					<text class="changeText">{{ i18n.publicText.Button_Pushorder }}</text>
 				</view>
-				<uni-drawer :visible="showLeft" mode="left" @close="closeDrawer()">
-					<uni-list><uni-list-item v-for="item in changeResArr" :title="item" note="" @tap="enterChangeRes(item)"></uni-list-item></uni-list>
+				<uni-drawer :visible="showLeft" mode="left" @close="closeDrawer()" class="drawerWrap">
+					<uni-list class="drawer"><uni-list-item v-for="item in changeResArr" :title="item" note="" @tap="enterChangeRes(item)"></uni-list-item></uni-list>
 				</uni-drawer>
 			</view>
 		</view>
@@ -156,10 +156,7 @@ export default {
 		console.log(option);
 		if (option.workItem) {
 			this.workItem = JSON.parse(decodeURIComponent(option.workItem));
-			this.finishValue = this.workItem.canReportQty;
-			console.log(this.workItem);
-		} else if (option.res) {
-			console.log(option);
+			this.finishValue = parseFloat(this.workItem.canReportQty)<parseFloat(this.workItem.plannedqty)?this.workItem.canReportQty:this.workItem.plannedqty;
 		}
 	},
 	onShow() {
@@ -349,19 +346,36 @@ export default {
 			});
 		},
 		changeDayShift(){
+			const userInfo = uni.getStorageSync('userInfo');
+			this.workItem.mesOperator = userInfo['userName'];
+			this.workItem.mesOpName = this.workItem.pmOpName;
+			this.workItem.mesResName = this.workItem.pmResName;
 			const _this = this;
 			uni.showModal({
-				content:"此版本没有功能?",
-				confirmText: this.i18n.publicText.datetime_confirm,
-				cancelText:this.i18n.publicText.datetime_cancel,
-				confirmColor:'green',
-				success(res){
-					if(res.confirm){
-						console.log("开始调用api接口");
-						uni.navigateBack()
-					}					
+				title:"确定换班?",
+				success(data) {
+					if(data.confirm){
+						_this.$HTTP({
+							url:'EndWorking',
+							data:{
+								bean:JSON.stringify(_this.workItem)
+							}
+						}).then(success=>{
+							if(success.data){
+								uni.showToast({
+									title:"换班成功",
+									complete() {
+										uni.navigateBack({
+											animationDuration:2000
+										})
+									}
+								})
+							}
+						})
+					}
 				}
 			})
+			
 		}
 	}
 };
@@ -544,6 +558,14 @@ export default {
 					color: $uni-btn-active-color;
 				}
 			}
+			.drawerWrap{
+				overflow: hidden;
+				.drawer{
+					overflow-y: scroll;
+					height: 100%;
+				}
+			}
+			
 		}
 	}
 }

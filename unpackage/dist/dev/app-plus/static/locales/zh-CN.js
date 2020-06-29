@@ -110,7 +110,7 @@ export const lang = {
 			name:'名字',
 			phone:'电话',
 			email:'邮箱',
-			userDescription:'用户描述',
+			userDescription:'用户组',
 			system:'系统名称',
 		}
 	}

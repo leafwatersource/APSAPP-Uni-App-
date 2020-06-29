@@ -1,7 +1,7 @@
 {
     "name" : "APSAPP",
     "appid" : "__UNI__D0A5451",
-    "description" : "登录模板",
+    "description" : "APSAPP",
     "versionName" : "2.0.0",
     "versionCode" : "100",
     "transformPx" : false,
@@ -94,7 +94,8 @@
             "enable" : false
         },
         "splashscreen" : {
-            "waiting" : false
+            "waiting" : false,
+            "alwaysShowBeforeRender" : false
         }
     },
     /* 快应用特有相关 */
