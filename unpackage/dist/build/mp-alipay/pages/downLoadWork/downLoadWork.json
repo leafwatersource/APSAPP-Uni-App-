@@ -1,0 +1,9 @@
+{
+  "defaultTitle": "可拉取的工单",
+  "titleBarColor": "#006dcb",
+  "usingComponents": {
+    "uni-card": "/components/uni-card/uni-card",
+    "uni-fab": "/components/uni-fab/uni-fab",
+    "mx-date-picker": "/components/mx-datepicker/mx-datepicker"
+  }
+}

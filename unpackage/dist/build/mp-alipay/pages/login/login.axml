@@ -1,0 +1,11 @@
+<view class="content data-v-c98a9186">
+  <view class="contentBox data-v-c98a9186">
+    <view class="logoBox data-v-c98a9186"></view>
+    <text class="title data-v-c98a9186">{{''+i18n.publicText.app_title+''}}</text>
+    <view class="inputBox data-v-c98a9186">
+      <input id="userName" type="text" placeholder="{{i18n.publicText.Login_UserName}}" placeholder-class="inpCl" data-event-opts="{{[['input',[['__set_model',['','userName','$event',[]]]]]]}}" value="{{userName}}" onInput="__e" class="data-v-c98a9186"/>
+      <input type="password" placeholder="{{i18n.publicText.Login_UserPass}}" placeholder-class="inpCl" data-event-opts="{{[['input',[['__set_model',['','userPass','$event',[]]]]]]}}" value="{{userPass}}" onInput="__e" class="data-v-c98a9186"/></view>
+    <button type="default" hover-class="btnClick" data-event-opts="{{[['tap',[['login',['$event']]]]]}}" onTap="__e" class="data-v-c98a9186">{{i18n.publicText.Login_Login}}</button></view>
+  <view class="desc data-v-c98a9186">
+    <text class="data-v-c98a9186">{{i18n.publicText.Login_Copyby}}</text>
+    <text class="data-v-c98a9186">{{i18n.publicText.Login_Version+version}}</text></view></view>

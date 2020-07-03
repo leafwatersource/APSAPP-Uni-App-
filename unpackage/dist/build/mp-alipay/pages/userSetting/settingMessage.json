@@ -1,0 +1,7 @@
+{
+  "defaultTitle": "设置用户信息",
+  "titleBarColor": "#006dcb",
+  "usingComponents": {
+    "uni-nav-bar": "/components/uni-nav-bar/uni-nav-bar"
+  }
+}

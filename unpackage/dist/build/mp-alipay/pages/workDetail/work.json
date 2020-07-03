@@ -1,0 +1,10 @@
+{
+  "defaultTitle": "订单详情",
+  "titleBarColor": "#006dcb",
+  "usingComponents": {
+    "uni-drawer": "/components/uni-drawer/uni-drawer",
+    "uni-list": "/components/uni-list/uni-list",
+    "uni-list-item": "/components/uni-list-item/uni-list-item",
+    "mx-date-picker": "/components/mx-datepicker/mx-datepicker"
+  }
+}
