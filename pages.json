@@ -47,6 +47,17 @@
 			}
 		},
 		{
+			"path": "pages/workDetail/finish",
+			"style": {
+				"navigationBarBackgroundColor": "#006dcb",
+				// "navigationBarTitleText":""
+				"navigationBarTitleText": "完成工单",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		},
+		{
 			"path": "pages/selectRes/resList",
 			"style": {
 				"navigationBarBackgroundColor": "#006dcb",

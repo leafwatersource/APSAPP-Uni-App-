@@ -26,6 +26,10 @@
 					<text class="value">{{ workItem.productID }}</text>
 				</view>
 				<view class="item">
+					<text class="name">产品单价:</text>
+					<text class="value">0.0</text>
+				</view>
+				<view class="item">
 					<text class="name">{{ i18n.publicText.Workorder_ResName }}</text>
 					<text class="value">{{ workItem.pmResName }}</text>
 				</view>
@@ -34,8 +38,16 @@
 					<text class="value">{{ workItem.pmOpName }}</text>
 				</view>
 				<view class="item">
+					<text class="name">班次:</text>
+					<text class="value">{{ workItem.dayShift}}</text>
+				</view>
+				<view class="item">
 					<text class="name">{{ i18n.publicText.Workorder_WorkHours }}</text>
 					<text class="value">{{ workItem.dayShift }}</text>
+				</view>
+				<view class="item">
+					<text class="name">交货日期</text>
+					<text class="value">{{ workItem.planendtime }}</text>
 				</view>
 				<view class="item">
 					<text class="name">{{ i18n.publicText.Workorder_Planstartendtime }}</text>
@@ -49,15 +61,19 @@
 					<text class="name">{{ i18n.publicText.Workorder_BomUsed }}</text>
 					<text class="value">{{ workItem.bomComused }}</text>
 				</view>
-				<view class="item">
+				<view class="item" v-if="workItem.itemDesp">
+					<text class="name">描述:</text>
+					<text class="value">{{ workItem.itemDesp }}</text>
+				</view>
+				<view class="item" v-if="workItem.itemAttr1">
 					<text class="name">{{ i18n.publicText.Workorder_ItemAttr1 }}</text>
 					<text class="value">{{ workItem.itemAttr1 }}</text>
 				</view>
-				<view class="item">
+				<view class="item" v-if="workItem.itemAttr2">
 					<text class="name">{{ i18n.publicText.Workorder_ItemAttr2 }}</text>
 					<text class="value">{{ workItem.itemAttr2 }}</text>
 				</view>
-				<view class="item">
+				<view class="item" v-if="workItem.itemAttr3">
 					<text class="name">{{ i18n.publicText.Workorder_ItemAttr3 }}</text>
 					<text class="value">{{ workItem.itemAttr3 }}</text>
 				</view>
@@ -153,7 +169,7 @@ export default {
 		uniDrawer
 	},
 	onLoad(option) {
-		console.log(option);
+	
 		if (option.workItem) {
 			this.workItem = JSON.parse(decodeURIComponent(option.workItem));
 			this.finishValue = parseFloat(this.workItem.canReportQty)<parseFloat(this.workItem.plannedqty)?this.workItem.canReportQty:this.workItem.plannedqty;
@@ -297,35 +313,36 @@ export default {
 		},
 		pullData(type, parseState) {
 			const _this = this;
-			this.$HTTP({
-				url: type,
-				data: {
-					bean: JSON.stringify(this.workItem)
-				}
-			}).then(data => {
-				console.log(data);
-				if (parseState) {
-					_this.workItem.taskFinishState = 3;
-					uni.navigateBack({
-						delta: 1,
-						animationType: 'pop-out',
-						animationDuration: 200
-					});
-					return;
-				}
-				if (_this.workItem.taskFinishState == 0) {
-					_this.workItem.taskFinishState = 1;
-				} else if (_this.workItem.taskFinishState == 1) {
-					_this.workItem.taskFinishState = 2;
-				} else if (_this.workItem.taskFinishState == 3) {
-					_this.workItem.taskFinishState = 0;
-				}
-				uni.navigateBack({
-					delta: 1,
-					animationType: 'pop-out',
-					animationDuration: 200
-				});
-			});
+			console.log(this.workItem);
+			// this.$HTTP({
+			// 	url: type,
+			// 	data: {
+			// 		bean: JSON.stringify(this.workItem)
+			// 	}
+			// }).then(data => {
+			// 	console.log(data);
+			// 	if (parseState) {
+			// 		_this.workItem.taskFinishState = 3;
+			// 		uni.navigateBack({
+			// 			delta: 1,
+			// 			animationType: 'pop-out',
+			// 			animationDuration: 200
+			// 		});
+			// 		return;
+			// 	}
+			// 	if (_this.workItem.taskFinishState == 0) {
+			// 		_this.workItem.taskFinishState = 1;
+			// 	} else if (_this.workItem.taskFinishState == 1) {
+			// 		_this.workItem.taskFinishState = 2;
+			// 	} else if (_this.workItem.taskFinishState == 3) {
+			// 		_this.workItem.taskFinishState = 0;
+			// 	}
+			// 	uni.navigateBack({
+			// 		delta: 1,
+			// 		animationType: 'pop-out',
+			// 		animationDuration: 200
+			// 	});
+			// });
 		},
 		enterChangeRes(resName) {
 			this.workItem.changeResName = resName;
@@ -444,8 +461,8 @@ export default {
 				display: flex;
 				border-bottom: 1upx solid #cccccc;
 				color: #999;
-				font-size: 30upx;
-				padding: 10upx 20upx;
+				font-size: 27upx;
+				padding: 4upx 20upx;
 				.value {
 					flex-grow: 1;
 					text-align: right;

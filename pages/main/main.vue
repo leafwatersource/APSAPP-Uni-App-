@@ -13,15 +13,15 @@
 						<ul>
 							<li @tap="scan">
 								<text class="fa fa-qrcode" @tap="selectRes"></text>
-								<text>{{i18n.publicText.Scancode}}</text>
+								<text>{{ i18n.publicText.Scancode }}</text>
 							</li>
 							<li @tap="selectRes">
 								<text class="fa fa-random"></text>
-								<text>{{i18n.publicText.ChangeRes_Title_ResName}}</text>
+								<text>{{ i18n.publicText.ChangeRes_Title_ResName }}</text>
 							</li>
 							<li @tap="downLoadWork">
 								<text class="fa fa-download"></text>
-								<text>{{i18n.publicText.Msg_DownOrder_Title}}</text>
+								<text>{{ i18n.publicText.Msg_DownOrder_Title }}</text>
 							</li>
 						</ul>
 					</view>
@@ -48,20 +48,21 @@
 								<view class="process-bar" style="float: right;">
 									<text>{{ item.finishedQty }}/{{ item.plannedqty }}</text>
 									<view class="process-content">
-										<view class="process-content-num" :style="{width:item.finishedQty/item.plannedqty*100+'%'}"></view>
+										<view class="process-content-num" :style="{ width: (item.finishedQty / item.plannedqty) * 100 + '%' }"></view>
 									</view>
 								</view>
 							</view>
-							<text class="productName">{{i18n.publicText.Workorder_Product}}{{ item.productID }}</text>
-							<text class="opname">{{i18n.publicText.Workorder_Operation}}{{ item.pmOpName }}</text>
-							<text>{{i18n.publicText.Workorder_Planstartendtime}}{{ item.planStartTime }} - {{ item.planendtime }}</text>
-							<text>{{i18n.publicText.Workorder_Description}}{{item.itemDesp}}</text>
+							<text class="productName">{{ i18n.publicText.Workorder_Product }}{{ item.productID }}</text>
+							<text class="opname">{{ i18n.publicText.Workorder_Operation }}{{ item.pmOpName }}</text>
+							<text>{{ i18n.publicText.Workorder_Planstartendtime }}{{ item.planStartTime }} - {{ item.planendtime }}</text>
+							<text>{{ i18n.publicText.Workorder_Description }}{{ item.itemDesp }}</text>
 						</view>
 						<view class="icon-right"><text class="icon-right fa fa-angle-right"></text></view>
 					</li>
 				</ul>
 				<ul class="done" v-show="current === 1">
-					<li class="work" v-for="(item, index) in doneWorkOrder" :key="index" @tap="work(item)" v-if="doneWorkOrder.length != 0">
+					<li class="work" v-for="(item, index) in testFinifsh" :key="index" @tap="finishOrser(item)">
+					<!-- <li class="work" v-for="(item, index) in testFinifsh" :key="index" @tap="finishOrser(item)" v-if="doneWorkOrder.length != 0"> -->
 						<view class="work-icon"><text class="iconfont-orange fa fa-check-circle"></text></view>
 						<view class="itemBox">
 							<view class="WorkBox">
@@ -69,14 +70,14 @@
 								<view class="process-bar" style="float: right;">
 									<text>{{ item.finishedQty }}/{{ item.plannedqty }}</text>
 									<view class="process-content">
-										<view class="process-content-num" :style="{width:item.finishedQty/item.plannedqty*100+'%'}"></view>
+										<view class="process-content-num" :style="{ width: (item.finishedQty / item.plannedqty) * 100 + '%' }"></view>
 									</view>
 								</view>
 							</view>
-							<text class="productName">{{i18n.publicText.Workorder_Product}}{{ item.productID }}</text>
-							<text class="opname">{{i18n.publicText.Workorder_Operation}}{{ item.pmOpName }}</text>
-							<text>{{i18n.publicText.Workorder_Planstartendtime}}{{ item.planStartTime }} - {{ item.planendtime }}</text>
-							<text>{{i18n.publicText.Workorder_Description}}{{item.itemDesp}}</text>
+							<text class="productName">{{ i18n.publicText.Workorder_Product }}{{ item.productID }}</text>
+							<text class="opname">{{ i18n.publicText.Workorder_Operation }}{{ item.pmOpName }}</text>
+							<text>{{ i18n.publicText.Workorder_Planstartendtime }}{{ item.planStartTime }} - {{ item.planendtime }}</text>
+							<text>{{ i18n.publicText.Workorder_Description }}{{ item.itemDesp }}</text>
 						</view>
 						<view class="icon-right"><text class="icon-right fa fa-angle-right"></text></view>
 					</li>
@@ -105,7 +106,41 @@ export default {
 			items: [],
 			current: 0,
 			searchWord: '',
-			resCount: false
+			resCount: false,
+			testFinifsh: [
+				{
+					mesResName: '',
+					mesOpName: '',
+					mesOperator: '',
+					planStartTime: '07/03 20:00:00',
+					planendtime: '07/04 07:00:00',
+					workID: '0004805001',
+					pmOpName: '割齿',
+					finishedQty: 0,
+					taskFinishState: 0,
+					itemAttr1: 'YJ260D',
+					itemAttr2: '中车永济电机有限公司',
+					itemAttr3: 'B',
+					itemAttr4: '',
+					productID: '8311280582',
+					pmResName: '五轴切割机32:1',
+					jobQty: 80,
+					plannedqty: 3.056,
+					allFinishedQty: 0,
+					failedQty: 0,
+					scrappedQty: 0,
+					dayShift: 2,
+					workHours: 11,
+					itemDesp: '转子压板',
+					setupTime: 0,
+					orderUID: 376759,
+					canReport: true,
+					canReportQty: 80,
+					bomComused: 1,
+					reportTime: '1900-01-01 00:00:00',
+					changeResName: ''
+				}
+			]
 		};
 	},
 	onLoad(option) {
@@ -117,7 +152,6 @@ export default {
 		}
 	},
 	onShow() {
-		console.log(this.resName);
 		uni.setTabBarItem({
 			index: 0,
 			text: this.i18n.tabBar.Nav_Report
@@ -138,18 +172,18 @@ export default {
 			this.searchWord = '';
 		}
 	},
-	computed:{
+	computed: {
 		...mapState(['forcedLogin', 'hasLogin', 'userName', 'api', 'userInfo']),
-		i18n () {
-			return this.$t('message'); 
-		},
-	}, 
+		i18n() {
+			return this.$t('message');
+		}
+	},
 	mounted() {
 		this.getSystemStatusBarHeight();
 		this.items.push(this.i18n.publicText.Tab_unstart);
 		this.items.push(this.i18n.publicText.Tab_finished);
 		this.HasLogin();
-		this.getResList(); 
+		this.getResList();
 	},
 	methods: {
 		scan() {
@@ -230,9 +264,14 @@ export default {
 			this.resCount = this.resCount == true ? false : true;
 		},
 		selectRes() {
-			console.log(JSON.stringify(this.resList))
 			uni.navigateTo({
 				url: '../selectRes/resList?resList=' + JSON.stringify(this.resList)
+			});
+		},
+		finishOrser(workItem) {
+			console.log(workItem);
+			uni.navigateTo({
+				url: '../workDetail/finish?workItem='+JSON.stringify(workItem)
 			});
 		},
 		work(workItem) {
@@ -255,7 +294,6 @@ export default {
 					usersysid: this.userInfo['userSysID']
 				}
 			}).then(resList => {
-				console.log(resList);
 				_this.resList.push(...resList.data);
 				if (_this.isRequest) {
 					_this.resName = resList.data[0];
@@ -368,7 +406,7 @@ export default {
 								display: inline-block;
 							}
 						}
-						
+
 						li:last-child {
 							border: none;
 						}
@@ -440,7 +478,6 @@ export default {
 							font-size: 50upx;
 							text-align: center;
 							display: block;
-							
 						}
 					}
 					.itemBox {

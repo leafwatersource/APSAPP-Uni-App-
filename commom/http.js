@@ -4,10 +4,11 @@ const process = 'development';
 var baseURL = 'http://api2.szrate.com:8088/api/'; //这里写接口名称就好啦
 if (process === 'development') {
 	console.log('开发环境/测试环境')
-	baseURL = 'https://datacenterapi.szrate.com/api/'; //这里写接口名称就好啦
+	// baseURL = 'https://datacenterapi.szrate.com/api/'; //这里写接口名称就好啦
 	 // baseURL = 'http://api2.szrate.com:8088/api/'; //这里写接口名称就好啦
+	 // baseURL = 'http://api1.szrate.com:8088/api/'; //这里写接口名称就好啦
 	 // baseURL = 'http://192.168.50.112/api/'; //这里写接口名称就好啦
-	 // baseURL ="http://192.168.50.111/api/";
+	 baseURL ="http://192.168.50.106/api/";
 	 // baseURL ="http://192.168.1.53/api/";
 
 	// baseURL = 'http://192.168.50.112/api/'; //这里写接口名称就好啦
@@ -16,11 +17,9 @@ if (process === 'development') {
 	baseURL = 'http://phone.szrate.com/api/'; //这里写接口名称就好啦
 }
 const http = (options) => {
-	console.log(baseURL);
 	return new Promise((resolve, reject) => {
 		uni.getNetworkType({
 			success: function(res) {
-				console.log(res.networkType == "none");
 				if (res.networkType == "none") {
 					uni.showToast({
 						title: "无网络",
@@ -42,10 +41,6 @@ const http = (options) => {
 				reject("none");
 			}
 		});
-		uni.showLoading({
-			title: '加载中...',
-			mask: options.load || false // 默认遮罩出现可以继续操作
-		});
 		try {
 			// 从本地获取token 
 			const UserGuid = uni.getStorageSync('UserGuid');
@@ -63,7 +58,6 @@ const http = (options) => {
 				},
 				success: res => {
 					uni.hideLoading();
-					console.log("here");
 					if(res.statusCode == 500){
 						uni.showToast({
 							title:"服务器异常",
@@ -114,8 +108,7 @@ const http = (options) => {
 							icon:"none",
 							duration: 2000
 						})
-					}	
-					
+					}					
 					// uni.showToast({
 					// 	title: '请求失败请检查网络连接',
 					// 	icon: 'none'

@@ -2,18 +2,16 @@
 	<view class="content">
 		<view class="contentBox">
 			<view class="logoBox"></view>
-			<text class="title">
-			{{i18n.publicText.app_title}}
-			</text>
+			<text class="title">{{ i18n.publicText.app_title }}</text>
 			<view class="inputBox">
 				<input id="userName" type="text" :placeholder="i18n.publicText.Login_UserName" placeholder-class="inpCl" v-model="userName" />
 				<input type="password" :placeholder="i18n.publicText.Login_UserPass" placeholder-class="inpCl" v-model="userPass" />
 			</view>
-			<button type="default" hover-class="btnClick" @tap="login">{{i18n.publicText.Login_Login}}</button>
+			<button type="default" hover-class="btnClick" @tap="login">{{ i18n.publicText.Login_Login }}</button>
 		</view>
 		<view class="desc">
-			<text>{{i18n.publicText.Login_Copyby}}</text>
-			<text>{{i18n.publicText.Login_Version}}{{ version }}</text>
+			<text>{{ i18n.publicText.Login_Copyby }}</text>
+			<text>{{ i18n.publicText.Login_Version }}{{ version }}</text>
 		</view>
 	</view>
 </template>
@@ -38,6 +36,7 @@ export default {
 			userName: '',
 			userPass: '',
 			version: '',
+			btnFlg: true
 		};
 	},
 	mounted() {
@@ -45,82 +44,82 @@ export default {
 		console.log(userInfo);
 		this.userName = userInfo.empID;
 		this.userPass = uni.getStorageSync('pass');
-		console.log(this.userPass);
 		plus.runtime.getProperty(plus.runtime.appid, wgtinfo => {
 			this.version = wgtinfo.version;
 		});
-		
-		
 	},
-	computed:{
-		 ...mapState(['forcedLogin', 'api', 'userGuid']),
-			i18n () {  
-				return this.$t('message'); 
-			},
+	computed: {
+		...mapState(['forcedLogin', 'api', 'userGuid']),
+		i18n() {
+			return this.$t('message');
+		}
 	},
 	methods: {
 		login() {
 			console.log(this.api);
-			const _this = this;
-			const UserGuid = uni.getStorageSync('UserGuid');
-			const UserEmpID = uni.getStorageSync('UserEmpID');
-			console.log(UserEmpID);
-			console.log(UserGuid);
-			uni.showLoading({
-				title: '登录中',
-				mask: true
-			});
-			this.$HTTP({
-				url: 'UserHaveLogin',
-				data: {
-					username: UserEmpID,
-					userGuid: UserGuid
-				}
-			}).then(status => {
-				console.log(status);
-				if (status.data) {
-					console.log('账号没有在别的设备登录过');
-					_this.ForceOut();
-				} else {
-					console.log(_this.userName, _this.userPass);
-					_this
-						.$HTTP({
-							url: 'login',
-							data: {
-								username: _this.userName,
-								userpass: _this.userPass
-							}
-						})
-						.then(loginStatus => {
-							console.log(loginStatus);
-							uni.hideLoading();
-							if (loginStatus.data['loginState'] == 2) {
+			if (this.btnFlg) {
+				this.btnFlg = false;
+				const _this = this;
+				const UserGuid = uni.getStorageSync('UserGuid');
+				const UserEmpID = uni.getStorageSync('UserEmpID');
+				console.log(UserEmpID);
+				console.log(UserGuid);
+				uni.showLoading({
+					title: '登录中',
+					mask: true
+				});
+				this.$HTTP({
+					url: 'UserHaveLogin',
+					data: {
+						username: UserEmpID,
+						userGuid: UserGuid
+					}
+				}).then(status => {
+					console.log(status);
+					if (status.data) {
+						console.log('账号没有在别的设备登录过');
+						_this.ForceOut();
+					} else {
+						_this
+							.$HTTP({
+								url: 'login',
+								data: {
+									username: _this.userName,
+									userpass: _this.userPass
+								}
+							})
+							.then(loginStatus => {
+								console.log(loginStatus);
 								uni.hideLoading();
-								//需要强制登陆
-								uni.showModal({
-									title: this.i18n.publicText.Login_forceOut,
-									content: loginStatus.data['message'],
-									confirmText:this.i18n.publicText.Button_OK,
-									cancelText:this.i18n.publicText.Button_Cancel,
-									success(data) {
-										if (data.confirm) {
-											_this.ForceOut();
+								if (loginStatus.data['loginState'] == 2) {
+									uni.hideLoading();
+									//需要强制登陆
+									uni.showModal({
+										title: this.i18n.publicText.Login_forceOut,
+										content: loginStatus.data['message'],
+										confirmText: this.i18n.publicText.Button_OK,
+										cancelText: this.i18n.publicText.Button_Cancel,
+										success(data) {
+											if (data.confirm) {
+												_this.ForceOut();
+											}
 										}
-									}
-								});
-							} else if (loginStatus.data['loginState'] == 1) {
-								_this.$store.state.userGuid = loginStatus.data['userGuiD'];
-								_this.UserInfo();
-							} else if (loginStatus.data['loginState'] == 0) {
-								uni.hideToast();
-								uni.showToast({
-									title: loginStatus.data['message'],
-									icon: 'none'
-								});
-							}
-						});
-				}
-			});
+									});
+								} else if (loginStatus.data['loginState'] == 1) {
+									_this.$store.state.userGuid = loginStatus.data['userGuiD'];
+									_this.UserInfo();
+								} else if (loginStatus.data['loginState'] == 0) {
+									uni.hideToast();
+									uni.showToast({
+										title: loginStatus.data['message'],
+										icon: 'none'
+									});
+									_this.btnFlg = true;
+								}
+							});
+					}
+				});
+			}
 		},
 		ForceOut() {
 			const _this = this;
@@ -156,6 +155,7 @@ export default {
 					empid: this.userName
 				}
 			}).then(userInfoData => {
+				_this.btnFlg = true;
 				if (userInfoData) {
 					_this.$store.state.userInfo = userInfoData.data;
 					const userInfo = userInfoData.data;
@@ -187,7 +187,6 @@ export default {
 					});
 					// _this.StartSocket();
 				} else {
-
 				}
 			});
 		},
