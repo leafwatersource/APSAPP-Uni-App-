@@ -42,10 +42,6 @@
 					<text class="value">{{ workItem.dayShift}}</text>
 				</view>
 				<view class="item">
-					<text class="name">{{ i18n.publicText.Workorder_WorkHours }}</text>
-					<text class="value">{{ workItem.dayShift }}</text>
-				</view>
-				<view class="item">
 					<text class="name">交货日期</text>
 					<text class="value">{{ workItem.planendtime }}</text>
 				</view>

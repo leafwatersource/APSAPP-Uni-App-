@@ -4,11 +4,11 @@ const process = 'development';
 var baseURL = 'http://api2.szrate.com:8088/api/'; //这里写接口名称就好啦
 if (process === 'development') {
 	console.log('开发环境/测试环境')
-	// baseURL = 'https://datacenterapi.szrate.com/api/'; //这里写接口名称就好啦
+	baseURL = 'https://datacenterapi.szrate.com/api/'; //这里写接口名称就好啦
 	 // baseURL = 'http://api2.szrate.com:8088/api/'; //这里写接口名称就好啦
 	 // baseURL = 'http://api1.szrate.com:8088/api/'; //这里写接口名称就好啦
 	 // baseURL = 'http://192.168.50.112/api/'; //这里写接口名称就好啦
-	 baseURL ="http://192.168.50.106/api/";
+	 // baseURL ="http://192.168.50.104/api/";
 	 // baseURL ="http://192.168.1.53/api/";
 
 	// baseURL = 'http://192.168.50.112/api/'; //这里写接口名称就好啦

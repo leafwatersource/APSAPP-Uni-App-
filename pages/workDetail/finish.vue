@@ -32,7 +32,7 @@
 			</li>
 			<li class="item">
 				<text class="name">工序:</text>
-				<text class="value">{{workItem.pmOpName}}</text>
+				<text class="value">{{ workItem.pmOpName }}</text>
 			</li>
 			<li class="item">
 				<text class="name">班次:</text>
@@ -57,7 +57,7 @@
 			<li class="item">
 				<text class="name">描述:</text>
 				<text class="value">{{ workItem.pmOpName }}</text>
-			</li>			
+			</li>
 			<li class="item">
 				<text class="name">产品分类:</text>
 				<text class="value">{{ workItem.itemAttr1 }}</text>
@@ -72,37 +72,41 @@
 			</li>
 		</ul>
 		<view class="history-title">工单操作历史记录</view>
-		<view class="table_content">
-			<table>
-				<tr>
-					<th>事件名称</th>
-					<th>执行时间</th>
-					<th>不良数</th>
-					<th>完成数</th>
-					<th>订单数</th>
-				</tr>
-				<tr v-for="item in 8">
-					<td>开始切换</td>
-					<td>2020/07/01 10:10:10</td>
-					<td>0.0</td>
-					<td>0.0</td>
-					<td>100</td>
-				</tr>
-				<tr>
-					<td>结束切换并生产</td>
-					<td>2020/07/01 10:10:10</td>
-					<td>0.0</td>
-					<td>0.0</td>
-					<td>100</td>
-				</tr>
-				<tr>
-					<td>报工</td>
-					<td>2020/07/01 10:10:10</td>
-					<td>0.0</td>
-					<td>0.0</td>
-					<td>100</td>
-				</tr>
-			</table>
+		<view class="tableWrap">
+			<view class="table_content">
+				<table>
+					<tr>
+						<th>事件名称</th>
+						<th>执行时间</th>
+						<th>不良数</th>
+						<th>完成数</th>
+						<th>订单数</th>
+						<th>操作人</th>
+						<th>操作人</th>
+					</tr>
+					<tr v-for="item in 8">
+						<td>开始切换</td>
+						<td>2020/07/01 10:10:10</td>
+						<td>0.0</td>
+						<td>0.0</td>
+						<td>100</td>
+					</tr>
+					<tr>
+						<td>结束切换并生产</td>
+						<td>2020/07/01 10:10:10</td>
+						<td>0.0</td>
+						<td>0.0</td>
+						<td>100</td>
+					</tr>
+					<tr>
+						<td>报工</td>
+						<td>2020/07/01 10:10:10</td>
+						<td>0.0</td>
+						<td>0.0</td>
+						<td>100</td>
+					</tr>
+				</table>
+			</view>
 		</view>
 	</view>
 </template>
@@ -111,7 +115,7 @@
 export default {
 	onLoad(option) {
 		this.workItem = JSON.parse(option.workItem);
-		console.log(this.workItem)
+		console.log(this.workItem);
 	},
 	data() {
 		return {
@@ -124,6 +128,7 @@ export default {
 <style lang="scss" scoped>
 .content {
 	padding: 0;
+	overflow: hidden;
 	.workIdBox {
 		padding: 10upx 15upx;
 		text {
@@ -193,21 +198,24 @@ export default {
 		line-height: 60upx;
 		box-sizing: border-box;
 	}
-	.table_content {
+	.tableWrap {
 		width: 100%;
 		height: 290upx;
 		box-sizing: border-box;
-		overflow-y: scroll;
-		table {
-			border: 1px solid #ccc;
-			width: 100%;
-			th,
-			td {
-				height: 20upx;
-				border: 1px solid #c0c0c0;
-				font-size: 24upx;
-				color: #888;
-				text-align: center;
+		overflow: scroll;
+		.table_content {
+			table {
+				border: 1px solid #ccc;
+				// width: 100%;
+				th,
+				td {
+					min-width: 100upx;
+					height: 20upx;
+					border: 1px solid #c0c0c0;
+					font-size: 24upx;
+					color: #888;
+					text-align: center;
+				}
 			}
 		}
 	}

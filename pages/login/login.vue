@@ -56,7 +56,6 @@ export default {
 	},
 	methods: {
 		login() {
-			console.log(this.api);
 			if (this.btnFlg) {
 				this.btnFlg = false;
 				const _this = this;
@@ -80,15 +79,13 @@ export default {
 						console.log('账号没有在别的设备登录过');
 						_this.ForceOut();
 					} else {
-						_this
-							.$HTTP({
+						_this.$HTTP({
 								url: 'login',
 								data: {
 									username: _this.userName,
 									userpass: _this.userPass
 								}
-							})
-							.then(loginStatus => {
+							}).then(loginStatus => {
 								console.log(loginStatus);
 								uni.hideLoading();
 								if (loginStatus.data['loginState'] == 2) {
