@@ -5,12 +5,9 @@
 				<text class="name">ID</text>
 				<text class="message"><text v-text="empId"></text></text>
 			</li>
-			<li @tap="canSetting('设置名字',name,'empName')">
+			<li>
 				<text class="name">{{i18n.userSetting.name}}</text>
-				<text class="message">
-					<text class="hasIcon" v-text="name"></text>
-					<text class="icon-right fa fa-angle-right"></text>
-				</text>
+				<text class="message"><text v-text="name"></text></text>
 			</li>
 			<li @tap="canSetting('设置电话',phone,'phoneNum')">
 				<text class="name">	{{i18n.userSetting.phone}}</text>
@@ -26,12 +23,9 @@
 					<text class="icon-right fa fa-angle-right"></text>
 				</text>
 			</li>
-			<li @tap="canSetting('用户描述',desc,'dept')">
+			<li>
 				<text class="name">{{i18n.userSetting.userDescription}}</text>
-				<text class="message">
-					<text class="hasIcon" v-text="desc"></text>
-					<text class="icon-right fa fa-angle-right"></text>
-				</text>
+				<text class="message"><text v-text="desc"></text></text>
 			</li>
 			<li>
 				<text class="name">{{i18n.userSetting.system}}</text>

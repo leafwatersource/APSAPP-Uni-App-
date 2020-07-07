@@ -13,15 +13,15 @@
 						<ul>
 							<li @tap="scan">
 								<text class="fa fa-qrcode" @tap="selectRes"></text>
-								<text>{{i18n.publicText.Scancode}}</text>
+								<text>{{ i18n.publicText.Scancode }}</text>
 							</li>
 							<li @tap="selectRes">
 								<text class="fa fa-random"></text>
-								<text>{{i18n.publicText.ChangeRes_Title_ResName}}</text>
+								<text>{{ i18n.publicText.ChangeRes_Title_ResName }}</text>
 							</li>
 							<li @tap="downLoadWork">
 								<text class="fa fa-download"></text>
-								<text>{{i18n.publicText.Msg_DownOrder_Title}}</text>
+								<text>{{ i18n.publicText.Msg_DownOrder_Title }}</text>
 							</li>
 						</ul>
 					</view>
@@ -48,20 +48,21 @@
 								<view class="process-bar" style="float: right;">
 									<text>{{ item.finishedQty }}/{{ item.plannedqty }}</text>
 									<view class="process-content">
-										<view class="process-content-num" :style="{width:item.finishedQty/item.plannedqty*100+'%'}"></view>
+										<view class="process-content-num" :style="{ width: (item.finishedQty / item.plannedqty) * 100 + '%' }"></view>
 									</view>
 								</view>
 							</view>
-							<text class="productName">{{i18n.publicText.Workorder_Product}}{{ item.productID }}</text>
-							<text class="opname">{{i18n.publicText.Workorder_Operation}}{{ item.pmOpName }}</text>
-							<text>{{i18n.publicText.Workorder_Planstartendtime}}{{ item.planStartTime }} - {{ item.planendtime }}</text>
-							<text>{{i18n.publicText.Workorder_Description}}{{item.itemDesp}}</text>
+							<text class="productName">{{ i18n.publicText.Workorder_Product }}{{ item.productID }}</text>
+							<text class="opname">{{ i18n.publicText.Workorder_Operation }}{{ item.pmOpName }}</text>
+							<text>{{ i18n.publicText.Workorder_Planstartendtime }}{{ item.planStartTime }} - {{ item.planendtime }}</text>
+							<text>{{ i18n.publicText.Workorder_Description }}{{ item.itemDesp }}</text>
 						</view>
 						<view class="icon-right"><text class="icon-right fa fa-angle-right"></text></view>
 					</li>
 				</ul>
 				<ul class="done" v-show="current === 1">
-					<li class="work" v-for="(item, index) in doneWorkOrder" :key="index" @tap="work(item)" v-if="doneWorkOrder.length != 0">
+					<li class="work" v-for="(item, index) in textFinish" :key="index" @tap="finishOrder(item)" v-if="textFinish.length != 0">
+					<!-- <li class="work" v-for="(item, index) in doneWorkOrder" :key="index" @tap="work(item)" v-if="doneWorkOrder.length != 0"> -->
 						<view class="work-icon"><text class="iconfont-orange fa fa-check-circle"></text></view>
 						<view class="itemBox">
 							<view class="WorkBox">
@@ -69,14 +70,14 @@
 								<view class="process-bar" style="float: right;">
 									<text>{{ item.finishedQty }}/{{ item.plannedqty }}</text>
 									<view class="process-content">
-										<view class="process-content-num" :style="{width:item.finishedQty/item.plannedqty*100+'%'}"></view>
+										<view class="process-content-num" :style="{ width: (item.finishedQty / item.plannedqty) * 100 + '%' }"></view>
 									</view>
 								</view>
 							</view>
-							<text class="productName">{{i18n.publicText.Workorder_Product}}{{ item.productID }}</text>
-							<text class="opname">{{i18n.publicText.Workorder_Operation}}{{ item.pmOpName }}</text>
-							<text>{{i18n.publicText.Workorder_Planstartendtime}}{{ item.planStartTime }} - {{ item.planendtime }}</text>
-							<text>{{i18n.publicText.Workorder_Description}}{{item.itemDesp}}</text>
+							<text class="productName">{{ i18n.publicText.Workorder_Product }}{{ item.productID }}</text>
+							<text class="opname">{{ i18n.publicText.Workorder_Operation }}{{ item.pmOpName }}</text>
+							<text>{{ i18n.publicText.Workorder_Planstartendtime }}{{ item.planStartTime }} - {{ item.planendtime }}</text>
+							<text>{{ i18n.publicText.Workorder_Description }}{{ item.itemDesp }}</text>
 						</view>
 						<view class="icon-right"><text class="icon-right fa fa-angle-right"></text></view>
 					</li>
@@ -105,7 +106,41 @@ export default {
 			items: [],
 			current: 0,
 			searchWord: '',
-			resCount: false
+			resCount: false,
+			textFinish: [
+				{
+					allFinishedQty: 0,
+					bomComused: 0.23157894736842105,
+					canReport: true,
+					canReportQty: 22,
+					changeResName: '',
+					dayShift: 1,
+					failedQty: 0,
+					finishedQty: 0,
+					itemAttr1: 'X20162',
+					itemAttr2: '西安阿尔斯通永济电气设备有限公司',
+					itemAttr3: 'A',
+					itemAttr4: '',
+					itemDesp: '转轴',
+					jobQty: 95,
+					mesOpName: '',
+					mesOperator: '',
+					mesResName: '',
+					orderUID: 385401,
+					planStartTime: '07/07 08:00:00',
+					planendtime: '07/07 12:36:30',
+					plannedqty: 25.471,
+					pmOpName: '修小端中心孔',
+					pmResName: '普通车床5',
+					productID: 'AT00000578039',
+					reportTime: '1900-01-01 00:00:00',
+					scrappedQty: 0,
+					setupTime: 0,
+					taskFinishState: 0,
+					workHours: 3.61,
+					workID: '0067407001'
+				}
+			]
 		};
 	},
 	onLoad(option) {
@@ -138,18 +173,18 @@ export default {
 			this.searchWord = '';
 		}
 	},
-	computed:{
+	computed: {
 		...mapState(['forcedLogin', 'hasLogin', 'userName', 'api', 'userInfo']),
-		i18n () {
-			return this.$t('message'); 
-		},
-	}, 
+		i18n() {
+			return this.$t('message');
+		}
+	},
 	mounted() {
 		this.getSystemStatusBarHeight();
 		this.items.push(this.i18n.publicText.Tab_unstart);
 		this.items.push(this.i18n.publicText.Tab_finished);
 		this.HasLogin();
-		this.getResList(); 
+		this.getResList();
 	},
 	methods: {
 		scan() {
@@ -234,6 +269,12 @@ export default {
 				url: '../selectRes/resList?resList=' + JSON.stringify(this.resList)
 			});
 		},
+		finishOrder(workItem){
+			console.log(workItem)
+			uni.navigateTo({
+				url:'../workDetail/finishWork?workItem='+JSON.stringify(workItem)
+			})
+		},
 		work(workItem) {
 			uni.navigateTo({
 				url: '../workDetail/work?workItem=' + JSON.stringify(workItem)
@@ -263,6 +304,7 @@ export default {
 			});
 		},
 		GetUnstartList(resName) {
+			console.log('获取工单');
 			console.log(resName);
 			if (this.isRequest) {
 				const _this = this;
@@ -367,7 +409,7 @@ export default {
 								display: inline-block;
 							}
 						}
-						
+
 						li:last-child {
 							border: none;
 						}
@@ -439,7 +481,6 @@ export default {
 							font-size: 50upx;
 							text-align: center;
 							display: block;
-							
 						}
 					}
 					.itemBox {
