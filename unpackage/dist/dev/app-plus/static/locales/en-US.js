@@ -108,9 +108,10 @@ export const lang = {
 		},
 		userSetting:{
 			name:'Name',
-			phone:'phone',
-			email:'email',
+			phone:'Mobile',
+			email:'Email',
 			userDescription:'User Description',
+			userGroup:'User Group',
 			system:'System',
 		}
 	},

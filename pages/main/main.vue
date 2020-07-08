@@ -61,8 +61,8 @@
 					</li>
 				</ul>
 				<ul class="done" v-show="current === 1">
-					<li class="work" v-for="(item, index) in textFinish" :key="index" @tap="finishOrder(item)" v-if="textFinish.length != 0">
-					<!-- <li class="work" v-for="(item, index) in doneWorkOrder" :key="index" @tap="work(item)" v-if="doneWorkOrder.length != 0"> -->
+					<!-- <li class="work" v-for="(item, index) in textFinish" :key="index" @tap="finishOrder(item)" v-if="textFinish.length != 0"> -->
+					<li class="work" v-for="(item, index) in doneWorkOrder" :key="index" @tap="finishOrder(item)" v-if="doneWorkOrder.length != 0">
 						<view class="work-icon"><text class="iconfont-orange fa fa-check-circle"></text></view>
 						<view class="itemBox">
 							<view class="WorkBox">
@@ -310,6 +310,8 @@ export default {
 				const _this = this;
 				this.undoneOrder = [];
 				this.undoneWorkOrder = [];
+				console.log(this.undoneOrder);
+				console.log(this.undoneWorkOrder);
 				this.$HTTP({
 					url: 'GetUnstartList',
 					data: {
@@ -322,6 +324,7 @@ export default {
 					if (UnstartList.data.length > 0) {
 						UnstartList.data.forEach(item => {
 							if (item.taskFinishState == 2) {
+								
 								_this.undoneWorkOrder.unshift(item);
 								_this.undoneOrder.unshift(item);
 							} else {

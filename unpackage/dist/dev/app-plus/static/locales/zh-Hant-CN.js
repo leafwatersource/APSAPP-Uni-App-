@@ -112,7 +112,7 @@ export const lang = {
 			name:'名字',
 			phone:'電話',
 			email:'郵箱',
-			userDescription:'用戶描述',
+			userGroup:'用戶組',
 			system:'系統名稱',
 		}
 	}

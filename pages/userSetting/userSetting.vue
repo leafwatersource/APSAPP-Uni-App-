@@ -9,6 +9,13 @@
 				<text class="name">{{i18n.userSetting.name}}</text>
 				<text class="message"><text v-text="name"></text></text>
 			</li>
+			<li @tap="resPage">
+				<text class="name">可报工的设备</text>
+				<text class="message">
+					<text class="hasIcon num" v-text="resList.length"></text>
+					<text class="icon-right fa fa-angle-right"></text>
+				</text>
+			</li>
 			<li @tap="canSetting('设置电话',phone,'phoneNum')">
 				<text class="name">	{{i18n.userSetting.phone}}</text>
 				<text class="message">
@@ -24,7 +31,7 @@
 				</text>
 			</li>
 			<li>
-				<text class="name">{{i18n.userSetting.userDescription}}</text>
+				<text class="name">{{i18n.userSetting.userGroup}}</text>
 				<text class="message"><text v-text="desc"></text></text>
 			</li>
 			<li>
@@ -44,7 +51,8 @@ export default {
 			email: '',
 			empId: '',
 			userSysName: '',
-			desc: ''
+			desc: '',
+			resList:[],
 		};
 	},
 	onShow() {
@@ -62,6 +70,9 @@ export default {
 			return this.$t('message'); 
 		},
 	},
+	mounted() {
+		this.getResList();
+	},
 	methods: {
 		canSetting(type,message,changeType){
 			console.log(type,message);
@@ -71,6 +82,31 @@ export default {
 			    animationDuration: 300
 			});
 		},
+		getResList(){
+			console.log(this.$store.userInfo)
+			const _this = this;
+			this.$HTTP({
+				url: 'ResList',
+				data: {
+					usersysid: this.$store.state.userInfo['userSysID']
+				}
+			}).then(resList => {
+				console.log(resList);
+				_this.resList = resList.data;
+				console.log(_this.resList)
+				// _this.resList.push(...resList.data);
+				// if (_this.isRequest) {
+				// 	_this.resName = resList.data[0];
+				// 	_this.GetUnstartList(resList.data[0]['resourceName']);
+				// }
+			});
+		},
+		resPage(){
+			console.log('here')
+			uni.navigateTo({
+				url:'./resList?resList='+JSON.stringify(this.resList)
+			})
+		}
 	}
 };
 </script>
@@ -92,6 +128,7 @@ export default {
 			text {
 				float: left;
 			}
+			
 			.message {
 				float: right;
 				position: relative;
@@ -99,6 +136,16 @@ export default {
 				color: #999999;
 				text {
 					text-align: right;
+				}
+				.num{
+					display: block;
+					width: 48upx;
+					height: 48upx;
+					line-height: 48upx;
+					text-align: center;
+					color: $uni-text-color-white;
+					border-radius: 50%;
+					background-color: $uni-btn-active-color;
 				}
 				.hasIcon {
 					margin-right: 20upx;

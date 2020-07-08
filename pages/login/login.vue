@@ -42,10 +42,7 @@ export default {
 	},
 	mounted() {
 		const userInfo = uni.getStorageSync('userInfo');
-		console.log(userInfo);
-		this.userName = userInfo.empID;
 		this.userPass = uni.getStorageSync('pass');
-		console.log(this.userPass);
 		plus.runtime.getProperty(plus.runtime.appid, wgtinfo => {
 			this.version = wgtinfo.version;
 		});
@@ -223,7 +220,6 @@ export default {
 
 <style scoped lang="scss">
 @import '@/uni.scss';
-
 .content {
 	background-color: $uni-gb-color-blue !important;
 	width: 100%;

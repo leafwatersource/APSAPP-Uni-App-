@@ -62,7 +62,18 @@
 			"style": {
 				"navigationBarBackgroundColor": "#006dcb",
 				// "navigationBarTitleText":""
-				"navigationBarTitleText": "完成工单",
+				"navigationBarTitleText": "已完成订单详情",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		},
+		{
+			"path": "pages/userSetting/resList",
+			"style": {
+				"navigationBarBackgroundColor": "#006dcb",
+				// "navigationBarTitleText":""
+				"navigationBarTitleText": "可报工的设备",
 				"app-plus": {
 					"bounce": "none"
 				}

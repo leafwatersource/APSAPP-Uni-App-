@@ -49,15 +49,15 @@
 					<text class="name">{{ i18n.publicText.Workorder_BomUsed }}</text>
 					<text class="value">{{ workItem.bomComused }}</text>
 				</view>
-				<view class="item">
+				<view class="item" v-if="workItem.itemAttr1">
 					<text class="name">{{ i18n.publicText.Workorder_ItemAttr1 }}</text>
 					<text class="value">{{ workItem.itemAttr1 }}</text>
 				</view>
-				<view class="item">
+				<view class="item" v-if="workItem.itemAttr2">
 					<text class="name">{{ i18n.publicText.Workorder_ItemAttr2 }}</text>
 					<text class="value">{{ workItem.itemAttr2 }}</text>
 				</view>
-				<view class="item">
+				<view class="item" v-if="workItem.itemAttr3">
 					<text class="name">{{ i18n.publicText.Workorder_ItemAttr3 }}</text>
 					<text class="value">{{ workItem.itemAttr3 }}</text>
 				</view>
@@ -298,36 +298,36 @@ export default {
 		},
 		pullData(type, parseState) {
 			console.log(this.workItem)
-			// const _this = this;
-			// this.$HTTP({
-			// 	url: type,
-			// 	data: {
-			// 		bean: JSON.stringify(this.workItem)
-			// 	}
-			// }).then(data => {
-			// 	console.log(data);
-			// 	if (parseState) {
-			// 		_this.workItem.taskFinishState = 3;
-			// 		uni.navigateBack({
-			// 			delta: 1,
-			// 			animationType: 'pop-out',
-			// 			animationDuration: 200
-			// 		});
-			// 		return;
-			// 	}
-			// 	if (_this.workItem.taskFinishState == 0) {
-			// 		_this.workItem.taskFinishState = 1;
-			// 	} else if (_this.workItem.taskFinishState == 1) {
-			// 		_this.workItem.taskFinishState = 2;
-			// 	} else if (_this.workItem.taskFinishState == 3) {
-			// 		_this.workItem.taskFinishState = 0;
-			// 	}
-			// 	uni.navigateBack({
-			// 		delta: 1,
-			// 		animationType: 'pop-out',
-			// 		animationDuration: 200
-			// 	});
-			// });
+			const _this = this;
+			this.$HTTP({
+				url: type,
+				data: {
+					bean: JSON.stringify(this.workItem)
+				}
+			}).then(data => {
+				console.log(data);
+				if (parseState) {
+					_this.workItem.taskFinishState = 3;
+					uni.navigateBack({
+						delta: 1,
+						animationType: 'pop-out',
+						animationDuration: 200
+					});
+					return;
+				}
+				if (_this.workItem.taskFinishState == 0) {
+					_this.workItem.taskFinishState = 1;
+				} else if (_this.workItem.taskFinishState == 1) {
+					_this.workItem.taskFinishState = 2;
+				} else if (_this.workItem.taskFinishState == 3) {
+					_this.workItem.taskFinishState = 0;
+				}
+				uni.navigateBack({
+					delta: 1,
+					animationType: 'pop-out',
+					animationDuration: 200
+				});
+			});
 		},
 		enterChangeRes(resName) {
 			this.workItem.changeResName = resName;
