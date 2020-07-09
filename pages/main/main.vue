@@ -251,7 +251,8 @@ export default {
 					dayShift: this.resName['dayshift']
 				}
 			}).then(finishData => {
-				console.log(finishData);
+				_this.doneOrder = [];
+				_this.doneWorkOrder = [];
 				_this.doneOrder.push(...finishData.data);
 				_this.doneWorkOrder.push(...finishData.data);
 				_this.search();

@@ -43,6 +43,8 @@ export default {
 	mounted() {
 		const userInfo = uni.getStorageSync('userInfo');
 		this.userPass = uni.getStorageSync('pass');
+		this.userName = userInfo['empID'];
+		console.log(userInfo);
 		plus.runtime.getProperty(plus.runtime.appid, wgtinfo => {
 			this.version = wgtinfo.version;
 		});
@@ -57,12 +59,10 @@ export default {
 	},
 	methods: {
 		login() {
-			console.log(this.api);
 			const _this = this;
 			const UserGuid = uni.getStorageSync('UserGuid');
 			const UserEmpID = uni.getStorageSync('UserEmpID');
-			console.log(UserEmpID);
-			console.log(UserGuid);
+			console.log(this.userName)
 			uni.showLoading({
 				title: '登录中',
 				mask: true
@@ -79,9 +79,7 @@ export default {
 					console.log('账号没有在别的设备登录过');
 					_this.ForceOut();
 				} else {
-					console.log(_this.userName, _this.userPass);
-					_this
-						.$HTTP({
+					_this.$HTTP({
 							url: 'login',
 							data: {
 								username: _this.userName,

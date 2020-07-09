@@ -49,6 +49,10 @@
 					<text class="name">{{ i18n.publicText.Workorder_BomUsed }}</text>
 					<text class="value">{{ workItem.bomComused }}</text>
 				</view>
+				<view class="item" v-if="workItem.itemDesp">
+					<text class="name">描述</text>
+					<text class="value">{{ workItem.itemDesp }}</text>
+				</view>
 				<view class="item" v-if="workItem.itemAttr1">
 					<text class="name">{{ i18n.publicText.Workorder_ItemAttr1 }}</text>
 					<text class="value">{{ workItem.itemAttr1 }}</text>
@@ -60,6 +64,10 @@
 				<view class="item" v-if="workItem.itemAttr3">
 					<text class="name">{{ i18n.publicText.Workorder_ItemAttr3 }}</text>
 					<text class="value">{{ workItem.itemAttr3 }}</text>
+				</view>
+				<view class="item" v-if="workItem.itemAttr4">
+					<text class="name">Attr4</text>
+					<text class="value">{{ workItem.itemAttr4 }}</text>
 				</view>
 			</view>
 
@@ -158,6 +166,7 @@ export default {
 			this.workItem = JSON.parse(decodeURIComponent(option.workItem));
 			this.finishValue = parseFloat(this.workItem.canReportQty)<parseFloat(this.workItem.plannedqty)?this.workItem.canReportQty:this.workItem.plannedqty;
 		}
+		console.log(this.workItem)
 	},
 	onShow() {
 		uni.setNavigationBarTitle({
@@ -258,6 +267,16 @@ export default {
 			const min = date.getMinutes() > 9 ? date.getMinutes() : '0' + date.getMinutes();
 			return year + '/' + month + '/' + day + ' ' + hour + ':' + min;
 		},
+		OrderAjustment(){
+			this.$HTTP({
+				url:'OrderAjustment',
+				data:{
+					'bean':JSON.stringify(this.workItem)
+				}
+			}).then(success=>{
+				console.log(success);
+			})
+		},
 		btnClick() {
 			const userInfo = uni.getStorageSync('userInfo');
 			this.workItem.mesOperator = userInfo['userName'];
@@ -266,7 +285,17 @@ export default {
 			console.log(this.workItem)
 			if (this.workItem.canReport) {
 				if (this.workItem.taskFinishState == 0) {
-					this.pullData('BeginChange');
+					let _this = this;
+					uni.showModal({
+						title:'是否调机',
+						success(res) {
+							if(res.confirm){
+								_this.OrderAjustment();
+							}
+							_this.pullData('BeginChange');
+						}
+					})
+					
 				} else if (this.workItem.taskFinishState == 1) {
 					this.pullData('EndChange');
 				} else if (this.workItem.taskFinishState == 2) {
