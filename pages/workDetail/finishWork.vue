@@ -6,7 +6,7 @@
 		</view>
 		<view class="messageBox">
 			<ul class="messageTab">
-				<li v-for="(item, index) in tabItem" v-text="item" :class="{ active: index === tabIndex ? true : false }" @tap="TabClick(index, $event)"></li>
+				<li v-for="(item, index) in tabItem" v-text="item" :class="{ active: index === tabIndex ? true : false }" :key="index" @tap="TabClick(index, $event)"></li>
 			</ul>
 			<view class="message">
 				<!-- <ul> -->
@@ -19,46 +19,35 @@
 							<view class="messageContentWrap">
 								<text>计划切换开始:{{ dataMessage.planSetupStartTime }}</text>
 								<text>计划切换结束:{{ dataMessage.planSetupEndTime }}</text>
-								<text>计划切换工时:{{ plannedSetupHours }}分钟</text>
-								<!-- //分钟 -->
-								<text>实际切换工时:{{ mesSetupHours }}分钟</text>
-								<!-- //分钟 -->
-								<text>差异工时:{{ mesSetupHours - plannedSetupHours }}分钟</text>
+								<text>计划切换工时:{{ (dataMessage.plannedSetupHours/60).toFixed(2) }}分钟</text>
+								<text>实际切换工时:{{ (dataMessage.mesSetupHours/60).toFixed(2)  }}分钟</text>
+								<text>差异工时:{{ (dataMessage.mesSetupHours/60 - dataMessage.plannedSetupHours/60).toFixed(2) }}分钟</text>
 								<text>切换达成率:{{setupNum[0]}}%</text>
 							</view>
 						</view>
-						<!-- //实际小于计划：（（（计划-实际）/计划）+1）*100 百分比
-						//计划为0：-100%
-						//实际>计划  （（实际-计划）/计划）*100   100-(（实际-计划）/计划）*100 -->
 					</li>
 					<li>
-						<view class="qiun-charts chart"><canvas canvas-id="canvasRing" id="ProductCanvasRing" class="charts" @touchstart="touchRing"></canvas></view>
+						<view class="qiun-charts chart"><canvas canvas-id="ProductCanvasRing" id="ProductCanvasRing" class="charts" @touchstart="touchRing"></canvas></view>
 						<view class="messageContent">
 							<view class="messageContentWrap">
 								<text>计划生产开始:{{ dataMessage.planStartTime }}</text>
 								<text>计划生产结束:{{ dataMessage.planEndTime }}</text>
-								<text>计划生产工时:{{plannedHours }}分钟</text>
-								<!-- //小时 -->
-								<text>实际生产工时:{{mesHours}}分钟</text>
-								<!-- //分钟 -->
-								<text>差异工时:{{mesHours - plannedHours }}分钟</text>
-								<!-- //计划-实际 -->
-								<text>生产达成率:{{setupNum[0]}}%</text>
-								<!-- // 实际>计划 实际/计划*100 1个值
-								//计划>实际  plannedHours/plannedQty * (finishedQty+failedQty)/plannedHours 2个值 -->
+								<text>计划生产工时:{{ (dataMessage.plannedHours/3600 ).toFixed(2)}}小时</text>
+								<text>实际生产工时:{{(dataMessage.mesHours/3600).toFixed(2)}}小时</text>
+								<text>差异工时:{{(dataMessage.plannedHours/3600 - dataMessage.mesHours/3600).toFixed(2) }}小时</text>
+								<text>生产达成率:{{productNum[0]}}%</text>
 							</view>
 						</view>
 					</li>
 					<li>
-						<view class="qiun-charts chart"><canvas canvas-id="canvasRing" id="canvasRing" class="charts" @touchstart="touchRing"></canvas></view>
+						<view class="qiun-charts chart"><canvas canvas-id="finishRing" id="finishRing" class="charts" @touchstart="touchRing"></canvas></view>
 						<view class="messageContent">
 							<view class="messageContentWrap">
-								<text>计划数量:{{ workItem.plannedQty }}</text>
-								<text>完成数量:{{ workItem.finishedQty }}</text>
-								<text>良品数:{{ workItem.finishedQty }}</text>
-								<text>不良数:{{ workItem.failedQty }}</text>
-								<text>产品良率:80%</text>
-								<!-- //finishedQty/finishedQty+failedQty -->
+								<text>计划数量:{{ dataMessage.plannedQty.toFixed(2) }}</text>
+								<text>完成数量:{{ dataMessage.finishedQty.toFixed(2) }}</text>
+								<text>良品数:{{ dataMessage.finishedQty.toFixed(2) }}</text>
+								<text>不良数:{{ dataMessage.failedQty.toFixed(2) }}</text>
+								<text>产品良率:{{parseFloat(finishNum).toFixed(2)}}%</text>
 							</view>
 						</view>
 					</li>
@@ -122,9 +111,7 @@
 			<view class="tabContent">
 				<ul class="fixedFiled">
 					<li>事件名称</li>
-					<li v-for="item in OpFinishHistory" v-text="item.eventMessage"></li>
-					<!-- <li>切换结束并生产</li>
-					<li>报工</li> -->
+					<li v-for="item in OpFinishHistory" v-text="item.eventMessage" :key="item"></li>
 				</ul>
 				<view class="filedContent">
 					<ul class="filed">
@@ -136,7 +123,7 @@
 							<span>计划数</span>
 							<span>操作人</span>
 						</li>
-						<li v-for="item in OpFinishHistory">
+						<li v-for="item in OpFinishHistory" :key="item">
 							<span>{{ item.eventTime }}</span>
 							<span>{{ item.failedQty }}</span>
 							<span>{{ item.finishedQty }}</span>
@@ -163,16 +150,13 @@ export default {
 			cHeight: '',
 			pixelRatio: 1,
 			serverData: '',
-			OpFinishHistory: [],
-			tabItem: ['切换达成', '生产达成', '良率统计'],
-			tabIndex: 0,
-			dataMessage: null,
-			setupNum: [],
-			mesSetupHours:null,
-			plannedSetupHours:null,
-			productNum:[],
-			plannedHours:null,
-			mesHours:null
+			OpFinishHistory: [],//事件
+			tabItem: ['切换达成', '生产达成', '良率统计'],//切换按钮
+			tabIndex: 0,//切换卡索引
+			dataMessage: null,//统计图的数据
+			setupNum: [],//生产工单的统计数据
+			productNum:[],//生产达成率的统计数据
+			finishNum:[]//良率统计数据
 		};
 	},
 	onLoad(option) {
@@ -199,31 +183,25 @@ export default {
 	mounted() {
 		this.FinishHistory();
 		this.OpFinish();
-		// this.initChart();
-		this.text();
 	},
 	methods: {
 		TabClick(index, e) {
+			//切换卡的点击事件
 			this.tabIndex = index;
-		},
-		touchPie(e, id) {
-			canvasObj[id].showToolTip(e, {
-				format: function(item) {
-					return item.name + ':' + item.data;
-				}
-			});
+			if(index==1){
+				this.setProductNum();
+			}else if(index ==2){
+				this.setFinishNum();
+			}
 		},
 		getServerData() {
-			console.log("设置统计图");
+			//设置切换达成率样式
 			let Ring = { series: [] };
-			//这里我后台返回的是数组，所以用等于，如果您后台返回的是单条数据，需要push进去
-			// Ring.series = res.data.data.Ring.series;
-		
 			if(this.setupNum.length==1){
 				Ring.series.push({
 					name:'一班',
 					data:this.setupNum[0],
-					color:'#429AF1',
+					color:'#006dcb',
 					show: true,
 					legendShape: "circle",
 					pointShape: "circle",
@@ -233,56 +211,44 @@ export default {
 				Ring.series.push({
 					name:'一班',
 					data:this.setupNum[0],
-					color:'#429AF1',
+					color:'#006dcb',
 					show: true
 				},{
 					name:'二班',
-					data:this.setupNum[1]
+					data:this.setupNum[1],
+					color:'#ddd',
 				})
 			}
-			// Ring.series = [
-			// 	{
-			// 		name: '一班',
-			// 		data: 100
-			// 	},
-			// 	{
-			// 		name: '二班',
-			// 		data: 50
-			// 	}
-			// ];
-			console.log(Ring);
-			this.showRing('canvasRing', Ring);
+			this.showRing('canvasRing', Ring,this.setupNum[0],'切换达成率');
 		},
 		setProductData(){
+			//设置生产达成率的样式
 			let Ring = { series: [] };
-			//这里我后台返回的是数组，所以用等于，如果您后台返回的是单条数据，需要push进去
-			// Ring.series = res.data.data.Ring.series;
-					
 			if(this.productNum.length==1){
 				Ring.series.push({
-					name:'一班',
+					name:'data1',
 					data:this.productNum[0],
-					color:'#429AF1',
-					show: true,
-					legendShape: "circle",
-					pointShape: "circle",
-					type: "ring"
+					color:'#006dcb',
+					show: true
 				})
 			}else if(this.productNum.length==2){
 				Ring.series.push({
 					name:'一班',
 					data:this.productNum[0],
-					color:'#429AF1',
+					color:'#006dcb',
 					show: true
 				},{
 					name:'二班',
-					data:this.setupNum[1]
+					data:this.productNum[1],
+					show: true,
+					color:'#ddd'
 				})
 			}
-			console.log(Ring);
-			this.showRing('ProductCanvasRing', Ring);
+			console.log(this.productNum,'productNum')
+			this.showRing('ProductCanvasRing', Ring,this.productNum[0],'生产达成率');
 		},
-		showRing(canvasId, chartData) {
+		showRing(canvasId, chartData,title,text) {
+			//设置环状统计图
 			let _this = this;
 			 canvaRing = new uCharts({
 			 				$this: _self,
@@ -291,14 +257,14 @@ export default {
 			 				fontSize: 11,
 			 				legend: false,
 			 				title: {
-			 					name: _this.setupNum[0]+'%',
+			 					name: title+'%',
 			 					color: '#7cb5ec',
 			 					fontSize: 18 * _self.pixelRatio,
 			 					offsetY: 2 * _self.pixelRatio
 			 				},
 			 
 			 				subtitle: {
-			 					name: '切换达成率',
+			 					name: text,
 			 					color: '#666666',
 			 					fontSize: 10 * _self.pixelRatio,
 			 					offsetY: 1 * _self.pixelRatio
@@ -328,91 +294,106 @@ export default {
 			});
 		},
 		OpFinish() {
-			let _this = this;
+			//获取统计图的数据
 			this.$HTTP({
 				url: 'OpFinish',
 				data: {
 					bean: JSON.stringify(this.workItem)
 				}
 			}).then(finish => {
-				console.log(finish);
-				_this.dataMessage = finish.data;
-				this.mesSetupHours = _this.dataMessage.mesSetupHours*60;
-				this.plannedSetupHours = this.dataMessage.plannedSetupHours*60;
-				this.plannedHours = this.dataMessage.plannedHours*60;
-				this.mesHours = this.dataMessage.mesHours*60;
-				_this.setNum();
+				this.dataMessage = finish.data;
+				console.log(this.dataMessage);
+				this.plannedSetupHours = (this.dataMessage.plannedSetupHours*60).toFixed(1);
+				this.mesHours = (this.dataMessage.mesHours/60).toFixed(2);
+				this.setNum();
+				
 			});
 		},
+		setProductNum(){
+			//计算生产达成率
+			this.productNum = [];
+			if(this.dataMessage.mesHours<=this.dataMessage.plannedHours){
+				this.productNum.push(parseInt(this.dataMessage.plannedHours/this.dataMessage.mesHours*100));
+				this.setProductData();
+				return;
+			}else if(this.dataMessage.mesHours>this.dataMessage.plannedHours){
+				var plancycletime  = this.dataMessage.plannedHours / this.dataMessage.plannedQty;
+				var mesplanusehours = this.dataMessage.finishedQty * plancycletime;
+				var percent =mesplanusehours/ this.dataMessage.mesHours * 100;
+				this.productNum.push(parseInt(percent));
+				this.productNum.push(100-this.productNum[0]);
+				this.setProductData();
+				return;
+			}
+			// //计划>实际  plannedHours/plannedQty * (finishedQty+failedQty)/plannedHours 2个值 -->
+		},
+		setFinishNum(){
+			//计算产品良率
+			this.finishNum = [];
+			this.finishNum.push((this.dataMessage.finishedQty - this.dataMessage.failedQty)/this.dataMessage.finishedQty *100);
+			if(this.finishNum<100){
+				this.finishNum.push(100-this.finishNum[0]);
+			}
+			let Ring = { series: [] };
+			if(this.finishNum.length==1){
+				Ring.series.push({
+					name:'data1',
+					data:this.finishNum[0],
+					color:'#006dcb',
+					show: true
+				})
+			}else if(this.finishNum.length==2){
+				Ring.series.push({
+					name:'一班',
+					data:this.finishNum[0],
+					color:'#006dcb',
+					show: true
+				},{
+					name:'二班',
+					data:this.finishNum[1],
+					show: true,
+					color:'#ddd'
+				})
+				}
+			this.showRing('finishRing', Ring,this.finishNum[0],'良率统计');			
+		},
 		setNum() {
-			console.log('setNum');
-			console.log(this.plannedSetupHours, '计划');
-			console.log(this.mesSetupHours, '实际');
-			// plannedSetupHours 
-			// <!-- //分钟 -->
-			// mesSetupTime
-			if (this.plannedSetupHours == 0) {
-				// this.setupNum = [];
-				// this.setupNum.push(-100);
-				// console.log(this.setupNum);
-				// this.getServerData();
-				// return;
+			//计算切换达成率
+			if (this.dataMessage.plannedSetupHours == 0) {
+				this.setupNum = [];
+				this.setupNum.push(-100);
+				this.getServerData();
+				return;
 			} else {
-				if (this.mesSetupHours < this.plannedSetupHours) {
-					console.log('计划大于实际')
+				if (this.dataMessage.mesSetupHours  <= this.dataMessage.plannedSetupHours ) {
 					this.setupNum = [];
-					this.setupNum.push(((this.plannedSetupHours - this.mesSetupHours) / this.plannedSetupHours + 1) * 100);
+					this.setupNum.push((this.dataMessage.plannedSetupHours/this.dataMessage.mesSetupHours)* 100);
 					console.log(this.setupNum);
-					// this.productNum.push(this.plannedHours/this.dataMessage.plannedQty*(this.dataMessage.finishedQty+this.dataMessage.failedQty)/this.plannedHours)
-					this.getServerData();
 					this.setProductData();
 					return;
-				} else if (this.mesSetupHours > this.plannedSetupHours) {
+				} else if (this.dataMessage.mesSetupHours >  this.dataMessage.plannedSetupHours) {
 					// 实际>计划
-					console.log("实际大于计划")
 					this.setupNum = [];
-					this.setupNum.push(((this.mesSetupHours - this.plannedSetupHours) / this.plannedSetupHours) * 100);
+					this.setupNum.push(parseInt(((this.dataMessage.plannedSetupHours/this.dataMessage.mesSetupHours)) * 100));
 					this.setupNum.push(100 - this.setupNum[0]);
-					console.log(this.setupNum);
-					//生产率
-					// 实际/计划*100
-					// this.productNum.push(this.mesHours/this.plannedHours*100);
 					this.getServerData();
 				}
-			}
-			console.log(this.setupNum);
-			
+			}			
 		},
 		FinishHistory() {
 			console.log('历史记录');
-			let _this = this;
+			// let _this = this;
 			this.$HTTP({
 				url: 'OpFinishHistory',
 				data: {
 					orderuid: this.workItem.orderUID
 				}
 			}).then(success => {
-				console.log(success);
-				_this.OpFinishHistory = success.data;
+				this.OpFinishHistory = success.data;
+				console.log(this.OpFinishHistory)
 			});
 		},
-		 text(){
-		                uni.request({
-		                    url: 'https://www.easy-mock.com/mock/5cc586b64fc5576cba3d647b/uni-wx-charts/chartsdata2',
-		                    data:{
-		                    },
-		                    success: function(res) {
-		                        let Ring={series:[]};
-		                        //这里我后台返回的是数组，所以用等于，如果您后台返回的是单条数据，需要push进去
-		                        Ring.series=res.data.data.Ring.series;
-								console.log(Ring)
-		                        // _self.showRing("canvasRing",Ring);
-		                    },
-		                    fail: () => {
-		                        _self.tips="网络错误，小程序端请检查合法域名";
-		                    },
-		                });
-		            },
+
 	}
 };
 </script>
@@ -522,9 +503,11 @@ export default {
 				border-bottom: 1upx solid #828282;
 				list-style: none;
 				padding: 1upx 0;
+				height: 50upx;
 				text {
 					color: #828282;
 					font-size: 27upx;
+					line-height: 50upx;
 				}
 				.value {
 					float: right;
@@ -574,21 +557,19 @@ export default {
 					font-size: 26upx;
 					height: 50upx;
 					line-height: 50upx;
-					border-left: 1upx solid #c0c0c0;
-					border-right: 1upx solid #c0c0c0;
 					color: #828282;
+					border: 1upx solid #c0c0c0;
+					border-top: none;
 				}
 				li:nth-child(2) {
 					border-bottom: 1upx solid #c0c0c0;
 				}
-				li:first-child,
-				li:last-child {
-					border: 1upx solid #c0c0c0;
+				li:first-child{
+					border-top: 1upx solid #c0c0c0;
 				}
 			}
 			.filedContent {
 				width: calc(100% - 200upx);
-				height: 100%;
 				position: absolute;
 				left: 101px;
 				overflow-x: auto;
@@ -605,6 +586,7 @@ export default {
 							height: 100%;
 							width: 220upx;
 							font-size: 26upx;
+							line-height: 50upx;
 							border-bottom: 1upx solid #c0c0c0;
 							border-right: 1upx solid #c0c0c0;
 							color: #828282;

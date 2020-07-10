@@ -61,7 +61,6 @@
 					</li>
 				</ul>
 				<ul class="done" v-show="current === 1">
-					<!-- <li class="work" v-for="(item, index) in textFinish" :key="index" @tap="finishOrder(item)" v-if="textFinish.length != 0"> -->
 					<li class="work" v-for="(item, index) in doneWorkOrder" :key="index" @tap="finishOrder(item)" v-if="doneWorkOrder.length != 0">
 						<view class="work-icon"><text class="iconfont-orange fa fa-check-circle"></text></view>
 						<view class="itemBox">
@@ -107,52 +106,15 @@ export default {
 			current: 0,
 			searchWord: '',
 			resCount: false,
-			textFinish: [
-				{
-					allFinishedQty: 0,
-					bomComused: 0.23157894736842105,
-					canReport: true,
-					canReportQty: 22,
-					changeResName: '',
-					dayShift: 1,
-					failedQty: 0,
-					finishedQty: 0,
-					itemAttr1: 'X20162',
-					itemAttr2: '西安阿尔斯通永济电气设备有限公司',
-					itemAttr3: 'A',
-					itemAttr4: '',
-					itemDesp: '转轴',
-					jobQty: 95,
-					mesOpName: '',
-					mesOperator: '',
-					mesResName: '',
-					orderUID: 385401,
-					planStartTime: '07/07 08:00:00',
-					planendtime: '07/07 12:36:30',
-					plannedqty: 25.471,
-					pmOpName: '修小端中心孔',
-					pmResName: '普通车床5',
-					productID: 'AT00000578039',
-					reportTime: '1900-01-01 00:00:00',
-					scrappedQty: 0,
-					setupTime: 0,
-					taskFinishState: 0,
-					workHours: 3.61,
-					workID: '0067407001'
-				}
-			]
 		};
 	},
 	onLoad(option) {
 		if (Object.keys(option).length != 0) {
 			const resName = JSON.parse(option.resName);
-			console.log(resName);
-			console.log(this.resName);
 			this.resName = resName;
 		}
 	},
 	onShow() {
-		console.log(this.resName);
 		uni.setTabBarItem({
 			index: 0,
 			text: this.i18n.tabBar.Nav_Report

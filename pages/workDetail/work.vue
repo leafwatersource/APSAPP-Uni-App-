@@ -299,9 +299,7 @@ export default {
 				} else if (this.workItem.taskFinishState == 1) {
 					this.pullData('EndChange');
 				} else if (this.workItem.taskFinishState == 2) {
-					console.log(this.finishValue, this.failValue);
-					console.log(this.datetime);
-					console.log(this.workItem.canReportQty);
+					
 					if (parseInt(this.finishValue) + parseInt(this.failValue) > this.workItem.canReportQty) {
 						uni.showToast({
 							title: '完成数加不良数不能超过工单总数',
@@ -312,7 +310,12 @@ export default {
 					this.workItem.finishedQty = this.finishValue;
 					this.workItem.failedQty = parseInt(this.failValue);
 					this.workItem.reportTime = this.datetime;
-					this.pullData('Report');
+					let mesTime =(new Date(this.datetime)- new Date(this.workItem.mesEndTime))/1000;
+					if(this.workItem.workHours*3600/this.workItem.plannedqty < mesTime / ((parseFloat(this.finishValue)+parseFloat(this.failValue)))){
+						console.log('生产延迟');
+					}else{
+						this.pullData('Report');
+					}
 				} else if (this.workItem.taskFinishState == 3) {
 					this.pullData('ResumeOrder');
 				}
