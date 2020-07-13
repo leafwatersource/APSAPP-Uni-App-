@@ -54,18 +54,18 @@ export default {
 		},
 		finish() {
 			const _this = this;
-			const userobj = {
-				empName: this.empName,
-				dept: this.dept,
-				phoneNum: this.phoneNum,
-				email: this.email
+			const userinfo = {
+				PhoneNumber: this.phoneNum,
+				Email: this.email,
+				UserSysID:this.userInfo['userSysID'],
+				EmpID:this.userInfo['empID'],
 			};
-			userobj[this.changeType] = this.message;
+			userinfo[this.changeType] = this.message;
 			console.log("完成");
 			this.$HTTP({
-				url: 'ChangeUserMessage',
+				url: 'ChangeUserInfo',
 				data: {
-					userobj: JSON.stringify(userobj)
+					userinfo: JSON.stringify(userinfo)
 				}
 			}).then(res => {
 				console.log(res);

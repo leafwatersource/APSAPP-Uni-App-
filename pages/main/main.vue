@@ -3,25 +3,25 @@
 		<view class="top">
 			<view class="status_bar" :style="{ height: barHeight + 'px' }"></view>
 			<view class="resBox">
-				<view class="resName">{{ resName['resourceName'] }}</view>
+				<view class="resName" v-text="resName['resourceName']" />
 				<view class="iconBox">
-					<text class="fa fa-bell-o"></text>
-					<text class="fa fa-plus-circle" @tap="showResCount"></text>
+					<text class="fa fa-bell-o" />
+					<text class="fa fa-plus-circle" @tap="showResCount" /> 
 				</view>
 				<view class="resCountWrap" @tap="resCountWrapClick" v-show="resCount" :style="{ top: barHeight + 'px' }">
 					<view class="resCount" :class="{ resCount: true, Active: resCount }">
 						<ul>
 							<li @tap="scan">
-								<text class="fa fa-qrcode" @tap="selectRes"></text>
-								<text>{{ i18n.publicText.Scancode }}</text>
+								<text class="fa fa-qrcode" @tap="selectRes" />
+								<text v-text="i18n.publicText.Scancode" />
 							</li>
 							<li @tap="selectRes">
-								<text class="fa fa-random"></text>
-								<text>{{ i18n.publicText.ChangeRes_Title_ResName }}</text>
+								<text class="fa fa-random" />
+								<text v-text="i18n.publicText.ChangeRes_Title_ResName" />
 							</li>
 							<li @tap="downLoadWork">
-								<text class="fa fa-download"></text>
-								<text>{{ i18n.publicText.Msg_DownOrder_Title }}</text>
+								<text class="fa fa-download" />
+								<text v-text="i18n.publicText.Msg_DownOrder_Title" />
 							</li>
 						</ul>
 					</view>
@@ -37,48 +37,50 @@
 				<ul class="undone" v-show="current === 0">
 					<li class="work" v-for="(item, index) in undoneWorkOrder" :key="index" @tap="work(item)" v-if="undoneOrder.length != 0">
 						<view class="work-icon">
-							<text class="iconfont-red fa fa-stop-circle" v-if="item.taskFinishState == 0"></text>
-							<text class="iconfont-blue fa fa-bandcamp" v-if="item.taskFinishState == 1"></text>
-							<text class="iconfont-green fa fa-play-circle" v-if="item.taskFinishState == 2"></text>
-							<text class="iconfont-orange fa fa-pause-circle" v-if="item.taskFinishState == 3"></text>
+							<text class="iconfont-red fa fa-stop-circle" v-if="item.taskFinishState == 0" />
+							<text class="iconfont-blue fa fa-bandcamp" v-if="item.taskFinishState == 1" />
+							<text class="iconfont-green fa fa-play-circle" v-if="item.taskFinishState == 2" />
+							<text class="iconfont-orange fa fa-pause-circle" v-if="item.taskFinishState == 3" />
 						</view>
 						<view class="itemBox">
 							<view class="WorkBox">
-								<text class="workId" style="float: left">{{ item.workID }}</text>
+								<text class="workId" style="float: left" v-text="item.workID" />
 								<view class="process-bar" style="float: right;">
-									<text>{{ item.finishedQty }}/{{ item.plannedqty }}</text>
+									<text v-text="item.finishedQty+'/'+item.plannedqty" />
 									<view class="process-content">
-										<view class="process-content-num" :style="{ width: (item.finishedQty / item.plannedqty) * 100 + '%' }"></view>
+										<view class="process-content-num" :style="{ width: (item.finishedQty / item.plannedqty) * 100 + '%' }" />
 									</view>
 								</view>
 							</view>
-							<text class="productName">{{ i18n.publicText.Workorder_Product }}{{ item.productID }}</text>
-							<text class="opname">{{ i18n.publicText.Workorder_Operation }}{{ item.pmOpName }}</text>
-							<text>{{ i18n.publicText.Workorder_Planstartendtime }}{{ item.planStartTime }} - {{ item.planendtime }}</text>
-							<text>{{ i18n.publicText.Workorder_Description }}{{ item.itemDesp }}</text>
+							<text class="productName" v-text="i18n.publicText.Workorder_Product+''+ item.productID" />
+							<text class="opname" v-text="i18n.publicText.Workorder_Operation +''+ item.pmOpName" />
+							<text v-text="i18n.publicText.Workorder_Planstartendtime +''+item.planStartTime-item.planendtime" />
+							<text v-text="i18n.publicText.Workorder_Description+''+item.itemDesp" />
 						</view>
-						<view class="icon-right"><text class="icon-right fa fa-angle-right"></text></view>
+						<view class="icon-right"><text class="icon-right fa fa-angle-right" /></view>
 					</li>
 				</ul>
 				<ul class="done" v-show="current === 1">
 					<li class="work" v-for="(item, index) in doneWorkOrder" :key="index" @tap="finishOrder(item)" v-if="doneWorkOrder.length != 0">
-						<view class="work-icon"><text class="iconfont-orange fa fa-check-circle"></text></view>
+						<view class="work-icon"><text class="iconfont-orange fa fa-check-circle" /></view>
 						<view class="itemBox">
 							<view class="WorkBox">
-								<text class="workId" style="float: left">{{ item.workID }}</text>
+								<text class="workId" style="float: left" v-text="item.workID" />
 								<view class="process-bar" style="float: right;">
-									<text>{{ item.finishedQty }}/{{ item.plannedqty }}</text>
+									<text v-text="item.finishedQty +'/'+item.plannedqty" />
 									<view class="process-content">
-										<view class="process-content-num" :style="{ width: (item.finishedQty / item.plannedqty) * 100 + '%' }"></view>
+										<view class="process-content-num" :style="{ width: (item.finishedQty / item.plannedqty) * 100 + '%' }" />
 									</view>
 								</view>
 							</view>
-							<text class="productName">{{ i18n.publicText.Workorder_Product }}{{ item.productID }}</text>
-							<text class="opname">{{ i18n.publicText.Workorder_Operation }}{{ item.pmOpName }}</text>
-							<text>{{ i18n.publicText.Workorder_Planstartendtime }}{{ item.planStartTime }} - {{ item.planendtime }}</text>
-							<text>{{ i18n.publicText.Workorder_Description }}{{ item.itemDesp }}</text>
+							<text class="productName" v-text="i18n.publicText.Workorder_Product +''+ item.productID" />
+							<text class="opname" v-text="i18n.publicText.Workorder_Operation +''+ item.pmOpName" />
+							<text v-text="i18n.publicText.Workorder_Planstartendtime +''+ (item.planStartTime -  item.planendtime)" />
+							<text v-text="i18n.publicText.Workorder_Description +''+ item.itemDesp" />
 						</view>
-						<view class="icon-right"><text class="icon-right fa fa-angle-right"></text></view>
+						<view class="icon-right">
+							<text class="icon-right fa fa-angle-right" />
+						</view>
 					</li>
 				</ul>
 			</view>

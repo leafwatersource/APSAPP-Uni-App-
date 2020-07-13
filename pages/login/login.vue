@@ -4,8 +4,10 @@
 			<view class="logoBox"></view>
 			<text class="title" v-text="i18n.publicText.app_title" />
 			<view class="inputBox">
+				<label for="userName" />
 				<input id="userName" type="text" :placeholder="i18n.publicText.Login_UserName" placeholder-class="inpCl" v-model="userName" />
-				<input type="password" :placeholder="i18n.publicText.Login_UserPass" placeholder-class="inpCl" v-model="userPass" />
+				<label for="password" class="fa fa-key" />
+				<input type="password" id="password" :placeholder="i18n.publicText.Login_UserPass" placeholder-class="inpCl" v-model="userPass" />
 			</view>
 			<button type="default" hover-class="btnClick" @tap="login">{{i18n.publicText.Login_Login}}</button>
 		</view>
@@ -216,6 +218,7 @@ export default {
 
 <style scoped lang="scss">
 @import '@/uni.scss';
+@import '@/commom/font-awesome-4.7.0/css/font-awesome.min.css';
 .content {
 	background-color: $uni-gb-color-blue !important;
 	width: 100%;
