@@ -5,21 +5,21 @@
 				<view class="content-box">
 					<ul>
 						<li>
-							<text>{{i18n.publicText.Workorder_Workid}}</text>
+							<text v-text="i18n.publicText.Workorder_Workid" />
 							<input type="text" value="" placeholder="请输入" v-model="searchWorkId" />
 						</li>
 						<li>
-							<text>{{i18n.publicText.Workorder_Operation}}</text>
+							<text v-text="i18n.publicText.Workorder_Operation" />
 							<input type="text" value="" placeholder="请输入" v-model="searchOpName" />
 						</li>
 						<li>
-							<text>班次:</text>
+							<text v-text="'班次:'" />
 							<input type="text" value="" placeholder="请输入" v-model="searchDayShift" />
 						</li>
 						<li>
-							<text>开始时间:</text>
+							<text v-text="'开始时间:'" />
 							<input type="text" value="" />
-							<text style="float: right;">选择</text>
+							<text style="float: right;" v-text="'选择'" />
 							<mx-date-picker :show="showPicker" type="rangetime" :value="searchStartTime" :show-tips="true" :show-seconds="false" @confirm="onSelected" @cancel="onSelected" />
 						</li>
 					</ul>
@@ -34,34 +34,32 @@
 			<li class="work" v-for="(item, index) in workList" :key="index" v-if="workList.length != 0" @tap="downLoad(item)">
 				<view class="workIDBox">
 					<text class="br">|</text>
-					<text>{{i18n.publicText.Workorder_Workid}}</text>
-					<text class="workId">
-						{{item.workID}}
-					</text>
+					<text v-text="i18n.publicText.Workorder_Workid" />
+					<text class="workId" v-text="item.workID" />
 				</view>
 				<view>
-					<text class="name">{{i18n.publicText.Workorder_ResName}}</text>
-					<text class="value">{{item.pmResName}}</text>
+					<text class="name" v-text="i18n.publicText.Workorder_ResName" />
+					<text class="value" v-text="item.pmResName" />
 				</view>
 				<view>
-					<text class="name">{{i18n.publicText.Workorder_Product}}</text>
-					<text class="value">{{item.productID}}</text>
+					<text class="name" v-text="i18n.publicText.Workorder_Product" />
+					<text class="value" v-text="item.productID" />
 				</view>
 				<view>
-					<text class="name">{{i18n.publicText.Workorder_Operation}}</text>
-					<text class="value">{{item.pmOpName}}</text>
+					<text class="name" v-text="i18n.publicText.Workorder_Operation" />
+					<text class="value" v-text="item.pmOpName" />
 				</view>
 				<view>
-					<text class="name">{{i18n.publicText.Workorder_PlannedQty}}</text>
-					<text class="value">{{item.jobQty}}</text>
+					<text class="name" v-text="i18n.publicText.Workorder_PlannedQty" />
+					<text class="value" v-text="item.jobQty" />
 				</view>
 				<view>
-					<text class="name">{{i18n.publicText.Workorder_Planstartendtime}}</text>
-					<text class="value">{{item.planStartTime}} - {{item.planendtime}}</text>
+					<text class="name" v-text="i18n.publicText.Workorder_Planstartendtime" />
+					<text class="value" v-text="item.planStartTime - item.planendtime" />
 				</view>
 				<view>
-					<text class="name">{{i18n.publicText.Workorder_Description}}</text>
-					<text class="value">{{item.itemDesp}}</text>
+					<text class="name" v-text="i18n.publicText.Workorder_Description" />
+					<text class="value" v-text="item.itemDesp" />
 				</view>
 			</li>
 		</ul>

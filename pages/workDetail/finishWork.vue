@@ -10,19 +10,19 @@
 			</ul>
 			<view class="message">
 				<!-- <ul> -->
-				<ul :style="{ left: -tabIndex * 100 + '%' }">
+				<ul :style="{ left: -tabIndex * 100 + '%' }" v-if='dataMessage'>
 					<li>
 						<view class="qiun-charts chart">
 							<canvas canvas-id="canvasRing" id="canvasRing" class="charts" @touchstart="touchRing"></canvas>
 						</view>
 						<view class="messageContent">
 							<view class="messageContentWrap">
-								<text>计划切换开始:{{ dataMessage.planSetupStartTime }}</text>
-								<text>计划切换结束:{{ dataMessage.planSetupEndTime }}</text>
-								<text>计划切换工时:{{ (dataMessage.plannedSetupHours/60).toFixed(2) }}分钟</text>
-								<text>实际切换工时:{{ (dataMessage.mesSetupHours/60).toFixed(2)  }}分钟</text>
-								<text>差异工时:{{ (dataMessage.mesSetupHours/60 - dataMessage.plannedSetupHours/60).toFixed(2) }}分钟</text>
-								<text>切换达成率:{{setupNum[0]}}%</text>
+								<text v-text="'计划切换开始:'+dataMessage.planSetupStartTime" />
+								<text v-text="'计划切换结束:'+dataMessage.planSetupEndTime" />
+								<text v-text="'计划切换工时:'+(dataMessage.plannedSetupHours/60).toFixed(2)+'分钟'" />
+								<text v-text="'实际切换工时:'+(dataMessage.mesSetupHours/60).toFixed(2)+'分钟'" />
+								<text v-text="'差异工时:'+(dataMessage.mesSetupHours/60 - dataMessage.plannedSetupHours/60).toFixed(2)+'分钟'" />
+								<text v-text="'切换达成率:'+setupNum[0]+'%'" />
 							</view>
 						</view>
 					</li>
@@ -30,12 +30,12 @@
 						<view class="qiun-charts chart"><canvas canvas-id="ProductCanvasRing" id="ProductCanvasRing" class="charts" @touchstart="touchRing"></canvas></view>
 						<view class="messageContent">
 							<view class="messageContentWrap">
-								<text>计划生产开始:{{ dataMessage.planStartTime }}</text>
-								<text>计划生产结束:{{ dataMessage.planEndTime }}</text>
-								<text>计划生产工时:{{ (dataMessage.plannedHours/3600 ).toFixed(2)}}小时</text>
-								<text>实际生产工时:{{(dataMessage.mesHours/3600).toFixed(2)}}小时</text>
-								<text>差异工时:{{(dataMessage.plannedHours/3600 - dataMessage.mesHours/3600).toFixed(2) }}小时</text>
-								<text>生产达成率:{{productNum[0]}}%</text>
+								<text v-text="'计划生产开始:'+dataMessage.planStartTime" />
+								<text v-text="'计划生产结束:'+dataMessage.planEndTime" />
+								<text v-text="'计划生产工时:'+(dataMessage.plannedHours/3600 ).toFixed(2)+'小时'" />
+								<text v-text="'实际生产工时:'+(dataMessage.mesHours/3600).toFixed(2)+'小时'" />
+								<text v-text="'差异工时:'+(dataMessage.plannedHours/3600 - dataMessage.mesHours/3600).toFixed(2)+'小时'" />
+								<text v-text="'生产达成率:'+productNum[0]+'%'" />
 							</view>
 						</view>
 					</li>
@@ -43,93 +43,93 @@
 						<view class="qiun-charts chart"><canvas canvas-id="finishRing" id="finishRing" class="charts" @touchstart="touchRing"></canvas></view>
 						<view class="messageContent">
 							<view class="messageContentWrap">
-								<text>计划数量:{{ dataMessage.plannedQty.toFixed(2) }}</text>
-								<text>完成数量:{{ dataMessage.finishedQty.toFixed(2) }}</text>
-								<text>良品数:{{ dataMessage.finishedQty.toFixed(2) }}</text>
-								<text>不良数:{{ dataMessage.failedQty.toFixed(2) }}</text>
-								<text>产品良率:{{parseFloat(finishNum).toFixed(2)}}%</text>
+								<text v-text="'计划数量:'+dataMessage.plannedQty.toFixed(2)" />
+								<text v-text="'完成数量:'+dataMessage.finishedQty.toFixed(2)" />
+								<text v-text="'良品数:'+dataMessage.finishedQty.toFixed(2)" />
+								<text v-text="'不良数:'+dataMessage.failedQty.toFixed(2)" />
+								<text v-text="'产品良率:'+parseFloat(finishNum).toFixed(2)" />
 							</view>
 						</view>
 					</li>
 				</ul>
 			</view>
 		</view>
-		<view class="main">
+		<view class="main" v-if="workItem">
 			<ul>
 				<li>
-					<text class="name">产品:</text>
-					<text class="value">{{ workItem.productID }}</text>
+					<text class="name" v-text="'产品:'" />
+					<text class="value" v-text="workItem.productID" />
 				</li>
 				<li>
-					<text class="name">产品单价</text>
-					<text class="value">{{ workItem.unitPrice }}</text>
+					<text class="name" v-text="'产品单价:'" />
+					<text class="value" v-text="workItem.unitPrice" />
 				</li>
 				<li>
-					<text class="name">设备名称</text>
-					<text class="value">{{ workItem.pmResName }}</text>
+					<text class="name" v-text="'设备名称:'" />
+					<text class="value" v-text="workItem.pmResName" />
 				</li>
 				<li>
-					<text class="name">工序</text>
-					<text class="value">{{ workItem.pmOpName }}</text>
+					<text class="name" v-text="'工序:'" />
+					<text class="value" v-text="workItem.pmOpName" />
 				</li>
 				<li>
-					<text class="name">班次</text>
-					<text class="value">{{ workItem.dayShift }}</text>
+					<text class="name" v-text="'班次:'" />
+					<text class="value" v-text="workItem.dayShift" />
 				</li>
 				<li>
-					<text class="name">交货日期</text>
-					<text class="value">{{ workItem.planendtime }}</text>
+					<text class="name" v-text="'交货日期:'" />
+					<text class="value" v-text="workItem.planendtime" />
 				</li>
 				<li>
-					<text class="name">工作时长</text>
-					<text class="value">{{ workItem.workHours }}</text>
+					<text class="name" v-text="'工作时长:'" />
+					<text class="value" v-text="workItem.workHours" />
 				</li>
 				<li>
-					<text class="name">BOM倍率</text>
-					<text class="value">{{ workItem.bomComused }}</text>
+					<text class="name" v-text="'BOM倍率:'" />
+					<text class="value" v-text="workItem.bomComused" /> 
 				</li>
 				<li>
-					<text class="name">描述</text>
-					<text class="value">{{ workItem.itemDesp }}</text>
+					<text class="name" v-text="'描述:'" />
+					<text class="value" v-text="workItem.itemDesp" />
 				</li>
 				<li v-if="workItem.itemAttr1">
-					<text class="name">产品分类</text>
-					<text class="value">{{ workItem.itemAttr1 }}</text>
+					<text class="name" v-text="'产品分类:'" />
+					<text class="value" v-text="workItem.itemAttr1" />
 				</li>
 				<li v-if="workItem.itemAttr2">
-					<text class="name">客户名称</text>
-					<text class="value">{{ workItem.itemAttr2 }}</text>
+					<text class="name" v-text="'客户名称:'" />
+					<text class="value" v-text="workItem.itemAttr2" /> 
 				</li>
 				<li v-if="workItem.itemAttr3">
-					<text class="name">图纸版本号</text>
-					<text class="value">{{ workItem.itemAttr3 }}</text>
+					<text class="name" v-text="'图纸版本号:'" />
+					<text class="value" v-text="workItem.itemAttr3" />
 				</li>
 			</ul>
 		</view>
-		<view class="tableTitleWrap"><view class="tableTitle">订单生产记录</view></view>
+		<view class="tableTitleWrap"><view class="tableTitle" v-text="'订单生产记录'" /></view>
 		<view class="tableWrap">
 			<view class="tabContent">
 				<ul class="fixedFiled">
-					<li>事件名称</li>
-					<li v-for="item in OpFinishHistory" v-text="item.eventMessage" :key="item"></li>
+					<li v-text="'事件名称'" />
+					<li v-for="(item,index) in OpFinishHistory" v-text="item.eventMessage" v-if="OpFinishHistory" :key="index" />
 				</ul>
 				<view class="filedContent">
-					<ul class="filed">
+					<ul class="filed" v-if="OpFinishHistory">
 						<li>
-							<span>执行时间</span>
-							<span>不良数</span>
-							<span>完成数</span>
-							<span>订单数</span>
-							<span>计划数</span>
-							<span>操作人</span>
+							<text v-text="'执行时间'" />
+							<text v-text="'不良数'" />
+							<text v-text="'完成数'" />
+							<text v-text="'订单数'" />
+							<text v-text="'计划数'" />
+							<text v-text="'操作人'" />
 						</li>
-						<li v-for="item in OpFinishHistory" :key="item">
-							<span>{{ item.eventTime }}</span>
-							<span>{{ item.failedQty }}</span>
-							<span>{{ item.finishedQty }}</span>
-							<span>{{ item.jobQty }}</span>
-							<span>{{ item.jobQty }}</span>
-							<span>{{ item.mesOperator }}</span>
+						<li v-for="(item,index) in OpFinishHistory" :key="index">
+							<text v-text="item.eventTime" />
+							<text v-text="item.failedQty " /> 
+							<text v-text="item.finishedQty " /> 
+							<text v-text="item.jobQty " /> 
+							<text v-text="item.jobQty " /> 
+							<text v-text="item.mesOperator " /> 
 						</li>
 					</ul>
 				</view>
@@ -156,7 +156,9 @@ export default {
 			dataMessage: null,//统计图的数据
 			setupNum: [],//生产工单的统计数据
 			productNum:[],//生产达成率的统计数据
-			finishNum:[]//良率统计数据
+			finishNum:[],//良率统计数据
+			productStatus:true,
+			finishStatus:true,
 		};
 	},
 	onLoad(option) {
@@ -171,26 +173,26 @@ export default {
 			success: function(res) {
 				if (res.pixelRatio > 1) {
 					//正常这里给2就行，如果pixelRatio=3性能会降低一点
-					//_self.pixelRatio =res.pixelRatio;
+					_self.pixelRatio =res.pixelRatio;
 					_self.pixelRatio = 1;
 				}
 			}
 		});
 		this.cWidth = uni.upx2px(260);
 		this.cHeight = uni.upx2px(380);
-		
 	},
 	mounted() {
 		this.FinishHistory();
 		this.OpFinish();
+	
 	},
 	methods: {
 		TabClick(index, e) {
 			//切换卡的点击事件
 			this.tabIndex = index;
-			if(index==1){
+			if(index==1 && this.productStatus){
 				this.setProductNum();
-			}else if(index ==2){
+			}else if(index ==2 && this.finishStatus){
 				this.setFinishNum();
 			}
 		},
@@ -244,7 +246,7 @@ export default {
 					color:'#ddd'
 				})
 			}
-			console.log(this.productNum,'productNum')
+			this.productStatus = false;
 			this.showRing('ProductCanvasRing', Ring,this.productNum[0],'生产达成率');
 		},
 		showRing(canvasId, chartData,title,text) {
@@ -302,7 +304,6 @@ export default {
 				}
 			}).then(finish => {
 				this.dataMessage = finish.data;
-				console.log(this.dataMessage);
 				this.plannedSetupHours = (this.dataMessage.plannedSetupHours*60).toFixed(1);
 				this.mesHours = (this.dataMessage.mesHours/60).toFixed(2);
 				this.setNum();
@@ -355,6 +356,7 @@ export default {
 					color:'#ddd'
 				})
 				}
+				this.finishStatus = false;
 			this.showRing('finishRing', Ring,this.finishNum[0],'良率统计');			
 		},
 		setNum() {
@@ -500,8 +502,8 @@ export default {
 		ul {
 			padding: 0;
 			li {
-				border-bottom: 1upx solid #828282;
 				list-style: none;
+				border-bottom: 1upx solid #828282;
 				padding: 1upx 0;
 				height: 50upx;
 				text {
@@ -580,7 +582,7 @@ export default {
 					li {
 						text-align: center;
 						height: 50upx;
-						span {
+						text {
 							display: block;
 							float: left;
 							height: 100%;
@@ -594,7 +596,7 @@ export default {
 						}
 					}
 					li:first-child {
-						span {
+						text {
 							border-top: 1upx solid #c0c0c0;
 						}
 					}

@@ -2,23 +2,23 @@
 	<view class="content">
 		<ul>
 			<li class="disable">
-				<text>ID</text>
+				<text v-text="'ID'" />
 				<input type="text" disabled v-model="empID" />
 			</li>
 			<li>
-				<text>{{i18n.changePass.oldPass}}</text>
+				<text v-text="i18n.changePass.oldPass" />
 				<input type="text" placeholder-class="holder" :placeholder="i18n.changePass.oldPassHolder" v-model="pass" />
 			</li>
 			<li>
-				<text>{{i18n.changePass.newPass}}</text>
+				<text v-text="i18n.changePass.newPass" />
 				<input type="text" placeholder-class="holder" :placeholder="i18n.changePass.newPassHolder" v-model="newPass" />
 			</li>
 			<li>
-				<text>{{i18n.changePass.enterPass}}</text>
+				<text v-text="i18n.changePass.enterPass" />
 				<input type="text" placeholder-class="holder" :placeholder="i18n.changePass.enterPassHolder" v-model="enterPass" />
 			</li>
 		</ul>
-		<button class="finish" @tap="finish">{{i18n.changePass.finish}}</button>
+		<button class="finish" @tap="finish" v-text="i18n.changePass.finish" />
 	</view>
 </template>
 

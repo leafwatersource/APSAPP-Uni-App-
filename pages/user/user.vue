@@ -6,36 +6,36 @@
 				<view class="usermanage">
 					<view class="photo"></view>
 					<view class="user">
-						<text class="name">{{userInfo.userName}}</text>
-						<text class="userID">ID:{{userInfo.empID}}</text>
-						<text class="userPhone">{{i18n.user.cellphoneNumber}}{{userInfo.phoneNumber}}</text>
+						<text class="name" v-text="userInfo.userName" />
+						<text class="userID" v-text="'ID:'+userInfo.empID" />
+						<text class="userPhone" v-text="i18n.user.cellphoneNumber+''+userInfo.phoneNumber" />
 					</view>
 				</view>
 			</view>
 			<view class="menu">
 				<ul class="menuList">
 					<li @tap="userSetting">
-						<text class="icon fa fa-address-card"></text>
-						<text>{{i18n.user.userSettings}}</text>
-						<text class="icon-right fa fa-angle-right"></text>
+						<text class="icon fa fa-address-card" />
+						<text v-text="i18n.user.userSettings" />
+						<text class="icon-right fa fa-angle-right" />
 					</li>
 					<li>
-						<text class="icon fa fa-cog"></text>
-						<text>{{i18n.user.systemSettings}}</text>
-						<text class="icon-right fa fa-angle-right"></text>
+						<text class="icon fa fa-cog" />
+						<text v-text="i18n.user.systemSettings" />
+						<text class="icon-right fa fa-angle-right" />
 					</li>
 					<li>
-						<text class="icon fa fa-pencil-square"></text>
-						<text>{{i18n.user.operationRecord}}</text>
-						<text class="icon-right fa fa-angle-right"></text>
+						<text class="icon fa fa-pencil-square" />
+						<text v-text="i18n.user.operationRecord" />
+						<text class="icon-right fa fa-angle-right" />
 					</li>
 					<li @tap="changePass">
-						<text class="icon fa fa-key "></text>
-						<text>{{i18n.user.changePassword}}</text>
-						<text class="icon-right fa fa-angle-right"></text>
+						<text class="icon fa fa-key " />
+						<text v-text="i18n.user.changePassword" />
+						<text class="icon-right fa fa-angle-right" />
 					</li>
 				</ul>
-				<button @click="cancelLogin" hover-class="hoverBtn">{{i18n.user.signOut}}</button>
+				<button @click="cancelLogin" hover-class="hoverBtn" v-text="i18n.user.signOut" />
 			</view>
 		</view>
 	</view>

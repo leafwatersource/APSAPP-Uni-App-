@@ -5,7 +5,7 @@ var baseURL = 'http://api2.szrate.com:8088/api/'; //这里写接口名称就好�
 if (process === 'development') {
 	console.log('开发环境/测试环境')
 	// baseURL = 'https://datacenterapi.szrate.com/api/'; //这里写接口名称就好啦
-	baseURL = 'http://192.168.1.115/api/'; //这里写接口名称就好啦
+	baseURL = 'http://192.168.50.106/api/'; //这里写接口名称就好啦
 } else {
 	console.log('生产环境/正式环境')
 	baseURL = 'http://phone.szrate.com/api/'; //这里写接口名称就好啦
@@ -16,7 +16,7 @@ const http = (options) => {
 		uni.getNetworkType({
 			success: function(res) {
 				console.log(res.networkType == "none");
-				if (res.networkType == "none") {
+				if (res.networkType == "none") { 
 					uni.showToast({
 						title: "无网络",
 						icon: "none"

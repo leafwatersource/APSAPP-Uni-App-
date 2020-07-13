@@ -1,9 +1,9 @@
 <template>
 	<view>
 		<uni-nav-bar :title="type" class="header" color="#ffffff" background-color="#006dcb" @clickLeft="back" @clickRight="finish" status-bar="true" fixed="true">
-			<view slot="left" class="left">取消</view>
+			<view slot="left" class="left" v-text="'取消'" />
 			<view slot="right" class="right">
-				<text>完成</text>
+				<text v-text="'完成'" />
 			</view>
 		</uni-nav-bar>
 		<view class="content"><input type="text" v-model="message" /></view>

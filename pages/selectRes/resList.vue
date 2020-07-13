@@ -3,8 +3,8 @@
 		<view class="searchBox"><input type="text" placeholder="请输入设备名称" v-model="searchWord" @input="search" /></view>
 		<ul>
 			<li v-for="item in resList" :key="item.resourceName" @tap="resClick(item)">
-				<text>{{ item.resourceName }}</text>
-				<text class="icon-right fa fa-angle-right"></text>
+				<text v-text="item.resourceName" />
+				<text class="icon-right fa fa-angle-right" />
 			</li>
 		</ul>
 	</view>

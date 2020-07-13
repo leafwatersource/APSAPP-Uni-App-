@@ -2,41 +2,41 @@
 	<view class="content">
 		<ul>
 			<li>
-				<text class="name">ID</text>
-				<text class="message"><text v-text="empId"></text></text>
+				<text class="name" v-text="'ID'" />
+				<text class="message"><text v-text="empId"/></text>
 			</li>
 			<li>
-				<text class="name">{{i18n.userSetting.name}}</text>
-				<text class="message"><text v-text="name"></text></text>
+				<text class="name" v-text="i18n.userSetting.name" />
+				<text class="message"><text v-text="name" /></text>
 			</li>
 			<li @tap="resPage">
-				<text class="name">可报工的设备</text>
+				<text class="name" v-text="'可报工的设备'" /> 
 				<text class="message">
-					<text class="hasIcon num" v-text="resList.length"></text>
-					<text class="icon-right fa fa-angle-right"></text>
+					<text class="hasIcon num" v-text="resList.length" />
+					<text class="icon-right fa fa-angle-right" />
 				</text>
 			</li>
 			<li @tap="canSetting('设置电话',phone,'phoneNum')">
-				<text class="name">	{{i18n.userSetting.phone}}</text>
+				<text class="name" v-text="i18n.userSetting.phone" />
 				<text class="message">
-					<text class="hasIcon" v-text="phone"></text>
-					<text class="icon-right fa fa-angle-right"></text>
+					<text class="hasIcon" v-text="phone" />
+					<text class="icon-right fa fa-angle-right" />
 				</text>
 			</li>
 			<li @tap="canSetting('设置邮箱',email,'email')">
 				<text class="name">{{i18n.userSetting.email}}</text>
 				<text class="message">
-					<text class="hasIcon" v-text="email"></text>
-					<text class="icon-right fa fa-angle-right"></text>
+					<text class="hasIcon" v-text="email" />
+					<text class="icon-right fa fa-angle-right" />
 				</text>
 			</li>
 			<li>
-				<text class="name">{{i18n.userSetting.userGroup}}</text>
-				<text class="message"><text v-text="desc"></text></text>
+				<text class="name" v-text="i18n.userSetting.userGroup" />
+				<text class="message"><text v-text="desc" /></text>
 			</li>
 			<li>
-				<text class="name">{{i18n.userSetting.system}}</text>
-				<text class="message"><text v-text="userSysName"></text></text>
+				<text class="name" v-text="i18n.userSetting.system" />
+				<text class="message"><text v-text="userSysName" /></text>
 			</li>
 		</ul>
 	</view>

@@ -2,9 +2,7 @@
 	<view class="content">
 		<view class="contentBox">
 			<view class="logoBox"></view>
-			<text class="title">
-			{{i18n.publicText.app_title}}
-			</text>
+			<text class="title" v-text="i18n.publicText.app_title" />
 			<view class="inputBox">
 				<input id="userName" type="text" :placeholder="i18n.publicText.Login_UserName" placeholder-class="inpCl" v-model="userName" />
 				<input type="password" :placeholder="i18n.publicText.Login_UserPass" placeholder-class="inpCl" v-model="userPass" />
@@ -12,8 +10,8 @@
 			<button type="default" hover-class="btnClick" @tap="login">{{i18n.publicText.Login_Login}}</button>
 		</view>
 		<view class="desc">
-			<text>{{i18n.publicText.Login_Copyby}}</text>
-			<text>{{i18n.publicText.Login_Version}}{{ version }}</text>
+			<text v-text="i18n.publicText.Login_Copyby" />
+			<text v-text="i18n.publicText.Login_Version+''+version " />
 		</view>
 	</view>
 </template>
