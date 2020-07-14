@@ -5,10 +5,7 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
 	state: {
-		hasLogin: false,
-		userName: "",
-		userGuid: "",
-		userInfo: null,
+		userInfo: {},
 		isConnected:true,
 	},
 	mutations: {

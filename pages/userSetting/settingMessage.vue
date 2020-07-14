@@ -12,6 +12,7 @@
 
 <script>
 import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
+import {mapState} from 'vuex';
 export default {
 	components: {
 		uniNavBar
@@ -31,13 +32,13 @@ export default {
 			dept: '',
 			phoneNum: '',
 			email: '',
-			userInfo: ''
 		};
+	},
+	computed:{
+		...mapState(['userInfo'])
 	},
 	mounted() {
 		this.getSystemStatusBarHeight();
-		this.userInfo = uni.getStorageSync('userInfo');
-		console.log('获取用户信息');
 		this.empName = this.userInfo.userName;
 		this.phoneNum = this.userInfo.phoneNumber;
 		this.email = this.userInfo.email;

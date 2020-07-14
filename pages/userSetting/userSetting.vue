@@ -3,11 +3,11 @@
 		<ul>
 			<li>
 				<text class="name" v-text="'ID'" />
-				<text class="message"><text v-text="empId"/></text>
+				<text class="message"><text v-text="userInfo.empID"/></text>
 			</li>
 			<li>
 				<text class="name" v-text="i18n.userSetting.name" />
-				<text class="message"><text v-text="name" /></text>
+				<text class="message"><text v-text="userInfo.userName" /></text>
 			</li>
 			<li @tap="resPage">
 				<text class="name" v-text="'可报工的设备'" /> 
@@ -16,33 +16,34 @@
 					<text class="icon-right fa fa-angle-right" />
 				</text>
 			</li>
-			<li @tap="canSetting('设置电话',phone,'phoneNum')">
+			<li @tap="canSetting('设置电话',userInfo.phoneNumber,'phoneNum')">
 				<text class="name" v-text="i18n.userSetting.phone" />
 				<text class="message">
-					<text class="hasIcon" v-text="phone" />
+					<text class="hasIcon" v-text="userInfo.phoneNumber" />
 					<text class="icon-right fa fa-angle-right" />
 				</text>
 			</li>
-			<li @tap="canSetting('设置邮箱',email,'email')">
+			<li @tap="canSetting('设置邮箱',userInfo.email,'email')">
 				<text class="name">{{i18n.userSetting.email}}</text>
 				<text class="message">
-					<text class="hasIcon" v-text="email" />
+					<text class="hasIcon" v-text="userInfo.email" />
 					<text class="icon-right fa fa-angle-right" />
 				</text>
 			</li>
 			<li>
 				<text class="name" v-text="i18n.userSetting.userGroup" />
-				<text class="message"><text v-text="desc" /></text>
+				<text class="message"><text v-text="userInfo.userDesc" /></text>
 			</li>
 			<li>
 				<text class="name" v-text="i18n.userSetting.system" />
-				<text class="message"><text v-text="userSysName" /></text>
+				<text class="message"><text v-text="userInfo.userSysName" /></text>
 			</li>
 		</ul>
 	</view>
 </template>
 
 <script>
+	import { mapState } from 'vuex';
 export default {
 	data() {
 		return {
@@ -56,16 +57,17 @@ export default {
 		};
 	},
 	onShow() {
-		var userInfo = uni.getStorageSync('userInfo');
-		this.name = userInfo.userName;
-		this.phone = userInfo.phoneNumber;
-		this.email = userInfo.email;
-		this.empId = userInfo.empID;
-		this.userSysName = userInfo.userSysName;
-		this.desc = userInfo.userDesc;
-		console.log(userInfo);
+		// var userInfo = uni.getStorageSync('userInfo');
+		// this.name = userInfo.userName;
+		// this.phone = userInfo.phoneNumber;
+		// this.email = userInfo.email;
+		// this.empId = userInfo.empID;
+		// this.userSysName = userInfo.userSysName;
+		// this.desc = userInfo.userDesc;
+		// console.log(userInfo);
 	},
 	computed:{
+			...mapState(['userInfo']),
 		i18n () {
 			return this.$t('message'); 
 		},
@@ -88,7 +90,7 @@ export default {
 			this.$HTTP({
 				url: 'ResList',
 				data: {
-					usersysid: this.$store.state.userInfo['userSysID']
+					usersysid: this.userInfo['userSysID']
 				}
 			}).then(resList => {
 				console.log(resList);

@@ -1,11 +1,13 @@
 // created by wangyong for uni-app request 2019.11.22
+import store from 'store/index';
+
 const process = 'development';
 // const process = 'product';
 var baseURL = 'http://api2.szrate.com:8088/api/'; //这里写接口名称就好啦
 if (process === 'development') {
 	console.log('开发环境/测试环境')
 	// baseURL = 'https://datacenterapi.szrate.com/api/'; //这里写接口名称就好啦
-	baseURL = 'http://192.168.1.115/api/'; //这里写接口名称就好啦
+	baseURL = 'http://192.168.50.106/api/'; //这里写接口名称就好啦
 } else {
 	console.log('生产环境/正式环境')
 	baseURL = 'http://phone.szrate.com/api/'; //这里写接口名称就好啦
@@ -39,8 +41,9 @@ const http = (options) => {
 		});
 		try {
 			// 从本地获取token 
-			const UserGuid = uni.getStorageSync('UserGuid');
-			const UserEmpID = uni.getStorageSync('UserEmpID');
+			const UserGuid = store.state.userInfo['userGuid'];
+			const UserEmpID = store.state.userInfo['empID'];
+			console.log(store.state.userInfo);
 			uni.request({
 				url: (options.baseURL || baseURL) + options.url,
 				method: options.method || 'POST', // 默认为POST请求

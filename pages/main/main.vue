@@ -138,7 +138,7 @@ export default {
 		}
 	},
 	computed: {
-		...mapState(['forcedLogin', 'hasLogin', 'userName', 'api', 'userInfo']),
+		...mapState(['userInfo']),
 		i18n() {
 			return this.$t('message');
 		}
@@ -148,7 +148,7 @@ export default {
 		this.items.push(this.i18n.publicText.Tab_unstart);
 		this.items.push(this.i18n.publicText.Tab_finished);
 		this.HasLogin();
-		this.getResList();
+		
 	},
 	methods: {
 		scan() {
@@ -195,7 +195,6 @@ export default {
 			if (this.current !== e.currentIndex) {
 				this.current = e.currentIndex;
 			}
-			console.log(this.current);
 			if (this.current == 1) {
 				this.GetFinishOrder();
 			} else if (this.current == 0) {
@@ -205,7 +204,6 @@ export default {
 			}
 		},
 		GetFinishOrder() {
-			const _this = this;
 			this.doneOrder = [];
 			this.doneWorkOrder = [];
 			this.$HTTP({
@@ -215,11 +213,11 @@ export default {
 					dayShift: this.resName['dayshift']
 				}
 			}).then(finishData => {
-				_this.doneOrder = [];
-				_this.doneWorkOrder = [];
-				_this.doneOrder.push(...finishData.data);
-				_this.doneWorkOrder.push(...finishData.data);
-				_this.search();
+				this.doneOrder = [];
+				this.doneWorkOrder = [];
+				this.doneOrder.push(...finishData.data);
+				this.doneWorkOrder.push(...finishData.data);
+				this.search();
 			});
 		},
 		getSystemStatusBarHeight() {
@@ -246,11 +244,14 @@ export default {
 			});
 		},
 		HasLogin() {
-			if (this.userInfo == null) {
+			console.log(this.userInfo);
+			if (JSON.stringify(this.userInfo) == '{}') {
 				uni.redirectTo({
 					url: '../login/login'
 				});
+				return ;
 			}
+			this.getResList();
 		},
 		getResList() {
 			const _this = this;
@@ -269,14 +270,9 @@ export default {
 			});
 		},
 		GetUnstartList(resName) {
-			console.log('获取工单');
-			console.log(resName);
 			if (this.isRequest) {
-				const _this = this;
 				this.undoneOrder = [];
 				this.undoneWorkOrder = [];
-				console.log(this.undoneOrder);
-				console.log(this.undoneWorkOrder);
 				this.$HTTP({
 					url: 'GetUnstartList',
 					data: {
@@ -290,22 +286,20 @@ export default {
 						UnstartList.data.forEach(item => {
 							if (item.taskFinishState == 2) {
 								
-								_this.undoneWorkOrder.unshift(item);
-								_this.undoneOrder.unshift(item);
+								this.undoneWorkOrder.unshift(item);
+								this.undoneOrder.unshift(item);
 							} else {
-								_this.undoneWorkOrder.push(item);
-								_this.undoneOrder.push(item);
+								this.undoneWorkOrder.push(item);
+								this.undoneOrder.push(item);
 							}
 						});
 						console.log('未完成工单要进行筛选');
-						_this.search();
+						this.search();
 					}
 				});
 			}
 		},
 		downLoadWork() {
-			console.log('选取要拉取的工单');
-			console.log(this.resName);
 			uni.navigateTo({
 				url: '../downLoadWork/downLoadWork?resName=' + JSON.stringify(this.resName) + '&dayshift=' + this.resName['dayshift']
 			});

@@ -48,16 +48,15 @@ export default {
 	data() {
 		return {
 			barHeight: 25,
-			userInfo: ''
 		};
 	},
 	computed: {
+		...mapState(['userInfo']),
 		i18n() {
 			return this.$t('message');
 		}
 	},
 	onShow() {
-		this.userInfo = uni.getStorageSync('userInfo');
 		uni.setTabBarItem({
 			index: 0,
 			text: this.i18n.tabBar.Nav_Report
@@ -103,7 +102,6 @@ export default {
 				confirmText: this.i18n.user.confirmText,
 				success(data) {
 					if (data.confirm) {
-						console.log(_this.userInfo.empID);
 						_this
 							.$HTTP({
 								url: 'UserSignOut',
@@ -116,6 +114,7 @@ export default {
 									uni.reLaunch({
 										url: '../login/login'
 									});
+									_this.userInfo = '';
 								}
 							});
 					}
