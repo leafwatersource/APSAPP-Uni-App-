@@ -1,10 +1,10 @@
 <template>
 	<view class="content">
-		<view class="status_bar" :style="{ height: barHeight + 'px' }"></view>
+		<view class="status_bar" :style="{ height: barHeight + 'px' }" />
 		<view class="UserContent" :style="{ top: barHeight + 'px' }">
 			<view class="userMessage">
 				<view class="usermanage">
-					<view class="photo"></view>
+					<view class="photo" />
 					<view class="user">
 						<text class="name" v-text="userInfo.userName" />
 						<text class="userID" v-text="'ID:' + userInfo.empID" />
@@ -19,7 +19,7 @@
 						<text v-text="i18n.user.userSettings" />
 						<text class="icon-right fa fa-angle-right" />
 					</li>
-					<li>
+					<li @tap="systemSetting">
 						<text class="icon fa fa-cog" />
 						<text v-text="i18n.user.systemSettings" />
 						<text class="icon-right fa fa-angle-right" />
@@ -120,6 +120,11 @@ export default {
 					}
 				}
 			});
+		},
+		systemSetting(){
+			uni.navigateTo({
+				url:'../text/test'
+			})
 		}
 	}
 };

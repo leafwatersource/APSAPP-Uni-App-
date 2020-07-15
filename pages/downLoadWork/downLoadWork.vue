@@ -33,7 +33,7 @@
 		<ul class="undone">
 			<li class="work" v-for="(item, index) in workList" :key="index" v-if="workList.length != 0" @tap="downLoad(item)">
 				<view class="workIDBox">
-					<text class="br">|</text>
+					<text class="br" v-text="'|'" />
 					<text v-text="i18n.publicText.Workorder_Workid" />
 					<text class="workId" v-text="item.workID" />
 				</view>

@@ -1,19 +1,18 @@
 <template>
 	<view class="content">
 		<view class="title">
-			<text class="name">工单号码:</text>
-			<text class="value">{{ workItem.workID }}</text>
+			<text class="name" v-text="'工单号码:'" />
+			<text class="value" v-text="workItem.workID" /> 
 		</view>
 		<view class="messageBox">
 			<ul class="messageTab">
-				<li v-for="(item, index) in tabItem" v-text="item" :class="{ active: index === tabIndex ? true : false }" :key="index" @tap="TabClick(index, $event)"></li>
+				<li v-for="(item, index) in tabItem" v-text="item" :class="{ active: index === tabIndex ? true : false }" :key="index" @tap="TabClick(index, $event)" />
 			</ul>
 			<view class="message">
-				<!-- <ul> -->
 				<ul :style="{ left: -tabIndex * 100 + '%' }" v-if='dataMessage'>
 					<li>
 						<view class="qiun-charts chart">
-							<canvas canvas-id="canvasRing" id="canvasRing" class="charts" @touchstart="touchRing"></canvas>
+							<canvas canvas-id="canvasRing" id="canvasRing" class="charts" @touchstart="touchRing" />
 						</view>
 						<view class="messageContent">
 							<view class="messageContentWrap">
@@ -27,7 +26,7 @@
 						</view>
 					</li>
 					<li>
-						<view class="qiun-charts chart"><canvas canvas-id="ProductCanvasRing" id="ProductCanvasRing" class="charts" @touchstart="touchRing"></canvas></view>
+						<view class="qiun-charts chart"><canvas canvas-id="ProductCanvasRing" id="ProductCanvasRing" class="charts" @touchstart="touchRing" /></view>
 						<view class="messageContent">
 							<view class="messageContentWrap">
 								<text v-text="'计划生产开始:'+dataMessage.planStartTime" />
@@ -40,14 +39,14 @@
 						</view>
 					</li>
 					<li>
-						<view class="qiun-charts chart"><canvas canvas-id="finishRing" id="finishRing" class="charts" @touchstart="touchRing"></canvas></view>
+						<view class="qiun-charts chart"><canvas canvas-id="finishRing" id="finishRing" class="charts" @touchstart="touchRing" /></view>
 						<view class="messageContent">
 							<view class="messageContentWrap">
 								<text v-text="'计划数量:'+dataMessage.plannedQty.toFixed(2)" />
 								<text v-text="'完成数量:'+dataMessage.finishedQty.toFixed(2)" />
 								<text v-text="'良品数:'+dataMessage.finishedQty.toFixed(2)" />
 								<text v-text="'不良数:'+dataMessage.failedQty.toFixed(2)" />
-								<text v-text="'产品良率:'+parseFloat(finishNum).toFixed(2)" />
+								<text v-text="'产品良率:'+parseInt(finishNum)+'%'" />
 							</view>
 						</view>
 					</li>
@@ -259,7 +258,7 @@ export default {
 			 				fontSize: 11,
 			 				legend: false,
 			 				title: {
-			 					name: title+'%',
+			 					name: parseInt(title)+'%',
 			 					color: '#7cb5ec',
 			 					fontSize: 18 * _self.pixelRatio,
 			 					offsetY: 2 * _self.pixelRatio

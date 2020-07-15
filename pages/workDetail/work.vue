@@ -155,6 +155,7 @@
 <script>
 import MxDatePicker from '@/components/mx-datepicker/mx-datepicker';
 import uniDrawer from '@/components/uni-drawer/uni-drawer.vue';
+import {mapState} from 'vuex'
 export default {
 	components: {
 		MxDatePicker,
@@ -188,10 +189,10 @@ export default {
 		};
 	},
 	mounted() {
-		console.log(this.workItem);
 		this.datetime = this.getNowDateTime();
 	},
 	computed: {
+		...mapState(['userInfo']),
 		i18n() {
 			return this.$t('message');
 		}
@@ -278,11 +279,10 @@ export default {
 			})
 		},
 		btnClick() {
-			const userInfo = uni.getStorageSync('userInfo');
-			this.workItem.mesOperator = userInfo['userName'];
+			//按钮的点击事件
+			this.workItem.mesOperator = this.userInfo['userName'];
 			this.workItem.mesOpName = this.workItem.pmOpName;
 			this.workItem.mesResName = this.workItem.pmResName;
-			console.log(this.workItem)
 			if (this.workItem.canReport) {
 				if (this.workItem.taskFinishState == 0) {
 					let _this = this;
@@ -313,6 +313,7 @@ export default {
 					let mesTime =(new Date(this.datetime)- new Date(this.workItem.mesEndTime))/1000;
 					if(this.workItem.workHours*3600/this.workItem.plannedqty < mesTime / ((parseFloat(this.finishValue)+parseFloat(this.failValue)))){
 						console.log('生产延迟');
+						
 					}else{
 						this.pullData('Report');
 					}
@@ -322,8 +323,7 @@ export default {
 			}
 		},
 		parseBtn() {
-			const userInfo = uni.getStorageSync('userInfo');
-			this.workItem.mesOperator = userInfo['userName'];
+			this.workItem.mesOperator = this.userInfo['userName'];
 			this.workItem.mesOpName = this.workItem.pmOpName;
 			this.workItem.mesResName = this.workItem.pmResName;
 			this.pullData('PauseOrder', true);

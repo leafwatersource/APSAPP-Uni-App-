@@ -27,7 +27,6 @@
 </template>
 
 <script>
-import service from '../../service.js';
 import { mapState, mapMutations } from 'vuex';
 import mInput from '../../components/m-input.vue';
 
@@ -37,17 +36,10 @@ export default {
 	},
 	data() {
 		return {
-			providerList: [],
-			hasProvider: false,
-			account: '',
-			password: '',
-			positionTop: 0,
-			isDevtools: false,
 			userName: '',
 			userPass: '',
 			version: '',
 			remenber: false,
-			userGuid: ''
 		};
 	},
 	mounted() {
@@ -92,7 +84,6 @@ export default {
 						userGuid: uni.getStorageSync('userGuid')
 					}
 				}).then(status => {
-					console.log(status.data);
 					if (status.data) {
 						this.ForceOut();
 					}else {
@@ -198,7 +189,7 @@ export default {
 							});
 						}
 					});
-					// _this.StartSocket();
+					// this.StartSocket();
 				}
 			});
 		},

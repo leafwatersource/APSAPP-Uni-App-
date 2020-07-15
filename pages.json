@@ -21,7 +21,6 @@
 					"bounce": "none"
 				}
 				// "enablePullDownRefresh": true
-
 			}
 		}, {
 			"path": "pages/user/user",
@@ -39,7 +38,6 @@
 			"path": "pages/workDetail/work",
 			"style": {
 				"navigationBarBackgroundColor": "#006dcb",
-				// "navigationBarTitleText":""
 				"navigationBarTitleText": "订单详情",
 				"app-plus": {
 					"bounce": "none"

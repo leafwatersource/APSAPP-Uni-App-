@@ -43,7 +43,6 @@ export default {
 		this.phoneNum = this.userInfo.phoneNumber;
 		this.email = this.userInfo.email;
 		this.dept = this.userInfo.userDesc;
-		console.log(this.userInfo);
 	},
 	methods: {
 		getSystemStatusBarHeight() {
@@ -54,6 +53,7 @@ export default {
 			uni.navigateBack({});
 		},
 		finish() {
+			//点击完成的时候触发
 			const _this = this;
 			const userinfo = {
 				PhoneNumber: this.phoneNum,
@@ -62,14 +62,12 @@ export default {
 				EmpID:this.userInfo['empID'],
 			};
 			userinfo[this.changeType] = this.message;
-			console.log("完成");
 			this.$HTTP({
 				url: 'ChangeUserInfo',
 				data: {
 					userinfo: JSON.stringify(userinfo)
 				}
 			}).then(res => {
-				console.log(res);
 				if (res.data) {
 					if (_this.changeType == 'empName') {
 						_this.userInfo['userName'] = _this.message;

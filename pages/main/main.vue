@@ -1,8 +1,10 @@
 <template>
 	<view class="content">
 		<view class="top">
+			<!-- 状态值的圆 -->
 			<view class="status_bar" :style="{ height: barHeight + 'px' }"></view>
 			<view class="resBox">
+				<view class="cricleStatus" />
 				<view class="resName" v-text="resName['resourceName']" />
 				<view class="iconBox">
 					<text class="fa fa-bell-o" />
@@ -54,7 +56,7 @@
 							</view>
 							<text class="productName" v-text="i18n.publicText.Workorder_Product+''+ item.productID" />
 							<text class="opname" v-text="i18n.publicText.Workorder_Operation +''+ item.pmOpName" />
-							<text v-text="i18n.publicText.Workorder_Planstartendtime +''+item.planStartTime-item.planendtime" />
+							<text v-text="i18n.publicText.Workorder_Planstartendtime +''+item.planStartTime+'-'+item.planendtime" />
 							<text v-text="i18n.publicText.Workorder_Description+''+item.itemDesp" />
 						</view>
 						<view class="icon-right"><text class="icon-right fa fa-angle-right" /></view>
@@ -75,7 +77,7 @@
 							</view>
 							<text class="productName" v-text="i18n.publicText.Workorder_Product +''+ item.productID" />
 							<text class="opname" v-text="i18n.publicText.Workorder_Operation +''+ item.pmOpName" />
-							<text v-text="i18n.publicText.Workorder_Planstartendtime +''+ (item.planStartTime -  item.planendtime)" />
+							<text v-text="i18n.publicText.Workorder_Planstartendtime +''+ item.planStartTime +'-'+  item.planendtime" />
 							<text v-text="i18n.publicText.Workorder_Description +''+ item.itemDesp" />
 						</view>
 						<view class="icon-right">
@@ -148,10 +150,10 @@ export default {
 		this.items.push(this.i18n.publicText.Tab_unstart);
 		this.items.push(this.i18n.publicText.Tab_finished);
 		this.HasLogin();
-		
 	},
 	methods: {
 		scan() {
+			//扫一扫
 			uni.scanCode({
 				success: function(res) {
 					console.log(res);
@@ -169,7 +171,7 @@ export default {
 			this.resCount = false;
 		},
 		search() {
-			console.log('search');
+			//搜索框
 			if (this.searchWord == '') {
 				return;
 			}
@@ -204,6 +206,7 @@ export default {
 			}
 		},
 		GetFinishOrder() {
+			//获取完成工单
 			this.doneOrder = [];
 			this.doneWorkOrder = [];
 			this.$HTTP({
@@ -213,6 +216,7 @@ export default {
 					dayShift: this.resName['dayshift']
 				}
 			}).then(finishData => {
+				console.log(finishData);
 				this.doneOrder = [];
 				this.doneWorkOrder = [];
 				this.doneOrder.push(...finishData.data);
@@ -228,23 +232,25 @@ export default {
 			this.resCount = this.resCount == true ? false : true;
 		},
 		selectRes() {
+			//跳转设备选择页面
 			uni.navigateTo({
 				url: '../selectRes/resList?resList=' + JSON.stringify(this.resList)
 			});
 		},
 		finishOrder(workItem){
-			console.log(workItem)
+			//跳转完成工单的详情页
 			uni.navigateTo({
 				url:'../workDetail/finishWork?workItem='+JSON.stringify(workItem)
 			})
 		},
 		work(workItem) {
+			//跳转未完成工单的详情页
 			uni.navigateTo({
 				url: '../workDetail/work?workItem=' + JSON.stringify(workItem)
 			});
 		},
 		HasLogin() {
-			console.log(this.userInfo);
+			//判断用户信息是否存在,不存在代表没有登录
 			if (JSON.stringify(this.userInfo) == '{}') {
 				uni.redirectTo({
 					url: '../login/login'
@@ -254,22 +260,22 @@ export default {
 			this.getResList();
 		},
 		getResList() {
-			const _this = this;
+			//获取设备列表
 			this.$HTTP({
 				url: 'ResList',
 				data: {
 					usersysid: this.userInfo['userSysID']
 				}
 			}).then(resList => {
-				console.log(resList);
-				_this.resList.push(...resList.data);
-				if (_this.isRequest) {
-					_this.resName = resList.data[0];
-					_this.GetUnstartList(resList.data[0]['resourceName']);
+				this.resList.push(...resList.data);
+				if (this.isRequest) {
+					this.resName = resList.data[0];
+					this.GetUnstartList(resList.data[0]['resourceName']);
 				}
 			});
 		},
 		GetUnstartList(resName) {
+			//获取未完成的工单
 			if (this.isRequest) {
 				this.undoneOrder = [];
 				this.undoneWorkOrder = [];
@@ -285,7 +291,6 @@ export default {
 					if (UnstartList.data.length > 0) {
 						UnstartList.data.forEach(item => {
 							if (item.taskFinishState == 2) {
-								
 								this.undoneWorkOrder.unshift(item);
 								this.undoneOrder.unshift(item);
 							} else {
@@ -300,6 +305,7 @@ export default {
 			}
 		},
 		downLoadWork() {
+			//跳转拉取工单页面
 			uni.navigateTo({
 				url: '../downLoadWork/downLoadWork?resName=' + JSON.stringify(this.resName) + '&dayshift=' + this.resName['dayshift']
 			});
@@ -324,6 +330,17 @@ export default {
 			position: relative;
 			width: 100%;
 			height: 80upx;
+			.cricleStatus{
+				position: absolute;
+				top: 50%;
+				transform: translateY(-50%);
+				width: 30upx;
+				height: 30upx;
+				border-radius: 50%;
+				// background-color: red;
+				// background-color: green;
+				// background-color: orange;
+			}
 			.resName {
 				display: inline-block;
 				padding: 0 20upx;
