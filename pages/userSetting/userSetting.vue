@@ -2,47 +2,48 @@
 	<view class="content">
 		<ul>
 			<li>
-				<text class="name">ID</text>
-				<text class="message"><text v-text="empId"></text></text>
+				<text class="name" v-text="'ID'" />
+				<text class="message"><text v-text="userInfo.empID"/></text>
 			</li>
 			<li>
-				<text class="name">{{ i18n.userSetting.name }}</text>
-				<text class="message" v-text="name"></text>
+				<text class="name" v-text="i18n.userSetting.name" />
+				<text class="message" v-text="name" />
 			</li>
-			<li @tap="canSetting('设置电话', phone, 'phoneNum')">
-				<text class="name">{{ i18n.userSetting.phone }}</text>
+			<li @tap="resPage">
+				<text class="name" v-text="'可报工的设备'" /> 
 				<text class="message">
-					<text class="hasIcon" v-text="phone"></text>
-					<text class="icon-right fa fa-angle-right"></text>
+					<text class="hasIcon num" v-text="resList.length" />
+					<text class="icon-right fa fa-angle-right" />
 				</text>
 			</li>
-			<li @tap="canSetting('设置电话', phone, 'phoneNum')">
-				<text class="name">可报工设备</text>
+			<li @tap="canSetting('设置电话',userInfo.phoneNumber,'phoneNum')">
+				<text class="name" v-text="i18n.userSetting.phone" />
 				<text class="message">
-					<text class="hasIcon" v-text="phone"></text>
-					<text class="icon-right fa fa-angle-right"></text>
+					<text class="hasIcon" v-text="userInfo.phoneNumber" />
+					<text class="icon-right fa fa-angle-right" />
 				</text>
 			</li>
-			<li @tap="canSetting('设置邮箱', email, 'email')">
-				<text class="name">{{ i18n.userSetting.email }}</text>
+			<li @tap="canSetting('设置邮箱',userInfo.email,'email')">
+				<text class="name" v-text="i18n.userSetting.email" />
 				<text class="message">
-					<text class="hasIcon" v-text="email"></text>
-					<text class="icon-right fa fa-angle-right"></text>
+					<text class="hasIcon" v-text="userInfo.email" />
+					<text class="icon-right fa fa-angle-right" />
 				</text>
 			</li>
 			<li>
-				<text class="name">{{ i18n.userSetting.userDescription }}</text>
-				<text class="message" v-text="desc"></text>
+				<text class="name" v-text="i18n.userSetting.userGroup" />
+				<text class="message"><text v-text="userInfo.userDesc" /></text>
 			</li>
 			<li>
-				<text class="name">{{ i18n.userSetting.system }}</text>
-				<text class="message"><text v-text="userSysName"></text></text>
+				<text class="name" v-text="i18n.userSetting.system" />
+				<text class="message"><text v-text="userInfo.userSysName" /></text>
 			</li>
 		</ul>
 	</view>
 </template>
 
 <script>
+	import { mapState } from 'vuex';
 export default {
 	data() {
 		return {
@@ -51,23 +52,29 @@ export default {
 			email: '',
 			empId: '',
 			userSysName: '',
-			desc: ''
+			desc: '',
+			resList:[],
 		};
 	},
 	onShow() {
-		var userInfo = uni.getStorageSync('userInfo');
-		this.name = userInfo.userName;
-		this.phone = userInfo.phoneNumber;
-		this.email = userInfo.email;
-		this.empId = userInfo.empID;
-		this.userSysName = userInfo.userSysName;
-		this.desc = userInfo.userDesc;
-		console.log(userInfo);
+		// var userInfo = uni.getStorageSync('userInfo');
+		// this.name = userInfo.userName;
+		// this.phone = userInfo.phoneNumber;
+		// this.email = userInfo.email;
+		// this.empId = userInfo.empID;
+		// this.userSysName = userInfo.userSysName;
+		// this.desc = userInfo.userDesc;
+		// console.log(userInfo);
 	},
-	computed: {
-		i18n() {
-			return this.$t('message');
-		}
+
+	computed:{
+			...mapState(['userInfo']),
+		i18n () {
+			return this.$t('message'); 
+		},
+	},
+	mounted() {
+		this.getResList();
 	},
 	methods: {
 		canSetting(type, message, changeType) {
@@ -78,11 +85,25 @@ export default {
 				animationDuration: 300
 			});
 		},
-		// GetCanChangeResList(){
-		// 	this.$HTTP({
-		// 		url:""
-		// 	})
-		// },
+		getResList(){
+			//获取设备能报工的设备
+			this.$HTTP({
+				url: 'ResList',
+				data: {
+					usersysid: this.userInfo['userSysID']
+				}
+			}).then(resList => {
+				console.log(resList);
+				this.resList = resList.data;
+				console.log(this.resList)
+			});
+		},
+		resPage(){
+			//跳转查看设备列表页面
+			uni.navigateTo({
+				url:'./resList?resList='+JSON.stringify(this.resList)
+			})
+		}
 	}
 };
 </script>
@@ -104,6 +125,7 @@ export default {
 			text {
 				float: left;
 			}
+			
 			.message {
 				float: right;
 				position: relative;
@@ -111,6 +133,16 @@ export default {
 				color: #999999;
 				text {
 					text-align: right;
+				}
+				.num{
+					display: block;
+					width: 48upx;
+					height: 48upx;
+					line-height: 48upx;
+					text-align: center;
+					color: $uni-text-color-white;
+					border-radius: 50%;
+					background-color: $uni-btn-active-color;
 				}
 				.hasIcon {
 					margin-right: 20upx;

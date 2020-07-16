@@ -2,24 +2,31 @@
 	<view class="content">
 		<view class="contentBox">
 			<view class="logoBox"></view>
-			<text class="title">
-			{{i18n.publicText.app_title}}
-			</text>
+			<text class="title" v-text="i18n.publicText.app_title" />
 			<view class="inputBox">
-				<input id="userName" type="text" :placeholder="i18n.publicText.Login_UserName" placeholder-class="inpCl" v-model="userName" />
-				<input type="password" :placeholder="i18n.publicText.Login_UserPass" placeholder-class="inpCl" v-model="userPass" />
+				<view class="inputFlexBox">
+					<label for="userName" class="fa fa-user" />
+					<input id="userName" type="text" :placeholder="i18n.publicText.Login_UserName" placeholder-class="inpCl" v-model="userName" />
+				</view>
+				<view class="inputFlexBox">
+					<label for="password" class="fa fa-key" />
+					<input type="password" id="password" :placeholder="i18n.publicText.Login_UserPass" placeholder-class="inpCl" v-model="userPass" />
+				</view>
 			</view>
-			<button type="default" hover-class="btnClick" @tap="login">{{i18n.publicText.Login_Login}}</button>
+			<label class="remember">
+				<checkbox :checked="remenber" @tap="checkboxClick" />
+				<text v-text="'记住我'" />
+			</label>
+			<button type="default" hover-class="btnClick" @tap="login">{{ i18n.publicText.Login_Login }}</button>
 		</view>
 		<view class="desc">
-			<text>{{i18n.publicText.Login_Copyby}}</text>
-			<text>{{i18n.publicText.Login_Version}}{{ version }}</text>
+			<text v-text="i18n.publicText.Login_Copyby" />
+			<text v-text="i18n.publicText.Login_Version + '' + version" />
 		</view>
 	</view>
 </template>
 
 <script>
-import service from '../../service.js';
 import { mapState, mapMutations } from 'vuex';
 import mInput from '../../components/m-input.vue';
 
@@ -29,101 +36,103 @@ export default {
 	},
 	data() {
 		return {
-			providerList: [],
-			hasProvider: false,
-			account: '',
-			password: '',
-			positionTop: 0,
-			isDevtools: false,
 			userName: '',
 			userPass: '',
 			version: '',
+			remenber: false,
 		};
 	},
 	mounted() {
 		const userInfo = uni.getStorageSync('userInfo');
-		console.log(userInfo);
-		this.userName = userInfo.empID;
 		this.userPass = uni.getStorageSync('pass');
-		console.log(this.userPass);
+		this.userName = userInfo['empID'];
 		plus.runtime.getProperty(plus.runtime.appid, wgtinfo => {
 			this.version = wgtinfo.version;
 		});
-		
-		
 	},
-	computed:{
-		 ...mapState(['forcedLogin', 'api', 'userGuid']),
-			i18n () {  
-				return this.$t('message'); 
-			},
+	computed: {
+		...mapState(['userInfo']),
+		i18n() {
+			return this.$t('message');
+		}
 	},
 	methods: {
+		...mapMutations(['WriteLog']),
+		checkboxClick() {
+			this.remenber = !this.remenber;
+		},
 		login() {
-			console.log(this.api);
-			const _this = this;
-			const UserGuid = uni.getStorageSync('UserGuid');
-			const UserEmpID = uni.getStorageSync('UserEmpID');
-			console.log(UserEmpID);
-			console.log(UserGuid);
-			uni.showLoading({
-				title: '登录中',
-				mask: true
-			});
+			if (this.userName == '') {
+				uni.showToast({
+					title: '请输入用户名',
+					icon: 'none'
+				});
+				return;
+			}
+			if (this.userPass == '') {
+				uni.showToast({
+					title: '请输入密码',
+					icon: 'none'
+				});
+				return;
+			}
+			const userInfo = uni.getStorageSync('userInfo');
+			if (userInfo.length != 0) {
+				this.$HTTP({
+					url: 'UserHaveLogin',
+					data: {
+						username: this.userName,
+						userGuid: uni.getStorageSync('userGuid')
+					}
+				}).then(status => {
+					if (status.data) {
+						this.ForceOut();
+					}else {
+						this.loginEnter();
+					}
+				});
+				return;
+			}
+			this.loginEnter();
+		},
+		loginEnter(){
 			this.$HTTP({
-				url: 'UserHaveLogin',
+				url: 'login',
 				data: {
-					username: UserEmpID,
-					userGuid: UserGuid
+					username: this.userName,
+					userpass: this.userPass
 				}
-			}).then(status => {
-				console.log(status);
-				if (status.data) {
-					console.log('账号没有在别的设备登录过');
-					_this.ForceOut();
-				} else {
-					console.log(_this.userName, _this.userPass);
-					_this
-						.$HTTP({
-							url: 'login',
-							data: {
-								username: _this.userName,
-								userpass: _this.userPass
+			}).then(loginStatus => {
+				if (loginStatus.data.loginState == 2) {
+					//是否强制登录
+					let _this = this;
+					uni.showModal({
+						title: this.i18n.publicText.Login_forceOut,
+						content: loginStatus.data['message'],
+						confirmText: this.i18n.publicText.Button_OK,
+						cancelText: this.i18n.publicText.Button_Cancel,
+						success(data) {
+							if (data.confirm) {
+								_this.ForceOut();
+								_this.WriteLog('强制登出','用户选择强制登出。');
 							}
-						})
-						.then(loginStatus => {
-							console.log(loginStatus);
-							uni.hideLoading();
-							if (loginStatus.data['loginState'] == 2) {
-								uni.hideLoading();
-								//需要强制登陆
-								uni.showModal({
-									title: this.i18n.publicText.Login_forceOut,
-									content: loginStatus.data['message'],
-									confirmText:this.i18n.publicText.Button_OK,
-									cancelText:this.i18n.publicText.Button_Cancel,
-									success(data) {
-										if (data.confirm) {
-											_this.ForceOut();
-										}
-									}
-								});
-							} else if (loginStatus.data['loginState'] == 1) {
-								_this.$store.state.userGuid = loginStatus.data['userGuiD'];
-								_this.UserInfo();
-							} else if (loginStatus.data['loginState'] == 0) {
-								uni.hideToast();
-								uni.showToast({
-									title: loginStatus.data['message'],
-									icon: 'none'
-								});
-							}
-						});
+						}
+					});
+				} else if (loginStatus.data.loginState == 1) {
+					this.$store.state.userInfo['userGuid'] = loginStatus.data['userGuiD'];
+					this.WriteLog('用户登陆','用户登陆成功。');
+					this.UserInfo();
+				} else if (loginStatus.data.loginState == 0) {
+					uni.hideToast();
+					uni.showToast({
+						title: loginStatus.data['message'],
+						icon: 'none'
+					});
 				}
 			});
 		},
 		ForceOut() {
-			const _this = this;
+			// 强制登录
 			this.$HTTP({
 				url: 'ForceOut',
 				data: {
@@ -131,10 +140,9 @@ export default {
 					userPass: this.userPass
 				}
 			}).then(ForceOutData => {
-				console.log(ForceOutData);
 				if (ForceOutData.data['loginState'] == 1) {
-					_this.$store.state.userGuid = ForceOutData.data.userGuiD;
-					_this.UserInfo();
+					this.$store.state.userInfo['userGuid'] = ForceOutData.data.userGuiD;
+					this.UserInfo();
 				} else if (ForceOutData.data['loginState'] == 0) {
 					uni.hideLoading();
 					uni.showToast({
@@ -143,39 +151,38 @@ export default {
 					});
 				}
 				if (ForceOutData.data.loginState == 2) {
-					_this.login();
+					this.login();
 				}
 			});
 		},
 		UserInfo() {
-			const _this = this;
+			//获取用户信息
 			this.$HTTP({
 				url: 'GetUserInfo',
 				data: {
-					userGuid: this.userGuid,
+					userGuid: this.$store.state.userInfo['userGuid'],
 					empid: this.userName
 				}
 			}).then(userInfoData => {
 				if (userInfoData) {
-					_this.$store.state.userInfo = userInfoData.data;
-					const userInfo = userInfoData.data;
-					const pass = _this.userPass;
+					this.$store.state.userInfo = userInfoData.data;
+					let userGuid = userInfoData.data['userGuid'];
 					uni.setStorage({
-						key: 'UserEmpID',
-						data: userInfoData.data['empID']
+						key: 'userGuid',
+						data: userGuid
 					});
-					uni.setStorage({
-						key: 'UserGuid',
-						data: userInfoData.data['userGuid']
-					});
-					uni.setStorage({
-						key: 'userInfo',
-						data: userInfo
-					});
-					uni.setStorage({
-						key: 'pass',
-						data: pass
-					});
+					if (this.remenber) {
+						const userInfo = userInfoData.data;
+						const pass = this.userPass;
+						uni.setStorage({
+							key: 'userInfo',
+							data: userInfo
+						});
+						uni.setStorage({
+							key: 'pass',
+							data: pass
+						});
+					}
 					uni.showToast({
 						title: '登陆成功',
 						success() {
@@ -185,9 +192,7 @@ export default {
 							});
 						}
 					});
-					// _this.StartSocket();
-				} else {
-
+					// this.StartSocket();
 				}
 			});
 		},
@@ -223,7 +228,7 @@ export default {
 
 <style scoped lang="scss">
 @import '@/uni.scss';
-
+@import '@/commom/font-awesome-4.7.0/css/font-awesome.min.css';
 .content {
 	background-color: $uni-gb-color-blue !important;
 	width: 100%;
@@ -235,7 +240,7 @@ export default {
 		position: absolute;
 		top: 50%;
 		transform: translateY(-50%);
-		padding: 0 40upx;
+		padding: 0 80upx;
 		box-sizing: border-box;
 
 		.logoBox {
@@ -261,15 +266,38 @@ export default {
 			input {
 				color: $uni-text-color-white;
 				border-bottom: 1px solid $uni-text-color-white;
-				margin-bottom: 80upx;
+				margin-bottom: 40upx;
 				padding: 10upx;
 			}
 
 			.inpCl {
 				color: white;
 			}
+			.inputFlexBox {
+				display: flex;
+				// border: 1px solid black;
+				label {
+					color: $uni-text-color-white;
+					font-weight: bolder;
+					font-size: 40upx;
+					margin-top: 10upx;
+					margin-right: 16upx;
+				}
+				input {
+					flex-grow: 1;
+				}
+			}
 		}
-
+		.remember {
+			margin-bottom: 80upx;
+			display: block;
+			checkbox {
+				transform: scale(0.8);
+			}
+			text {
+				color: $uni-text-color-white;
+			}
+		}
 		button {
 			background-color: #303f9f;
 			color: white;

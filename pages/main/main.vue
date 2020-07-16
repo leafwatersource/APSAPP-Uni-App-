@@ -1,27 +1,29 @@
 <template>
 	<view class="content">
 		<view class="top">
+			<!-- 状态值的圆 -->
 			<view class="status_bar" :style="{ height: barHeight + 'px' }"></view>
 			<view class="resBox">
-				<view class="resName">{{ resName['resourceName'] }}</view>
+				<view class="cricleStatus" />
+				<view class="resName" v-text="resName['resourceName']" />
 				<view class="iconBox">
-					<text class="fa fa-bell-o"></text>
-					<text class="fa fa-plus-circle" @tap="showResCount"></text>
+					<text class="fa fa-bell-o" />
+					<text class="fa fa-plus-circle" @tap="showResCount" /> 
 				</view>
 				<view class="resCountWrap" @tap="resCountWrapClick" v-show="resCount" :style="{ top: barHeight + 'px' }">
 					<view class="resCount" :class="{ resCount: true, Active: resCount }">
 						<ul>
 							<li @tap="scan">
-								<text class="fa fa-qrcode" @tap="selectRes"></text>
-								<text>{{i18n.publicText.Scancode}}</text>
+								<text class="fa fa-qrcode" @tap="selectRes" />
+								<text v-text="i18n.publicText.Scancode" />
 							</li>
 							<li @tap="selectRes">
-								<text class="fa fa-random"></text>
-								<text>{{i18n.publicText.ChangeRes_Title_ResName}}</text>
+								<text class="fa fa-random" />
+								<text v-text="i18n.publicText.ChangeRes_Title_ResName" />
 							</li>
 							<li @tap="downLoadWork">
-								<text class="fa fa-download"></text>
-								<text>{{i18n.publicText.Msg_DownOrder_Title}}</text>
+								<text class="fa fa-download" />
+								<text v-text="i18n.publicText.Msg_DownOrder_Title" />
 							</li>
 						</ul>
 					</view>
@@ -37,48 +39,50 @@
 				<ul class="undone" v-show="current === 0">
 					<li class="work" v-for="(item, index) in undoneWorkOrder" :key="index" @tap="work(item)" v-if="undoneOrder.length != 0">
 						<view class="work-icon">
-							<text class="iconfont-red fa fa-stop-circle" v-if="item.taskFinishState == 0"></text>
-							<text class="iconfont-blue fa fa-bandcamp" v-if="item.taskFinishState == 1"></text>
-							<text class="iconfont-green fa fa-play-circle" v-if="item.taskFinishState == 2"></text>
-							<text class="iconfont-orange fa fa-pause-circle" v-if="item.taskFinishState == 3"></text>
+							<text class="iconfont-red fa fa-stop-circle" v-if="item.taskFinishState == 0" />
+							<text class="iconfont-blue fa fa-bandcamp" v-if="item.taskFinishState == 1" />
+							<text class="iconfont-green fa fa-play-circle" v-if="item.taskFinishState == 2" />
+							<text class="iconfont-orange fa fa-pause-circle" v-if="item.taskFinishState == 3" />
 						</view>
 						<view class="itemBox">
 							<view class="WorkBox">
-								<text class="workId" style="float: left">{{ item.workID }}</text>
+								<text class="workId" style="float: left" v-text="item.workID" />
 								<view class="process-bar" style="float: right;">
-									<text>{{ item.finishedQty }}/{{ item.plannedqty }}</text>
+									<text v-text="item.finishedQty+'/'+item.plannedqty" />
 									<view class="process-content">
-										<view class="process-content-num" :style="{width:item.finishedQty/item.plannedqty*100+'%'}"></view>
+										<view class="process-content-num" :style="{ width: (item.finishedQty / item.plannedqty) * 100 + '%' }" />
 									</view>
 								</view>
 							</view>
-							<text class="productName">{{i18n.publicText.Workorder_Product}}{{ item.productID }}</text>
-							<text class="opname">{{i18n.publicText.Workorder_Operation}}{{ item.pmOpName }}</text>
-							<text>{{i18n.publicText.Workorder_Planstartendtime}}{{ item.planStartTime }} - {{ item.planendtime }}</text>
-							<text>{{i18n.publicText.Workorder_Description}}{{item.itemDesp}}</text>
+							<text class="productName" v-text="i18n.publicText.Workorder_Product+''+ item.productID" />
+							<text class="opname" v-text="i18n.publicText.Workorder_Operation +''+ item.pmOpName" />
+							<text v-text="i18n.publicText.Workorder_Planstartendtime +''+item.planStartTime+'-'+item.planendtime" />
+							<text v-text="i18n.publicText.Workorder_Description+''+item.itemDesp" />
 						</view>
-						<view class="icon-right"><text class="icon-right fa fa-angle-right"></text></view>
+						<view class="icon-right"><text class="icon-right fa fa-angle-right" /></view>
 					</li>
 				</ul>
 				<ul class="done" v-show="current === 1">
-					<li class="work" v-for="(item, index) in doneWorkOrder" :key="index" @tap="work(item)" v-if="doneWorkOrder.length != 0">
-						<view class="work-icon"><text class="iconfont-orange fa fa-check-circle"></text></view>
+					<li class="work" v-for="(item, index) in doneWorkOrder" :key="index" @tap="finishOrder(item)" v-if="doneWorkOrder.length != 0">
+						<view class="work-icon"><text class="iconfont-orange fa fa-check-circle" /></view>
 						<view class="itemBox">
 							<view class="WorkBox">
-								<text class="workId" style="float: left">{{ item.workID }}</text>
+								<text class="workId" style="float: left" v-text="item.workID" />
 								<view class="process-bar" style="float: right;">
-									<text>{{ item.finishedQty }}/{{ item.plannedqty }}</text>
+									<text v-text="item.finishedQty +'/'+item.plannedqty" />
 									<view class="process-content">
-										<view class="process-content-num" :style="{width:item.finishedQty/item.plannedqty*100+'%'}"></view>
+										<view class="process-content-num" :style="{ width: (item.finishedQty / item.plannedqty) * 100 + '%' }" />
 									</view>
 								</view>
 							</view>
-							<text class="productName">{{i18n.publicText.Workorder_Product}}{{ item.productID }}</text>
-							<text class="opname">{{i18n.publicText.Workorder_Operation}}{{ item.pmOpName }}</text>
-							<text>{{i18n.publicText.Workorder_Planstartendtime}}{{ item.planStartTime }} - {{ item.planendtime }}</text>
-							<text>{{i18n.publicText.Workorder_Description}}{{item.itemDesp}}</text>
+							<text class="productName" v-text="i18n.publicText.Workorder_Product +''+ item.productID" />
+							<text class="opname" v-text="i18n.publicText.Workorder_Operation +''+ item.pmOpName" />
+							<text v-text="i18n.publicText.Workorder_Planstartendtime +''+ item.planStartTime +'-'+  item.planendtime" />
+							<text v-text="i18n.publicText.Workorder_Description +''+ item.itemDesp" />
 						</view>
-						<view class="icon-right"><text class="icon-right fa fa-angle-right"></text></view>
+						<view class="icon-right">
+							<text class="icon-right fa fa-angle-right" />
+						</view>
 					</li>
 				</ul>
 			</view>
@@ -87,7 +91,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
 
 import uniSegmentedControl from '@/components/uni-segmented-control/uni-segmented-control.vue';
 export default {
@@ -105,19 +109,16 @@ export default {
 			items: [],
 			current: 0,
 			searchWord: '',
-			resCount: false
+			resCount: false,
 		};
 	},
 	onLoad(option) {
 		if (Object.keys(option).length != 0) {
 			const resName = JSON.parse(option.resName);
-			console.log(resName);
-			console.log(this.resName);
 			this.resName = resName;
 		}
 	},
 	onShow() {
-		console.log(this.resName);
 		uni.setTabBarItem({
 			index: 0,
 			text: this.i18n.tabBar.Nav_Report
@@ -138,21 +139,24 @@ export default {
 			this.searchWord = '';
 		}
 	},
-	computed:{
-		...mapState(['forcedLogin', 'hasLogin', 'userName', 'api', 'userInfo']),
-		i18n () {
-			return this.$t('message'); 
-		},
-	}, 
+	computed: {
+		...mapState(['userInfo']),
+		i18n() {
+			return this.$t('message');
+		}
+	},
 	mounted() {
 		this.getSystemStatusBarHeight();
 		this.items.push(this.i18n.publicText.Tab_unstart);
 		this.items.push(this.i18n.publicText.Tab_finished);
 		this.HasLogin();
-		this.getResList(); 
+		this.getResList();
+		console.log(login);
 	},
 	methods: {
+		...mapMutations(['HasLogin']),
 		scan() {
+			//扫一扫
 			uni.scanCode({
 				success: function(res) {
 					console.log(res);
@@ -170,7 +174,7 @@ export default {
 			this.resCount = false;
 		},
 		search() {
-			console.log('search');
+			//搜索框
 			if (this.searchWord == '') {
 				return;
 			}
@@ -196,7 +200,6 @@ export default {
 			if (this.current !== e.currentIndex) {
 				this.current = e.currentIndex;
 			}
-			console.log(this.current);
 			if (this.current == 1) {
 				this.GetFinishOrder();
 			} else if (this.current == 0) {
@@ -206,7 +209,7 @@ export default {
 			}
 		},
 		GetFinishOrder() {
-			const _this = this;
+			//获取完成工单
 			this.doneOrder = [];
 			this.doneWorkOrder = [];
 			this.$HTTP({
@@ -217,9 +220,11 @@ export default {
 				}
 			}).then(finishData => {
 				console.log(finishData);
-				_this.doneOrder.push(...finishData.data);
-				_this.doneWorkOrder.push(...finishData.data);
-				_this.search();
+				this.doneOrder = [];
+				this.doneWorkOrder = [];
+				this.doneOrder.push(...finishData.data);
+				this.doneWorkOrder.push(...finishData.data);
+				this.search();
 			});
 		},
 		getSystemStatusBarHeight() {
@@ -230,43 +235,41 @@ export default {
 			this.resCount = this.resCount == true ? false : true;
 		},
 		selectRes() {
-			console.log(JSON.stringify(this.resList))
 			uni.navigateTo({
 				url: '../selectRes/resList?resList=' + JSON.stringify(this.resList)
 			});
 		},
+		finishOrder(workItem){
+			//跳转完成工单的详情页
+			uni.navigateTo({
+				url:'../workDetail/finishWork?workItem='+JSON.stringify(workItem)
+			})
+		},
 		work(workItem) {
+			//跳转未完成工单的详情页
 			uni.navigateTo({
 				url: '../workDetail/work?workItem=' + JSON.stringify(workItem)
 			});
 		},
-		HasLogin() {
-			if (this.userInfo == null) {
-				uni.redirectTo({
-					url: '../login/login'
-				});
-			}
-		},
 		getResList() {
-			const _this = this;
+			//获取设备列表
 			this.$HTTP({
 				url: 'ResList',
 				data: {
 					usersysid: this.userInfo['userSysID']
 				}
 			}).then(resList => {
-				console.log(resList);
-				_this.resList.push(...resList.data);
-				if (_this.isRequest) {
-					_this.resName = resList.data[0];
-					_this.GetUnstartList(resList.data[0]['resourceName']);
+				this.resList.push(...resList.data);
+				console.log(this.resList);
+				if (this.isRequest) {
+					this.resName = resList.data[0];
+					this.GetUnstartList(resList.data[0]['resourceName']);
 				}
 			});
 		},
 		GetUnstartList(resName) {
-			console.log(resName);
+			//获取未完成的工单
 			if (this.isRequest) {
-				const _this = this;
 				this.undoneOrder = [];
 				this.undoneWorkOrder = [];
 				this.$HTTP({
@@ -281,22 +284,21 @@ export default {
 					if (UnstartList.data.length > 0) {
 						UnstartList.data.forEach(item => {
 							if (item.taskFinishState == 2) {
-								_this.undoneWorkOrder.unshift(item);
-								_this.undoneOrder.unshift(item);
+								this.undoneWorkOrder.unshift(item);
+								this.undoneOrder.unshift(item);
 							} else {
-								_this.undoneWorkOrder.push(item);
-								_this.undoneOrder.push(item);
+								this.undoneWorkOrder.push(item);
+								this.undoneOrder.push(item);
 							}
 						});
 						console.log('未完成工单要进行筛选');
-						_this.search();
+						this.search();
 					}
 				});
 			}
 		},
 		downLoadWork() {
-			console.log('选取要拉取的工单');
-			console.log(this.resName);
+			//跳转拉取工单页面
 			uni.navigateTo({
 				url: '../downLoadWork/downLoadWork?resName=' + JSON.stringify(this.resName) + '&dayshift=' + this.resName['dayshift']
 			});
@@ -321,9 +323,21 @@ export default {
 			position: relative;
 			width: 100%;
 			height: 80upx;
+			.cricleStatus{
+				position: absolute;
+				left: 20upx;
+				top: 50%;
+				transform: translateY(-50%);
+				width: 30upx;
+				height: 30upx;
+				border-radius: 50%;
+				// background-color: #FF0000;
+				background-color: #00aa00;
+				// background-color: #ff9900;
+			}
 			.resName {
 				display: inline-block;
-				padding: 0 20upx;
+				padding: 0 60upx;
 				line-height: 80upx;
 				color: $uni-text-color-white;
 				font-size: 30upx;
@@ -368,7 +382,7 @@ export default {
 								display: inline-block;
 							}
 						}
-						
+
 						li:last-child {
 							border: none;
 						}
@@ -440,7 +454,6 @@ export default {
 							font-size: 50upx;
 							text-align: center;
 							display: block;
-							
 						}
 					}
 					.itemBox {

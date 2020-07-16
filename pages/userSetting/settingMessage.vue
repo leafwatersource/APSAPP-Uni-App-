@@ -1,9 +1,9 @@
 <template>
 	<view>
 		<uni-nav-bar :title="type" class="header" color="#ffffff" background-color="#006dcb" @clickLeft="back" @clickRight="finish" status-bar="true" fixed="true">
-			<view slot="left" class="left">取消</view>
+			<view slot="left" class="left" v-text="'取消'" />
 			<view slot="right" class="right">
-				<text>完成</text>
+				<text v-text="'完成'" />
 			</view>
 		</uni-nav-bar>
 		<view class="content"><input type="text" v-model="message" /></view>
@@ -12,6 +12,7 @@
 
 <script>
 import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
+import {mapState} from 'vuex';
 export default {
 	components: {
 		uniNavBar
@@ -31,18 +32,17 @@ export default {
 			dept: '',
 			phoneNum: '',
 			email: '',
-			userInfo: ''
 		};
+	},
+	computed:{
+		...mapState(['userInfo'])
 	},
 	mounted() {
 		this.getSystemStatusBarHeight();
-		this.userInfo = uni.getStorageSync('userInfo');
-		console.log('获取用户信息');
 		this.empName = this.userInfo.userName;
 		this.phoneNum = this.userInfo.phoneNumber;
 		this.email = this.userInfo.email;
 		this.dept = this.userInfo.userDesc;
-		console.log(this.userInfo);
 	},
 	methods: {
 		getSystemStatusBarHeight() {
@@ -53,22 +53,21 @@ export default {
 			uni.navigateBack({});
 		},
 		finish() {
+			//点击完成的时候触发
 			const _this = this;
-			const userobj = {
-				empName: this.empName,
-				dept: this.dept,
-				phoneNum: this.phoneNum,
-				email: this.email
+			const userinfo = {
+				PhoneNumber: this.phoneNum,
+				Email: this.email,
+				UserSysID:this.userInfo['userSysID'],
+				EmpID:this.userInfo['empID'],
 			};
-			userobj[this.changeType] = this.message;
-			console.log("完成");
+			userinfo[this.changeType] = this.message;
 			this.$HTTP({
-				url: 'ChangeUserMessage',
+				url: 'ChangeUserInfo',
 				data: {
-					userobj: JSON.stringify(userobj)
+					userinfo: JSON.stringify(userinfo)
 				}
 			}).then(res => {
-				console.log(res);
 				if (res.data) {
 					if (_this.changeType == 'empName') {
 						_this.userInfo['userName'] = _this.message;

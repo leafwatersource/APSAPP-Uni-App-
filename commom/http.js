@@ -1,4 +1,6 @@
 // created by wangyong for uni-app request 2019.11.22
+import store from 'store/index';
+
 const process = 'development';
 // const process = 'product';
 var baseURL = 'http://api2.szrate.com:8088/api/'; //这里写接口名称就好啦
@@ -11,6 +13,9 @@ if (process === 'development') {
 	 // baseURL ="http://192.168.1.53/api/";
 
 	// baseURL = 'http://192.168.50.112/api/'; //这里写接口名称就好啦
+	// baseURL = 'https://datacenterapi.szrate.com/api/'; //这里写接口名称就好啦
+	baseURL = 'http://192.168.1.53/api/'; //这里写接口名称就好啦
+
 } else {
 	console.log('生产环境/正式环境')
 	baseURL = 'http://phone.szrate.com/api/'; //这里写接口名称就好啦
@@ -20,8 +25,7 @@ const http = (options) => {
 	return new Promise((resolve, reject) => {
 		uni.getNetworkType({
 			success: function(res) {
-				console.log(res.networkType == "none");
-				if (res.networkType == "none") {
+				if (res.networkType == "none") { 
 					uni.showToast({
 						title: "无网络",
 						icon: "none"
@@ -42,14 +46,10 @@ const http = (options) => {
 				reject("none");
 			}
 		});
-		uni.showLoading({
-			title: '加载中...',
-			mask: options.load || false // 默认遮罩出现可以继续操作
-		});
 		try {
 			// 从本地获取token 
-			const UserGuid = uni.getStorageSync('UserGuid');
-			const UserEmpID = uni.getStorageSync('UserEmpID');
+			const UserGuid = store.state.userInfo['userGuid'];
+			const UserEmpID = store.state.userInfo['empID'];
 			uni.request({
 				url: (options.baseURL || baseURL) + options.url,
 				method: options.method || 'POST', // 默认为POST请求
@@ -62,13 +62,14 @@ const http = (options) => {
 					'Content-Type': 'application/x-www-form-urlencoded'
 				},
 				success: res => {
-					uni.hideLoading();
-					console.log("here");
 					if(res.statusCode == 500){
 						uni.showToast({
 							title:"服务器异常",
 							icon:"none"
 						});
+						uni.reLaunch({
+							url:"/pages/login/login"
+						})
 						return;
 					}else if(res.statusCode == 200){
 						if(res.data.LoginState == "0"){

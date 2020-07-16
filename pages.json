@@ -21,7 +21,6 @@
 					"bounce": "none"
 				}
 				// "enablePullDownRefresh": true
-
 			}
 		}, {
 			"path": "pages/user/user",
@@ -39,7 +38,6 @@
 			"path": "pages/workDetail/work",
 			"style": {
 				"navigationBarBackgroundColor": "#006dcb",
-				// "navigationBarTitleText":""
 				"navigationBarTitleText": "订单详情",
 				"app-plus": {
 					"bounce": "none"
@@ -58,6 +56,28 @@
 			}
 		},
 		{
+			"path": "pages/workDetail/finishWork",
+			"style": {
+				"navigationBarBackgroundColor": "#006dcb",
+				// "navigationBarTitleText":""
+				"navigationBarTitleText": "已完成订单详情",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		},
+		{
+			"path": "pages/userSetting/resList",
+			"style": {
+				"navigationBarBackgroundColor": "#006dcb",
+				// "navigationBarTitleText":""
+				"navigationBarTitleText": "可报工的设备",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		},
+		{
 			"path": "pages/statisticsCenter/statisticsCenter",
 			"style": {
 				"navigationBarBackgroundColor": "#006dcb",
@@ -68,6 +88,7 @@
 				}
 			}
 		},
+		
 		{
 			"path": "pages/downLoadWork/downLoadWork",
 			"style": {
@@ -83,6 +104,16 @@
 			"style": {
 				"navigationBarBackgroundColor": "#006dcb",
 				"navigationBarTitleText": "个人信息",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		},
+		{
+			"path": "pages/userSetting/logTab",
+			"style": {
+				"navigationBarBackgroundColor": "#006dcb",
+				"navigationBarTitleText": "用户操作记录",
 				"app-plus": {
 					"bounce": "none"
 				}
