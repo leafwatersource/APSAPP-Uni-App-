@@ -3,19 +3,20 @@
 		<view class="searchBox"><input type="text" placeholder="请输入设备名称" v-model="searchWord" @input="search" /></view>
 		<ul>
 			<li v-for="item in resList" :key="item.resourceName" @tap="resClick(item)">
-				<text v-text="item.resourceName" />
-				<text class="icon-right fa fa-angle-right" />
+				<view :class="{'circleBox':true,'circle_green':item.resEventType=='U'?true:false,'circle_orange':item.resEventType=='Y'?true:false}" />
+				<text class="resName" v-text="item.resourceName" />
+				<view class="rightContent">
+					<text class="person" v-if="item.lockedPerson" v-text="item.lockedPerson" />
+					<text class="icon-right fa fa-angle-right" />
+				</view>
 			</li>
 		</ul>
 	</view>
 </template>
 
 <script>
+import {mapState} from 'vuex'
 export default {
-	onLoad(options) {
-		this.resList = JSON.parse(decodeURIComponent(options.resList));
-		this.AllRes = JSON.parse(decodeURIComponent(options.resList));
-	},
 	data() {
 		return {
 			resList: [],
@@ -23,19 +24,43 @@ export default {
 			searchWord: ''
 		};
 	},
+	computed:{
+		...mapState(['userInfo']),
+	},
+	mounted() {
+		this.getResList();
+	},
 	methods: {
-		resClick(resName) {
-			const resData = JSON.stringify(resName);
-			console.log(resData);
-			uni.reLaunch({
-				url: '../main/main?resName=' + resData
+		getResList(){
+			this.$HTTP({
+				url: 'ResList',
+				data: {
+					usersysid: this.userInfo['userSysID']
+				}
+			}).then(resList => {
+				this.resList = resList.data;
+				this.AllRes = resList.data;
 			});
+		},
+		resClick(resItem) {
+			if(resItem.resEventType!='Y'&& this.userInfo['userName'] != resItem.lockedPerson){
+				uni.showToast({
+					title:'不能切换此设备',
+					icon:'none'
+				})
+			}else{
+				const resData = JSON.stringify(resItem);
+				uni.reLaunch({
+					url: '../main/main?resName=' + resItem.resourceName
+				});
+			}
+			
 		},
 		search() {
 			if (this.searchWord != '') {
 				this.resList = [];
 				for (var i = 0; i < this.AllRes.length; i++) {
-					if (this.AllRes[i]["resourceName"].indexOf(this.searchWord)!= -1) {
+					if (this.AllRes[i]['resourceName'].indexOf(this.searchWord) != -1) {
 						this.resList.push(this.AllRes[i]);
 					}
 				}
@@ -69,6 +94,7 @@ export default {
 	ul {
 		padding: 0;
 		li {
+			position: relative;
 			list-style: none;
 			background-color: $uni-text-color-white;
 			padding: 20upx 40upx;
@@ -77,8 +103,39 @@ export default {
 			::last-child {
 				border-bottom: none;
 			}
-			.icon-right {
-				float: right;
+			.circleBox {
+				position: absolute;
+				left: 15upx;
+				top: 50%;
+				transform: translateY(-50%);
+				width: 30upx;
+				height: 30upx;
+				border-radius: 50%;
+			}
+			.circle_green{
+				background-color: #00aa00;
+			}
+			.circle_red{
+				background-color: #FF0000;
+			}
+			.circle_orange{
+				background-color: #ff9900;
+			}
+			.resName{
+				margin-left: 15upx;
+			}
+			.rightContent {
+				position: absolute;
+				right: 15upx;
+				top: 50%;
+				transform: translateY(-50%);
+				.person {
+					margin-right: 10upx;
+				}
+				.icon-right {
+					float: right;
+					line-height: 45upx;
+				}
 			}
 		}
 	}

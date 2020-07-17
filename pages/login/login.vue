@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex';
+import { mapState } from 'vuex';
 import mInput from '../../components/m-input.vue';
 
 export default {
@@ -43,9 +43,14 @@ export default {
 		};
 	},
 	mounted() {
-		const userInfo = uni.getStorageSync('userInfo');
-		this.userPass = uni.getStorageSync('pass');
-		this.userName = userInfo['empID'];
+		try{
+			const userInfo = uni.getStorageSync('userInfo');
+			this.userPass = uni.getStorageSync('pass');
+			this.userName = userInfo['empID'];
+		}catch(e){
+			this.userPass = '';
+			this.userName = '';
+		}
 		plus.runtime.getProperty(plus.runtime.appid, wgtinfo => {
 			this.version = wgtinfo.version;
 		});
@@ -57,7 +62,6 @@ export default {
 		}
 	},
 	methods: {
-		...mapMutations(['WriteLog']),
 		checkboxClick() {
 			this.remenber = !this.remenber;
 		},
@@ -114,13 +118,12 @@ export default {
 						success(data) {
 							if (data.confirm) {
 								_this.ForceOut();
-								_this.WriteLog('强制登出','用户选择强制登出。');
 							}
 						}
 					});
 				} else if (loginStatus.data.loginState == 1) {
-					this.$store.state.userInfo['userGuid'] = loginStatus.data['userGuiD'];
-					this.WriteLog('用户登陆','用户登陆成功。');
+					this.userInfo['userGuid'] = loginStatus.data['userGuiD'];
+					// _this.$store.state.userInfo['userGuid'] = loginStatus.data['userGuiD'];
 					this.UserInfo();
 				} else if (loginStatus.data.loginState == 0) {
 					uni.hideToast();
@@ -141,7 +144,8 @@ export default {
 				}
 			}).then(ForceOutData => {
 				if (ForceOutData.data['loginState'] == 1) {
-					this.$store.state.userInfo['userGuid'] = ForceOutData.data.userGuiD;
+					this.userInfo['userGuid'] = ForceOutData.data.userGuiD;
+					// this.$store.state.userInfo['userGuid'] = ForceOutData.data.userGuiD;
 					this.UserInfo();
 				} else if (ForceOutData.data['loginState'] == 0) {
 					uni.hideLoading();
@@ -160,7 +164,7 @@ export default {
 			this.$HTTP({
 				url: 'GetUserInfo',
 				data: {
-					userGuid: this.$store.state.userInfo['userGuid'],
+					userGuid: this.userInfo['userGuid'],
 					empid: this.userName
 				}
 			}).then(userInfoData => {

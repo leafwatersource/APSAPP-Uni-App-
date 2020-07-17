@@ -4,22 +4,20 @@
 			<li :class="{ active: index == tabActive ? true : false }" v-for="(item, index) in tabs" :key="index" v-text="item" @tap="tabClick(index)" />
 		</ul>
 		<view class="TabContent">
-			<view class="TabLogBox" :style="{'left':-tabActive*100+'%'}">
-				<ul class="LogView" v-for="(items,index) in logData">
-					<li v-for="item in items">
-						<view class="circleBox"><view class="circle" /></view>
-						<view class="range" />
-						<view class="logMessage">
-							<text class="logTime" v-text="item.logTime" />
-							<text class="message" v-text="'事件类型:' + item.model" />
-							<text class="message" v-text="'事件详情:' + item.logMessage" />
-							<text class="message" v-text="'用户名:' + item.empName" />
-							<text class="message" v-text="'用户IP:' + item.ipAddress" />
-							<text class="message" v-text="'操作系统:' + item.webinfomation" />
-						</view>
-					</li>
-				</ul>
-			</view>
+			<ul :class="{ logView: true, logActive: index == tabActive }" v-for="(items, index) in logData" :key="index">
+				<li v-for="item in items">
+					<view class="circleBox"><view class="circle" /></view>
+					<view class="range" />
+					<view class="logMessage">
+						<text class="logTime" v-text="item.logTime" />
+						<text class="message" v-text="'事件类型:' + item.model" />
+						<text class="message" v-text="'事件详情:' + item.logMessage" />
+						<text class="message" v-text="'用户名:' + item.empName" />
+						<text class="message" v-text="'用户IP:' + item.ipAddress" />
+						<text class="message" v-text="'操作系统:' + item.webinfomation" />
+					</view>
+				</li>
+			</ul>
 		</view>
 	</view>
 </template>
@@ -31,13 +29,8 @@ export default {
 		return {
 			tabs: ['今天', '近三天', '进七天', '近一个月'],
 			tabActive: 0,
-			logData:{
-				todaylogData: [],
-				thereLogData: [],
-				sevenLogData: [],
-				monthLogData: []
-			}
-		}
+			logData: [[], [], [], []]
+		};
 	},
 	computed: {
 		...mapState(['userInfo'])
@@ -49,13 +42,13 @@ export default {
 		tabClick(index) {
 			//切换卡的点击事件
 			this.tabActive = index;
-			if (this.logData.todaylogData.length != 0 && index == 0) {
+			if (this.logData[0].length != 0 && index == 0) {
 				return;
-			} else if (this.logData.thereLogData.length != 0 && index == 1) {
+			} else if (this.logData[1].length != 0 && index == 1) {
 				return;
-			} else if (this.logData.sevenLogData.length != 0 && index == 2) {
+			} else if (this.logData[2].length != 0 && index == 2) {
 				return;
-			} else if (this.logData.monthLogData.length != 0 && index == 3) {
+			} else if (this.logData[3].length != 0 && index == 3) {
 				return;
 			}
 			this.getLog(this.tabActive);
@@ -71,15 +64,7 @@ export default {
 				}
 			}).then(logList => {
 				console.log(logList);
-				if (index == 0) {
-					this.logData.todaylogData.push(...logList.data);
-				} else if (index == 1) {
-					this.logData.thereLogData.push(...logList.data);
-				} else if (index == 2) {
-					this.logData.sevenLogData.push(...logList.data);
-				} else if (index == 3) {
-					this.logData.monthLogData.push(...logList.data);
-				}
+				this.logData[index].push(...logList.data);
 			});
 		}
 	}
@@ -113,75 +98,66 @@ export default {
 			background-color: $uni-btn-active-color;
 		}
 	}
-	.TabContent{
-		position: relative;
-		width: 100%;
-		overflow-x: hidden;
-		height: 100%;
-		overflow-y: scroll;
-		.TabLogBox{
-			position: absolute;
-			left: 0;
-			top: 0;
-			width: 400%;
-			display: flex;
-			.LogView {
-				width: calc(100% / 4);
-				height: auto;
-				padding: 15upx 0;
-				margin: 20upx 0;
-				background-color: $uni-text-color-white;
-				li {
-					position: relative;
-					list-style: none;
-					display: flex;
-					padding: 0 50upx;
-					box-sizing: border-box;
-					.circleBox {
+	.TabContent {
+		ul {
+			width: 100%;
+			display: none;
+			padding: 15upx 0;
+			margin: 20upx 0;
+			box-sizing: border-box;
+			background-color: $uni-text-color-white;
+			li {
+				position: relative;
+				list-style: none;
+				display: flex;
+				padding: 0 50upx;
+				box-sizing: border-box;
+				.circleBox {
+					width: 35upx;
+					height: 35upx;
+					.circle {
 						width: 35upx;
 						height: 35upx;
-						.circle {
-							width: 35upx;
-							height: 35upx;
-							border-radius: 50%;
-							background-color: $uni-btn-active-color;
-						}
-					}
-					.range {
-						position: absolute;
-						width: 5upx;
-						height: calc(100% - 30upx);
+						border-radius: 50%;
 						background-color: $uni-btn-active-color;
-						left: 65upx;
-						top: 33upx;
 					}
-					.logMessage {
-						padding: 0 15upx;
-						flex-grow: 1;
-						text {
-							display: block;
-						}
-						.logTime {
-							color: $uni-btn-active-color;
-							font-size: 32upx;
-							font-weight: bold;
-						}
-						.message {
-							font-size: 26upx;
-							padding-top: 15upx;
-							border-bottom: 1upx solid #f2f2f2;
-							word-wrap: break-word;
-							word-break: break-all;
-							overflow: hidden;
-						}
-						.message:last-child {
-							margin-bottom: 20upx;
-						}
+				}
+				.range {
+					position: absolute;
+					width: 5upx;
+					height: calc(100% - 30upx);
+					background-color: $uni-btn-active-color;
+					left: 65upx;
+					top: 33upx;
+				}
+				.logMessage {
+					padding: 0 15upx;
+					flex-grow: 1;
+					text {
+						display: block;
+					}
+					.logTime {
+						color: $uni-btn-active-color;
+						font-size: 32upx;
+						font-weight: bold;
+					}
+					.message {
+						font-size: 26upx;
+						padding-top: 15upx;
+						border-bottom: 1upx solid #f2f2f2;
+						word-wrap: break-word;
+						word-break: break-all;
+						overflow: hidden;
+					}
+					.message:last-child {
+						margin-bottom: 20upx;
 					}
 				}
 			}
 		}
+		.logActive {
+			display: block;
+		}
 	}
-	
 }
 </style>

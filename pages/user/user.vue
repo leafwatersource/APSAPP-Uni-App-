@@ -47,7 +47,7 @@ import { mapState, mapMutations } from 'vuex';
 export default {
 	data() {
 		return {
-			barHeight: 25,
+			barHeight: 25
 		};
 	},
 	computed: {
@@ -89,7 +89,6 @@ export default {
 			this.barHeight = height;
 		},
 		userLog() {
-			console.log('logTab')
 			uni.navigateTo({
 				url: '../userSetting/logTab'
 			});
@@ -121,10 +120,10 @@ export default {
 				}
 			});
 		},
-		systemSetting(){
+		systemSetting() {
 			uni.navigateTo({
-				url:'../text/test'
-			})
+				url: '../text/test'
+			});
 		}
 	}
 };

@@ -9,9 +9,7 @@
 <script>
 	export default{
 		onLoad(options) {
-			console.log(options)
 			this.resList = JSON.parse(options.resList);
-			console.log(this.resList)
 		},
 		data(){
 			return {

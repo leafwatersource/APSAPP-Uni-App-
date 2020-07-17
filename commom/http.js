@@ -6,22 +6,16 @@ const process = 'development';
 var baseURL = 'http://api2.szrate.com:8088/api/'; //这里写接口名称就好啦
 if (process === 'development') {
 	console.log('开发环境/测试环境')
-	baseURL = 'https://datacenterapi.szrate.com/api/'; //这里写接口名称就好啦
-	 // baseURL = 'http://api2.szrate.com:8088/api/'; //这里写接口名称就好啦
-	 // baseURL = 'http://192.168.50.112/api/'; //这里写接口名称就好啦
-	 // baseURL ="http://192.168.50.111/api/";
+	// baseURL = 'https://datacenterapi.szrate.com/api/';
+	 // baseURL = 'http://api2.szrate.com:8088/api/';
 	 // baseURL ="http://192.168.1.53/api/";
-
-	// baseURL = 'http://192.168.50.112/api/'; //这里写接口名称就好啦
-	// baseURL = 'https://datacenterapi.szrate.com/api/'; //这里写接口名称就好啦
-	baseURL = 'http://192.168.1.53/api/'; //这里写接口名称就好啦
+	baseURL = 'http://192.168.50.108/api/';
 
 } else {
 	console.log('生产环境/正式环境')
-	baseURL = 'http://phone.szrate.com/api/'; //这里写接口名称就好啦
+	baseURL = 'http://phone.szrate.com/api/';
 }
 const http = (options) => {
-	console.log(baseURL);
 	return new Promise((resolve, reject) => {
 		uni.getNetworkType({
 			success: function(res) {
@@ -50,6 +44,15 @@ const http = (options) => {
 			// 从本地获取token 
 			const UserGuid = store.state.userInfo['userGuid'];
 			const UserEmpID = store.state.userInfo['empID'];
+			if(options.url.indexOf('login')==-1&& options.url.indexOf('ForceOut')==-1&& options.url.indexOf('GetUserInfo')==-1&&options.url.indexOf('UserHaveLogin')==-1){
+				if((!UserGuid||!UserEmpID)){
+						uni.showToast({
+							title:"账号在别处登录了",
+							icon:"none"
+						});
+					return
+				}
+			}
 			uni.request({
 				url: (options.baseURL || baseURL) + options.url,
 				method: options.method || 'POST', // 默认为POST请求

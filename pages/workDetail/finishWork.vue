@@ -34,7 +34,7 @@
 								<text v-text="'计划生产工时:'+(dataMessage.plannedHours/3600 ).toFixed(2)+'小时'" />
 								<text v-text="'实际生产工时:'+(dataMessage.mesHours/3600).toFixed(2)+'小时'" />
 								<text v-text="'差异工时:'+(dataMessage.plannedHours/3600 - dataMessage.mesHours/3600).toFixed(2)+'小时'" />
-								<text v-text="'生产达成率:'+productNum[0]+'%'" />
+								<text v-text="'生产达成率:'+parseInt(productNum[0])+'%'" />
 							</view>
 						</view>
 					</li>
@@ -183,7 +183,6 @@ export default {
 	mounted() {
 		this.FinishHistory();
 		this.OpFinish();
-	
 	},
 	methods: {
 		TabClick(index, e) {
@@ -200,22 +199,19 @@ export default {
 			let Ring = { series: [] };
 			if(this.setupNum.length==1){
 				Ring.series.push({
-					name:'一班',
+					name:'data1',
 					data:this.setupNum[0],
 					color:'#006dcb',
-					show: true,
-					legendShape: "circle",
-					pointShape: "circle",
-					type: "ring"
+					show: true
 				})
 			}else if(this.setupNum.length==2){
 				Ring.series.push({
-					name:'一班',
+					name:'data1',
 					data:this.setupNum[0],
 					color:'#006dcb',
 					show: true
 				},{
-					name:'二班',
+					name:'data2',
 					data:this.setupNum[1],
 					color:'#ddd',
 				})
@@ -224,6 +220,7 @@ export default {
 		},
 		setProductData(){
 			//设置生产达成率的样式
+			console.log(this.productNum)
 			let Ring = { series: [] };
 			if(this.productNum.length==1){
 				Ring.series.push({
@@ -234,12 +231,12 @@ export default {
 				})
 			}else if(this.productNum.length==2){
 				Ring.series.push({
-					name:'一班',
+					name:'data1',
 					data:this.productNum[0],
 					color:'#006dcb',
 					show: true
 				},{
-					name:'二班',
+					name:'data2',
 					data:this.productNum[1],
 					show: true,
 					color:'#ddd'
@@ -313,7 +310,11 @@ export default {
 			//计算生产达成率
 			this.productNum = [];
 			if(this.dataMessage.mesHours<=this.dataMessage.plannedHours){
-				this.productNum.push(parseInt(this.dataMessage.plannedHours/this.dataMessage.mesHours*100));
+				if(this.dataMessage.mesHours*100 ==0){
+					this.productNum.push(parseInt(this.dataMessage.plannedHours));
+				}else{
+					this.productNum.push(parseInt(this.dataMessage.plannedHours/this.dataMessage.mesHours*100));
+				}
 				this.setProductData();
 				return;
 			}else if(this.dataMessage.mesHours>this.dataMessage.plannedHours){
@@ -383,7 +384,6 @@ export default {
 		},
 		FinishHistory() {
 			console.log('历史记录');
-			// let _this = this;
 			this.$HTTP({
 				url: 'OpFinishHistory',
 				data: {

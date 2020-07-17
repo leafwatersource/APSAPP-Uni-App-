@@ -20,7 +20,6 @@
 					"titleNView": false ,//去掉当前页的顶部导航栏
 					"bounce": "none"
 				}
-				// "enablePullDownRefresh": true
 			}
 		}, {
 			"path": "pages/user/user",
@@ -48,7 +47,6 @@
 			"path": "pages/selectRes/resList",
 			"style": {
 				"navigationBarBackgroundColor": "#006dcb",
-				// "navigationBarTitleText":""
 				"navigationBarTitleText": "设备列表",
 				"app-plus": {
 					"bounce": "none"
@@ -59,7 +57,6 @@
 			"path": "pages/workDetail/finishWork",
 			"style": {
 				"navigationBarBackgroundColor": "#006dcb",
-				// "navigationBarTitleText":""
 				"navigationBarTitleText": "已完成订单详情",
 				"app-plus": {
 					"bounce": "none"
@@ -70,7 +67,6 @@
 			"path": "pages/userSetting/resList",
 			"style": {
 				"navigationBarBackgroundColor": "#006dcb",
-				// "navigationBarTitleText":""
 				"navigationBarTitleText": "可报工的设备",
 				"app-plus": {
 					"bounce": "none"

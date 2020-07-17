@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="e089aec8-6b21-4baa-8845-e538b31b90fb" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/commom/http.js" beforeDir="false" afterPath="$PROJECT_DIR$/commom/http.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages.json" beforeDir="false" afterPath="$PROJECT_DIR$/pages.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/login/login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/login/login.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/main/main.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/main/main.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/selectRes/resList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/selectRes/resList.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/user/user.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/user/user.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/userSetting/logTab.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/userSetting/logTab.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/userSetting/resList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/userSetting/resList.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/userSetting/settingMessage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/userSetting/settingMessage.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/userSetting/userSetting.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/userSetting/userSetting.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/workDetail/finishWork.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workDetail/finishWork.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/unpackage/dist/dev/app-plus/__uniapppicker.js" beforeDir="false" afterPath="$PROJECT_DIR$/unpackage/dist/dev/app-plus/__uniapppicker.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/unpackage/dist/dev/app-plus/app-config-service.js" beforeDir="false" afterPath="$PROJECT_DIR$/unpackage/dist/dev/app-plus/app-config-service.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/unpackage/dist/dev/app-plus/app-service.js" beforeDir="false" afterPath="$PROJECT_DIR$/unpackage/dist/dev/app-plus/app-service.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/unpackage/dist/dev/app-plus/app-view.js" beforeDir="false" afterPath="$PROJECT_DIR$/unpackage/dist/dev/app-plus/app-view.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/unpackage/dist/dev/app-plus/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/unpackage/dist/dev/app-plus/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/unpackage/dist/dev/app-plus/view.umd.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/unpackage/dist/dev/app-plus/view.umd.min.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1eo4DsXumA1uKtO1nZldc2b6Yw1" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="true" />
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e089aec8-6b21-4baa-8845-e538b31b90fb" name="Default Changelist" comment="" />
+      <created>1594974495734</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1594974495734</updated>
+      <workItem from="1594974502583" duration="88000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1594974586906">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1594974586906" />
+    <state x="640" y="344" key="com.intellij.ide.util.TipDialog" timestamp="1594974506642">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="640" y="344" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1594974506642" />
+  </component>
+</project>

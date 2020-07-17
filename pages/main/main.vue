@@ -2,10 +2,10 @@
 	<view class="content">
 		<view class="top">
 			<!-- 状态值的圆 -->
-			<view class="status_bar" :style="{ height: barHeight + 'px' }"></view>
+			<view class="status_bar" v-if="resName" :style="{ height: barHeight + 'px' }" />
 			<view class="resBox">
 				<view class="cricleStatus" />
-				<view class="resName" v-text="resName['resourceName']" />
+				<view class="resName" v-text="resName" />
 				<view class="iconBox">
 					<text class="fa fa-bell-o" />
 					<text class="fa fa-plus-circle" @tap="showResCount" /> 
@@ -99,8 +99,7 @@ export default {
 	data() {
 		return {
 			barHeight: 25,
-			resList: [],
-			resName: '',
+			resName: '',//设备的名称
 			undoneWorkOrder: [],
 			doneWorkOrder: [],
 			undoneOrder: [],
@@ -110,12 +109,13 @@ export default {
 			current: 0,
 			searchWord: '',
 			resCount: false,
+			resClick:true,//判断是否是选择工单页面跳过来的数据
 		};
 	},
 	onLoad(option) {
 		if (Object.keys(option).length != 0) {
-			const resName = JSON.parse(option.resName);
-			this.resName = resName;
+			this.resName = option.resName;
+			this.resClick = false;
 		}
 	},
 	onShow() {
@@ -133,8 +133,8 @@ export default {
 		});
 		if (this.resName != '') {
 			this.isRequest = true;
-			this.GetUnstartList(this.resName['resourceName']);
-			this.GetFinishOrder(this.resName['resourceName']);
+			this.GetUnstartList(this.resName);
+			this.GetFinishOrder(this.resName);
 			this.isRequest = false;
 			this.searchWord = '';
 		}
@@ -150,8 +150,9 @@ export default {
 		this.items.push(this.i18n.publicText.Tab_unstart);
 		this.items.push(this.i18n.publicText.Tab_finished);
 		this.HasLogin();
-		this.getResList();
-		console.log(login);
+		if(this.resClick){
+			this.getResList();
+		}
 	},
 	methods: {
 		...mapMutations(['HasLogin']),
@@ -179,7 +180,6 @@ export default {
 				return;
 			}
 			if (this.current == 0) {
-				console.log('搜索未完成工单');
 				this.undoneWorkOrder = [];
 				this.undoneOrder.forEach(item => {
 					if (item.workID.indexOf(this.searchWord) != -1 || item.productID.indexOf(this.searchWord) != -1) {
@@ -187,7 +187,6 @@ export default {
 					}
 				});
 			} else {
-				console.log('搜索完成工单');
 				this.doneWorkOrder = [];
 				this.doneOrder.forEach(item => {
 					if (item.workID.indexOf(this.searchWord) != -1 || item.productID.indexOf(this.searchWord) != -1) {
@@ -215,11 +214,10 @@ export default {
 			this.$HTTP({
 				url: 'GetFinishedList',
 				data: {
-					resName: this.resName['resourceName'],
+					resName: this.resName,
 					dayShift: this.resName['dayshift']
 				}
 			}).then(finishData => {
-				console.log(finishData);
 				this.doneOrder = [];
 				this.doneWorkOrder = [];
 				this.doneOrder.push(...finishData.data);
@@ -236,7 +234,7 @@ export default {
 		},
 		selectRes() {
 			uni.navigateTo({
-				url: '../selectRes/resList?resList=' + JSON.stringify(this.resList)
+				url: '../selectRes/resList'
 			});
 		},
 		finishOrder(workItem){
@@ -252,20 +250,13 @@ export default {
 			});
 		},
 		getResList() {
-			//获取设备列表
+			//获取设备
 			this.$HTTP({
-				url: 'ResList',
-				data: {
-					usersysid: this.userInfo['userSysID']
-				}
-			}).then(resList => {
-				this.resList.push(...resList.data);
-				console.log(this.resList);
-				if (this.isRequest) {
-					this.resName = resList.data[0];
-					this.GetUnstartList(resList.data[0]['resourceName']);
-				}
-			});
+				url:'GetDefaultRes'
+			}).then(resName=>{
+			this.resName = resName.data;
+			this.GetUnstartList(this.resName);
+			})
 		},
 		GetUnstartList(resName) {
 			//获取未完成的工单
@@ -279,8 +270,6 @@ export default {
 						dayShift: this.resName['dayshift']
 					}
 				}).then(UnstartList => {
-					console.log(UnstartList);
-					uni.hideLoading();
 					if (UnstartList.data.length > 0) {
 						UnstartList.data.forEach(item => {
 							if (item.taskFinishState == 2) {
@@ -331,9 +320,7 @@ export default {
 				width: 30upx;
 				height: 30upx;
 				border-radius: 50%;
-				// background-color: #FF0000;
 				background-color: #00aa00;
-				// background-color: #ff9900;
 			}
 			.resName {
 				display: inline-block;

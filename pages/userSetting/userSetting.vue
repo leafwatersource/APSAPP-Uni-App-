@@ -3,11 +3,11 @@
 		<ul>
 			<li>
 				<text class="name" v-text="'ID'" />
-				<text class="message"><text v-text="userInfo.empID"/></text>
+				<text class="message" v-text="userInfo.empID"/>
 			</li>
 			<li>
 				<text class="name" v-text="i18n.userSetting.name" />
-				<text class="message" v-text="name" />
+				<text class="message" v-text="userInfo.userName" />
 			</li>
 			<li @tap="resPage">
 				<text class="name" v-text="'可报工的设备'" /> 
@@ -32,11 +32,11 @@
 			</li>
 			<li>
 				<text class="name" v-text="i18n.userSetting.userGroup" />
-				<text class="message"><text v-text="userInfo.userDesc" /></text>
+				<text class="message" v-text="userInfo.userDesc" />
 			</li>
 			<li>
 				<text class="name" v-text="i18n.userSetting.system" />
-				<text class="message"><text v-text="userInfo.userSysName" /></text>
+				<text class="message" v-text="userInfo.userSysName" />
 			</li>
 		</ul>
 	</view>
@@ -56,17 +56,6 @@ export default {
 			resList:[],
 		};
 	},
-	onShow() {
-		// var userInfo = uni.getStorageSync('userInfo');
-		// this.name = userInfo.userName;
-		// this.phone = userInfo.phoneNumber;
-		// this.email = userInfo.email;
-		// this.empId = userInfo.empID;
-		// this.userSysName = userInfo.userSysName;
-		// this.desc = userInfo.userDesc;
-		// console.log(userInfo);
-	},
-
 	computed:{
 			...mapState(['userInfo']),
 		i18n () {
@@ -78,7 +67,6 @@ export default {
 	},
 	methods: {
 		canSetting(type, message, changeType) {
-			console.log(type, message);
 			uni.navigateTo({
 				url: './settingMessage?type=' + type + '&message=' + message + '&changeType=' + changeType,
 				animationType: 'slide-in-bottom',
@@ -93,9 +81,7 @@ export default {
 					usersysid: this.userInfo['userSysID']
 				}
 			}).then(resList => {
-				console.log(resList);
 				this.resList = resList.data;
-				console.log(this.resList)
 			});
 		},
 		resPage(){
@@ -125,7 +111,6 @@ export default {
 			text {
 				float: left;
 			}
-			
 			.message {
 				float: right;
 				position: relative;

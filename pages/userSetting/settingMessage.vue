@@ -54,7 +54,6 @@ export default {
 		},
 		finish() {
 			//点击完成的时候触发
-			const _this = this;
 			const userinfo = {
 				PhoneNumber: this.phoneNum,
 				Email: this.email,
@@ -69,24 +68,24 @@ export default {
 				}
 			}).then(res => {
 				if (res.data) {
-					if (_this.changeType == 'empName') {
-						_this.userInfo['userName'] = _this.message;
-					} else if (_this.changeType == 'dept') {
-						_this.userInfo['userDesc'] = _this.message;
-					} else if (_this.changeType == 'phoneNum') {
-						_this.userInfo['phoneNumber'] = _this.message;
-					} else if (_this.changeType == 'email') {
-						_this.userInfo['email'] = _this.message;
+					this.userInfo[this.changeType] = this.message;
+					// if (this.changeType == 'empName') {
+					// 	this.userInfo['userName'] = this.message;
+					// } else if (this.changeType == 'dept') {
+					// 	this.userInfo['userDesc'] = this.message;
+					// } else if (this.changeType == 'phoneNum') {
+					// 	this.userInfo['phoneNumber'] = this.message;
+					// } else if (this.changeType == 'email') {
+					// 	this.userInfo['email'] = this.message;
+					// }
+					if(uni.getStorageSync('userInfo')!=""){
+						let newUserInfo = uni.uni.getStorageSync('userInfo');
+						newUserInfo[changeType] = this.message;
+						uni.setStorage({
+							key:"userInfo",
+							data:newUserInfo
+						})
 					}
-					const usermessage = _this.userInfo;
-					console.log(usermessage);
-					console.log(_this.userInfo);
-					uni.setStorage({
-						key:"userInfo",
-						data:usermessage
-					})
-					var temp = uni.getStorageInfoSync('userInfo')
-					console.log(temp);
 					uni.showToast({
 						title: '修改成功',
 						icon: 'none'
