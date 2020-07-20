@@ -6,8 +6,8 @@
 				<view :class="{'circleBox':true,'circle_green':item.resEventType=='U'?true:false,'circle_orange':item.resEventType=='Y'?true:false,'circle_red':item.resEventType=='S'?true:false}" />
 				<text class="resName" v-text="item.resourceName" />
 				<view class="rightContent">
-					<text v-if="item.resEventType=='S'" v-text="'设备异常'" /> 
-					<text class="person" v-if="item.lockedPerson" v-text="item.lockedPerson" />
+					<text v-if="item.resEventType=='S'" v-text="item.resEventComment" /> 
+					<text class="person" v-else v-text="item.lockedPerson" />
 					<text class="icon-right fa fa-angle-right" />
 				</view>
 			</li>
@@ -38,6 +38,9 @@ export default {
 	},
 	methods: {
 		getResList(){
+			uni.showLoading({
+				title:'设备加载中'
+			})
 			this.$HTTP({
 				url: 'ResList',
 				data: {
@@ -46,6 +49,8 @@ export default {
 			}).then(resList => {
 				this.resList = resList.data;
 				this.AllRes = resList.data;
+				console.log(this.resList);
+				uni.hideLoading();
 			});
 		},
 		resClick(resItem) {
@@ -56,7 +61,6 @@ export default {
 				});
 			}else{
 				this.SetResUnused(resItem.resourceName);
-				
 				uni.reLaunch({
 					url: '../main/main?resName=' + resItem.resourceName
 				});
@@ -64,14 +68,13 @@ export default {
 			
 		},
 		SetResUnused(resName){
-			console.log('删除之前的状态');
 			this.$HTTP({
 				url:'SetResUnused',
 				data:{
 					resname:this.prevRes,
-					usetype:'Y'
+					usetype:'U'
 				}
-			});			
+			})		
 		},
 		search() {
 			if (this.searchWord != '') {

@@ -7,6 +7,7 @@ const store = new Vuex.Store({
 	state: {
 		userInfo: {},
 		isConnected:true,
+		stateResname:'',
 	},
 	mutations: {
 		WriteLog(logmodel,logmessage){

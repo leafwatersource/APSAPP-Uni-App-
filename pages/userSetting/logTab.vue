@@ -55,7 +55,6 @@ export default {
 		},
 		getLog(index) {
 			//获取用户的操作日志
-			console.log(this.userInfo);
 			this.$HTTP({
 				url: 'UserLog',
 				data: {
@@ -63,7 +62,6 @@ export default {
 					logtype: index
 				}
 			}).then(logList => {
-				console.log(logList);
 				this.logData[index].push(...logList.data);
 			});
 		}

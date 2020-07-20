@@ -30,6 +30,14 @@
 				console.log(wgtinfo);
 				console.log(plus.runtime.appid);
 			});
+						 // var color = plus.android.newObject("android.graphics.Color")  
+			 //        var ac = plus.android.runtimeMainActivity();  
+			 //        var c2int = plus.android.invoke(color, "parseColor", "#429AF1");  
+			 //        console.log("c2int===" + JSON.stringify(c2int))  
+			 //        var win = plus.android.invoke(ac, "getWindow");  
+			 //        console.log("win===" + JSON.stringify(win))  
+			 //        plus.android.invoke(win, "setNavigationBarColor", c2int);  
+			
 			//检测用户是否是最新的版本软件，传入appid,version,imei
 			//数据库必须存入软件的最新版本的版本号,和最新版本的地址
 			// uni.request({

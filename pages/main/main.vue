@@ -115,6 +115,7 @@ export default {
 	onLoad(option) {
 		if (option.resName) {
 			this.resName = option.resName;
+			this.$store.state.stateResname = option.resName;
 			this.resClick = false;
 			this.SetResUsed();
 		}
@@ -141,7 +142,7 @@ export default {
 		}
 	},
 	computed: {
-		...mapState(['userInfo']),
+		...mapState(['userInfo','stateResname']),
 		i18n() {
 			return this.$t('message');
 		}
@@ -257,12 +258,12 @@ export default {
 				url:'GetDefaultRes'
 			}).then(resName=>{
 			this.resName = resName.data;
+			this.$store.state.stateResname = resName.data;
 			this.SetResUsed();
 			this.GetUnstartList(this.resName);
 			})
 		},
 		SetResUsed(){
-			console.log('SetResUsed');
 			this.$HTTP({
 				url:'SetResUsed',
 				data:{
@@ -272,9 +273,7 @@ export default {
 					endtime:'9999-12-31 23:59:59.000',
 					eventmessage:'用户使用设备.'
 				}
-			}).then(success=>{
-				console.log(success);
-			});
+			})
 		},
 		getDate(){
 			var date = new Date();

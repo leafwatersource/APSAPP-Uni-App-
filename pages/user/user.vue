@@ -110,15 +110,28 @@ export default {
 							})
 							.then(res => {
 								if (res.data) {
-									uni.reLaunch({
-										url: '../login/login'
-									});
-									_this.userInfo = '';
+									_this.SetResUnused()
+									
 								}
 							});
 					}
 				}
 			});
+		},
+		SetResUnused(){
+			this.$HTTP({
+				url:'SetResUnused',
+				data:{
+					resname:this.$store.state.stateResname,
+					usetype:'U'
+				}
+			}).then(success=>{
+				this.$store.state.stateResname = '';
+				this.$store.state.userInfo = '';
+				uni.reLaunch({
+					url: '../login/login'
+				});
+			})	
 		},
 		systemSetting() {
 			uni.navigateTo({
