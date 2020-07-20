@@ -1,7 +1,7 @@
 <template>
 	<view class="content">
 		<view class="contentBox">
-			<view class="logoBox"></view>
+			<view class="logoBox" />
 			<text class="title" v-text="i18n.publicText.app_title" />
 			<view class="inputBox">
 				<view class="inputFlexBox">

@@ -8,8 +8,8 @@ if (process === 'development') {
 	console.log('开发环境/测试环境')
 	// baseURL = 'https://datacenterapi.szrate.com/api/';
 	 // baseURL = 'http://api2.szrate.com:8088/api/';
-	 // baseURL ="http://192.168.1.53/api/";
-	baseURL = 'http://192.168.50.108/api/';
+	 baseURL ="http://192.168.1.53/api/";
+	// baseURL = 'http://192.168.50.108/api/';
 
 } else {
 	console.log('生产环境/正式环境')
@@ -50,6 +50,9 @@ const http = (options) => {
 							title:"账号在别处登录了",
 							icon:"none"
 						});
+						uni.reLaunch({
+							url:"/pages/login/login"
+						});
 					return
 				}
 			}
@@ -82,7 +85,7 @@ const http = (options) => {
 							});
 							uni.reLaunch({
 								url:"/pages/login/login"
-							})
+							});
 							return;
 						}
 						if(res.data==-1){

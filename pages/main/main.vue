@@ -113,9 +113,10 @@ export default {
 		};
 	},
 	onLoad(option) {
-		if (Object.keys(option).length != 0) {
+		if (option.resName) {
 			this.resName = option.resName;
 			this.resClick = false;
+			this.SetResUsed();
 		}
 	},
 	onShow() {
@@ -234,7 +235,7 @@ export default {
 		},
 		selectRes() {
 			uni.navigateTo({
-				url: '../selectRes/resList'
+				url: '../selectRes/resList?resName='+this.resName
 			});
 		},
 		finishOrder(workItem){
@@ -250,13 +251,40 @@ export default {
 			});
 		},
 		getResList() {
+			console.log('获取设备');
 			//获取设备
 			this.$HTTP({
 				url:'GetDefaultRes'
 			}).then(resName=>{
 			this.resName = resName.data;
+			this.SetResUsed();
 			this.GetUnstartList(this.resName);
 			})
+		},
+		SetResUsed(){
+			console.log('SetResUsed');
+			this.$HTTP({
+				url:'SetResUsed',
+				data:{
+					resname:this.resName,
+					usetype:'U',
+					starttime:this.getDate(),
+					endtime:'9999-12-31 23:59:59.000',
+					eventmessage:'用户使用设备.'
+				}
+			}).then(success=>{
+				console.log(success);
+			});
+		},
+		getDate(){
+			var date = new Date();
+			var year = date.getFullYear();
+			var month = date.getMonth()+1;
+			var day = date.getDate();
+			var hour = date.getHours();
+			var min = date.getMinutes();
+			var sec = date.getSeconds();
+			return year+'-'+month+'-'+day+' '+hour+':'+min+':'+sec;
 		},
 		GetUnstartList(resName) {
 			//获取未完成的工单

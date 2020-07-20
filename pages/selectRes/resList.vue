@@ -3,9 +3,10 @@
 		<view class="searchBox"><input type="text" placeholder="请输入设备名称" v-model="searchWord" @input="search" /></view>
 		<ul>
 			<li v-for="item in resList" :key="item.resourceName" @tap="resClick(item)">
-				<view :class="{'circleBox':true,'circle_green':item.resEventType=='U'?true:false,'circle_orange':item.resEventType=='Y'?true:false}" />
+				<view :class="{'circleBox':true,'circle_green':item.resEventType=='U'?true:false,'circle_orange':item.resEventType=='Y'?true:false,'circle_red':item.resEventType=='S'?true:false}" />
 				<text class="resName" v-text="item.resourceName" />
 				<view class="rightContent">
+					<text v-if="item.resEventType=='S'" v-text="'设备异常'" /> 
 					<text class="person" v-if="item.lockedPerson" v-text="item.lockedPerson" />
 					<text class="icon-right fa fa-angle-right" />
 				</view>
@@ -21,11 +22,16 @@ export default {
 		return {
 			resList: [],
 			AllRes: [],
-			searchWord: ''
+			searchWord: '',
+			prevRes:''
 		};
 	},
+	
 	computed:{
 		...mapState(['userInfo']),
+	},
+	onLoad(option) {
+		this.prevRes = option.resName;
 	},
 	mounted() {
 		this.getResList();
@@ -43,18 +49,29 @@ export default {
 			});
 		},
 		resClick(resItem) {
-			if(resItem.resEventType!='Y'&& this.userInfo['userName'] != resItem.lockedPerson){
+			if((resItem.resEventType=='S'||resItem.resEventType=='U')||(resItem.lockedPerson!=""&&this.userInfo['userName'] != resItem.lockedPerson)){
 				uni.showToast({
 					title:'不能切换此设备',
 					icon:'none'
-				})
+				});
 			}else{
-				const resData = JSON.stringify(resItem);
+				this.SetResUnused(resItem.resourceName);
+				
 				uni.reLaunch({
 					url: '../main/main?resName=' + resItem.resourceName
 				});
 			}
 			
+		},
+		SetResUnused(resName){
+			console.log('删除之前的状态');
+			this.$HTTP({
+				url:'SetResUnused',
+				data:{
+					resname:this.prevRes,
+					usetype:'Y'
+				}
+			});			
 		},
 		search() {
 			if (this.searchWord != '') {

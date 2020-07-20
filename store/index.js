@@ -14,8 +14,6 @@ const store = new Vuex.Store({
 				url:'WriteLog',
 				logmodel:logmodel,
 				logmessage:logmessage
-			}).then(success=>{
-				console.log(success);
 			})
 		},
 		HasLogin(state) {
