@@ -25,6 +25,10 @@
 								<text class="fa fa-download" />
 								<text v-text="i18n.publicText.Msg_DownOrder_Title" />
 							</li>
+							<li @tap="tryPage">
+								<text class="fa fa-download" />
+								<text v-text="'try'" />
+							</li>
 						</ul>
 					</view>
 				</view>
@@ -158,6 +162,11 @@ export default {
 	},
 	methods: {
 		...mapMutations(['HasLogin']),
+		tryPage(){
+			uni.navigateTo({
+				url:'./tryPage'
+			});
+		},
 		scan() {
 			//扫一扫
 			uni.scanCode({
@@ -252,7 +261,6 @@ export default {
 			});
 		},
 		getResList() {
-			console.log('获取设备');
 			//获取设备
 			this.$HTTP({
 				url:'GetDefaultRes'
@@ -307,7 +315,6 @@ export default {
 								this.undoneOrder.push(item);
 							}
 						});
-						console.log('未完成工单要进行筛选');
 						this.search();
 					}
 				});

@@ -116,10 +116,8 @@ export default {
 		},
 	}, 
 	onLoad(option) {
-		console.log(option);
 		this.resName = JSON.parse(option.resName);
 		this.dayshift = option.dayshift;
-		console.log(this.resName)
 	},
 	onShow() {
 		uni.setNavigationBarTitle({
@@ -131,7 +129,6 @@ export default {
 	},
 	methods: {
 		getWorkPlan() {
-			const _this = this;
 			this.$HTTP({
 				url: 'DownOrder',
 				data: {
@@ -139,21 +136,15 @@ export default {
 					dayshift:this.dayshift.toString()
 				}
 			}).then(workList => {
-				console.log(workList)
 				if (workList.statusCode == 200) {
-					_this.workList.push(...workList.data);
-					_this.workListArr.push(...workList.data);
-					console.log(_this.workList);
+					this.workList.push(...workList.data);
+					this.workListArr.push(...workList.data);
 				}
-			},fail=>{
-				console.log(fail.data)
 			});
 		},
 		downLoad(workItem) {
-			console.log(workItem)
 			const _this = this;
 			const orderUID = workItem.orderUID;
-			console.log(this.resName.resourceName);
 			uni.showModal({
 				content: this.i18n.publicText.Msg_DownOrder_Message+workItem.workID,
 				confirmText:this.i18n.publicText.datetime_confirm,
@@ -168,7 +159,6 @@ export default {
 									dayshift:_this.dayshift.toString()
 								}
 							}).then(status => {
-								console.log(status)
 								if (status.data) {
 									uni.showToast({
 										title: '工单拉取成功',
@@ -181,8 +171,6 @@ export default {
 										}
 									});
 								}
-							},fail=>{
-								console.log(fail)
 							});
 						}
 				}
@@ -230,8 +218,6 @@ export default {
 			searchArr = [];
 		},
 		filterData(data, searchWord, dataKey) {
-			console.log(dataKey);
-			console.log(searchWord);
 			var newArr = [];
 			data.forEach(item => {
 				for (var i = 0; i < dataKey.length; i++) {
@@ -241,7 +227,6 @@ export default {
 				}
 				newArr.push(item);
 			});
-			console.log(newArr);
 			return newArr;
 		},
 		clearSearch() {

@@ -221,7 +221,6 @@ export default {
 		},
 		setProductData() {
 			//设置生产达成率的样式
-			console.log(this.productNum);
 			let Ring = { series: [] };
 			if (this.productNum.length == 1) {
 				Ring.series.push({
@@ -376,7 +375,6 @@ export default {
 				if (this.dataMessage.mesSetupHours <= this.dataMessage.plannedSetupHours) {
 					this.setupNum = [];
 					this.setupNum.push((this.dataMessage.plannedSetupHours / this.dataMessage.mesSetupHours) * 100);
-					console.log(this.setupNum);
 					this.setProductData();
 					return;
 				} else if (this.dataMessage.mesSetupHours > this.dataMessage.plannedSetupHours) {
@@ -396,7 +394,6 @@ export default {
 				}
 			}).then(success => {
 				this.OpFinishHistory = success.data;
-				console.log(this.OpFinishHistory);
 			});
 		}
 	}

@@ -39,7 +39,7 @@
 				</view>
 				<view class="item">
 					<text class="name" v-text="i18n.publicText.Workorder_Planstartendtime" />
-					<text class="value" v-text="workItem.planStartTime-workItem.planendtime" />
+					<text class="value" v-text="workItem.planStartTime+'-'+workItem.planendtime" />
 				</view>
 				<view class="item">
 					<text class="name" v-text="i18n.publicText.Workorder_WorkHours" />
@@ -70,7 +70,6 @@
 					<text class="value" v-text="workItem.itemAttr4" />
 				</view>
 			</view>
-
 			<view class="finishBox" v-if="workItem.taskFinishState == 2">
 				<view class="name" v-text="i18n.publicText.Workorder_Inputfinishedqty" />
 				<view class="uni-input-wrapper inputBox">
@@ -91,8 +90,11 @@
 					<text class="datetime" v-text="datetime" />
 					<text class="select" @click="onShowDatePicker('datetime')" v-text="i18n.publicText.datetime_select_date" />
 				</view>
+				<e-picker-plus ref="picker" mode="YMDhms" @confirm="dateConfirm"
+				 :start="defaultTime" 
+				 :end="new Date().getFullYear()+'-12-31 23:59:59'"
+				 :defaultValue="defaultTime" />
 			</view>
-			<mx-date-picker :show="showPicker" :type="type" :value="datetime" :show-tips="true" :show-seconds="false" @confirm="onSelected" @cancel="onSelected" />
 		</view>
 		<view class="footer" v-if="workItem.taskFinishState != 4">
 			<button
@@ -152,21 +154,18 @@
 </template>
 
 <script>
-import MxDatePicker from '@/components/mx-datepicker/mx-datepicker';
 import uniDrawer from '@/components/uni-drawer/uni-drawer.vue';
 import {mapState} from 'vuex'
 export default {
 	components: {
-		MxDatePicker,
 		uniDrawer
 	},
 	onLoad(option) {
-		console.log(option);
 		if (option.workItem) {
 			this.workItem = JSON.parse(decodeURIComponent(option.workItem));
 			this.finishValue = parseFloat(this.workItem.canReportQty)<parseFloat(this.workItem.plannedqty)?this.workItem.canReportQty:this.workItem.plannedqty;
+			this.canReportQty = this.finishValue;
 		}
-		console.log(this.workItem)
 	},
 	onShow() {
 		uni.setNavigationBarTitle({
@@ -181,14 +180,15 @@ export default {
 			finishValue: '',
 			failValue: 0,
 			datetime: '',
-			type: 'rangetime',
-			showPicker: false,
+			defaultTime:'',
 			showLeft: false, //左边
-			changeResArr: []
+			changeResArr: [],
+			canReportQty:0,//能报工的数量
 		};
 	},
 	mounted() {
-		this.datetime = this.getNowDateTime();
+		this.defaultTime = this.getNowDateTime();
+		this.datetime = this.defaultTime;
 	},
 	computed: {
 		...mapState(['userInfo']),
@@ -197,6 +197,13 @@ export default {
 		}
 	},
 	methods: {
+		onShowDatePicker(){
+			this.$refs.picker.show();
+		},
+		dateConfirm(e){
+			//获取的日期
+			this.datetime = e.result;
+		},
 		closeDrawer() {
 			this.showLeft = false;
 		},
@@ -210,6 +217,7 @@ export default {
 		},
 		FinishClearInput(event) {
 			this.finishValue = event.detail.value;
+		
 			if (event.detail.value.length > 0) {
 				this.finishShowClearIcon = true;
 			} else {
@@ -222,18 +230,6 @@ export default {
 				this.failShowClearIcon = true;
 			} else {
 				this.failShowClearIcon = false;
-			}
-		},
-		onShowDatePicker(type) {
-			//显示
-			this.type = type;
-			this.showPicker = true;
-		},
-		onSelected(e) {
-			//选择
-			this.showPicker = false;
-			if (e) {
-				this[this.type] = e.value;
 			}
 		},
 		changeRes() {
@@ -265,7 +261,8 @@ export default {
 			const day = date.getDate() > 9 ? date.getDate() : '0' + date.getDate();
 			const hour = date.getHours() > 9 ? date.getHours() : '0' + date.getHours();
 			const min = date.getMinutes() > 9 ? date.getMinutes() : '0' + date.getMinutes();
-			return year + '/' + month + '/' + day + ' ' + hour + ':' + min;
+			const sec = date.getSeconds() > 9 ? date.getSeconds() : '0' + date.getSeconds();
+			return year + '-' + month + '-' + day + ' ' + hour + ':' + min+':'+sec;
 		},
 		OrderAjustment(){
 			this.$HTTP({
@@ -273,9 +270,6 @@ export default {
 				data:{
 					'bean':JSON.stringify(this.workItem)
 				}
-			}).then(success=>{
-				console.log(success);
-				//调机成功
 			})
 		},
 		btnClick() {
@@ -302,7 +296,7 @@ export default {
 					
 					if (parseInt(this.finishValue) + parseInt(this.failValue) > this.workItem.canReportQty) {
 						uni.showToast({
-							title: '完成数加不良数不能超过工单总数',
+							title: '不能超过报工数量,此工单最大报工数量:'+this.canReportQty,
 							icon: 'none'
 						});
 						return;
@@ -310,10 +304,9 @@ export default {
 					this.workItem.finishedQty = this.finishValue;
 					this.workItem.failedQty = parseInt(this.failValue);
 					this.workItem.reportTime = this.datetime;
-					let mesTime =(new Date(this.datetime)- new Date(this.workItem.mesEndTime))/1000;
+					let mesTime =(new Date(this.datetime) - new Date(this.workItem.mesEndTime))/1000;
 					//判断是否是生产延迟
 					if(this.workItem.workHours*3600/this.workItem.plannedqty < mesTime / ((parseFloat(this.finishValue)+parseFloat(this.failValue)))){
-						console.log('生产延迟');
 						uni.showToast({
 							title:"生产延迟",
 							icon:"none"
@@ -333,17 +326,14 @@ export default {
 			this.pullData('PauseOrder', true);
 		},
 		pullData(type, parseState) {
-			console.log(this.workItem)
-			const _this = this;
 			this.$HTTP({
 				url: type,
 				data: {
 					bean: JSON.stringify(this.workItem)
 				}
 			}).then(data => {
-				console.log(data);
 				if (parseState) {
-					_this.workItem.taskFinishState = 3;
+					this.workItem.taskFinishState = 3;
 					uni.navigateBack({
 						delta: 1,
 						animationType: 'pop-out',
@@ -351,12 +341,12 @@ export default {
 					});
 					return;
 				}
-				if (_this.workItem.taskFinishState == 0) {
-					_this.workItem.taskFinishState = 1;
-				} else if (_this.workItem.taskFinishState == 1) {
-					_this.workItem.taskFinishState = 2;
-				} else if (_this.workItem.taskFinishState == 3) {
-					_this.workItem.taskFinishState = 0;
+				if (this.workItem.taskFinishState == 0) {
+					this.workItem.taskFinishState = 1;
+				} else if (this.workItem.taskFinishState == 1) {
+					this.workItem.taskFinishState = 2;
+				} else if (this.workItem.taskFinishState == 3) {
+					this.workItem.taskFinishState = 0;
 				}
 				uni.navigateBack({
 					delta: 1,
@@ -367,7 +357,6 @@ export default {
 		},
 		enterChangeRes(resName) {
 			this.workItem.changeResName = resName;
-			const _this = this;
 			this.$HTTP({
 				url: 'ChangeResource',
 				data: {
@@ -429,8 +418,10 @@ export default {
 			display: block;
 			color: $uni-btn-active-color;
 			font-weight: 500;
-			padding: 6upx 30upx;
+			padding: 10upx 30upx;
 			font-size: 35upx;
+			height: 50upx;
+			line-height: 50upx;
 		}
 
 		.NumBox {
@@ -476,16 +467,19 @@ export default {
 		}
 
 		.workItem {
-			border-bottom: 1px solid #ccc;
 			.item {
-				display: flex;
-				border-bottom: 1upx solid #cccccc;
+				position: relative;
+				border-bottom: .5upx solid #E3E3E3;
 				color: #999;
 				font-size: 30upx;
 				padding: 10upx 20upx;
+				height: 40upx;
 				.value {
-					flex-grow: 1;
-					text-align: right;
+					line-height: 40upx;
+					position: absolute;
+					right: 15upx;
+					top: 50%;
+					transform: translateY(-50%);
 				}
 			}
 			.name:last-child {
@@ -534,11 +528,13 @@ export default {
 				float: right;
 				width: 68%;
 			}
-
 			.select {
 				float: right;
 				color: #0faeff;
 				font-size: 28upx;
+			}
+			.datetime{
+				font-size: 30upx;
 			}
 			.timer {
 				float: left;

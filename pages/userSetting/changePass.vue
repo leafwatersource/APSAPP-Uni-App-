@@ -43,8 +43,6 @@ export default {
 	},
 	methods: {
 		finish() {
-			console.log(this.empID);
-			const _this = this;
 			if(this.pass == ""){
 				uni.showToast({
 					title:"请输入旧密码"
@@ -88,7 +86,7 @@ export default {
 				if (status.data) {
 					uni.setStorage({
 						key: 'pass',
-						data: _this.enterPass
+						data: this.enterPass
 					});
 					uni.showToast({
 						title: '密码修改成功',

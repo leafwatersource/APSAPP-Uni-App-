@@ -77,6 +77,9 @@
 		},
 		onHide: function() {
 			console.log('App Hide');
+			// setInterval(()=>{
+			// 	console.log(111)
+			// },1000)
 		}
 	}
 </script>

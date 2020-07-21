@@ -135,6 +135,17 @@
 					"bounce": "none"
 				}
 			}
+		},
+		{
+			"path": "pages/main/tryPage",
+			"style": {
+				"navigationBarBackgroundColor": "#006dcb",
+				"navigationBarTitleText": "测试",
+				"navigationStyle": "default",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
 		}
 	],
 	"tabBar": {

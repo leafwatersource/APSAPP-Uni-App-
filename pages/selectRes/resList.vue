@@ -49,7 +49,6 @@ export default {
 			}).then(resList => {
 				this.resList = resList.data;
 				this.AllRes = resList.data;
-				console.log(this.resList);
 				uni.hideLoading();
 			});
 		},
@@ -65,7 +64,6 @@ export default {
 					url: '../main/main?resName=' + resItem.resourceName
 				});
 			}
-			
 		},
 		SetResUnused(resName){
 			this.$HTTP({
@@ -120,6 +118,8 @@ export default {
 			padding: 20upx 40upx;
 			border-bottom: 1px solid #e3e3e3;
 			color: #757575;
+			height: 50upx;
+			line-height: 50upx;
 			::last-child {
 				border-bottom: none;
 			}
@@ -154,7 +154,7 @@ export default {
 				}
 				.icon-right {
 					float: right;
-					line-height: 45upx;
+					line-height: 50upx;
 				}
 			}
 		}

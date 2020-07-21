@@ -8,7 +8,7 @@ if (process === 'development') {
 	console.log('开发环境/测试环境')
 	// baseURL = 'https://datacenterapi.szrate.com/api/';
 	 // baseURL = 'http://api2.szrate.com:8088/api/';
-	 baseURL ="http://192.168.1.53/api/";
+	 baseURL ="http://192.168.1.49/api/";
 	// baseURL = 'http://192.168.50.108/api/';
 
 } else {
