@@ -4,6 +4,7 @@ export const lang = {
 			"Nav_Report": "移動報工",
 			"Nav_Dash": "統計中心",
 			"Nav_User": "用戶操作",
+			"Scan":"掃一掃"
 		},
 		publicText: {
 		    "app_name": "移動報工",
@@ -86,7 +87,19 @@ export const lang = {
 			"User_Setting":"用戶設置",
 			"Change_PassWorld" :"修改密碼",
 			"Person_Message":"個人信息",
-			"Statistics_Center":"統計中心"
+			"Statistics_Center":"統計中心",
+			"User_Operation":"用戶操作記録",
+			"Person_Message":"個人信息",
+			"Change_Password":"修改密碼"
+		},
+		messageBox:{
+			"Input_Res":"請輸入設備名稱",
+			"Res_loading":"設備加載中",
+			"Cancel":"取消",
+			"Finish":"完成"
+		},
+		login:{
+			Remember_Mi:"記住我"
 		},
 		user:{
 			cellphoneNumber:'手機號碼:',
@@ -114,6 +127,9 @@ export const lang = {
 			email:'郵箱',
 			userGroup:'用戶組',
 			system:'系統名稱',
+			Can_Report:'可報工的設備',
+			Set_Email:'設置郵箱',
+			Set_Phone:"設置電話"
 		}
 	}
 }

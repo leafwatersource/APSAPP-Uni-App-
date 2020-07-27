@@ -10,20 +10,20 @@
 				<text class="message" v-text="userInfo.userName" />
 			</li>
 			<li @tap="resPage">
-				<text class="name" v-text="'可报工的设备'" /> 
+				<text class="name" v-text="i18n.userSetting.Can_Report" /> 
 				<text class="message">
 					<text class="hasIcon num" v-text="resList.length" />
 					<text class="icon-right fa fa-angle-right" />
 				</text>
 			</li>
-			<li @tap="canSetting('设置电话',userInfo.phoneNumber,'phoneNum')">
+			<li @tap="canSetting(i18n.userSetting.Set_Phone,userInfo.phoneNumber,'phoneNum')">
 				<text class="name" v-text="i18n.userSetting.phone" />
 				<text class="message">
 					<text class="hasIcon" v-text="userInfo.phoneNumber" />
 					<text class="icon-right fa fa-angle-right" />
 				</text>
 			</li>
-			<li @tap="canSetting('设置邮箱',userInfo.email,'email')">
+			<li @tap="canSetting(i18n.userSetting.Set_Email,userInfo.email,'email')">
 				<text class="name" v-text="i18n.userSetting.email" />
 				<text class="message">
 					<text class="hasIcon" v-text="userInfo.email" />
@@ -61,6 +61,11 @@ export default {
 		i18n () {
 			return this.$t('message'); 
 		},
+	},
+	onShow() {
+		uni.setNavigationBarTitle({
+			title:this.i18n.pageTitle.Person_Message
+		})
 	},
 	mounted() {
 		this.getResList();

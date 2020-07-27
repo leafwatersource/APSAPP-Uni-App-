@@ -1,9 +1,9 @@
 <template>
 	<view>
 		<uni-nav-bar :title="type" class="header" color="#ffffff" background-color="#006dcb" @clickLeft="back" @clickRight="finish" status-bar="true" fixed="true">
-			<view slot="left" class="left" v-text="'取消'" />
+			<view slot="left" class="left" v-text="i18.messageBox.Cancel" />
 			<view slot="right" class="right">
-				<text v-text="'完成'" />
+				<text v-text="i18.messageBox.Finish" />
 			</view>
 		</uni-nav-bar>
 		<view class="content">
@@ -37,7 +37,10 @@ export default {
 		};
 	},
 	computed:{
-		...mapState(['userInfo'])
+		...mapState(['userInfo']),
+		i18(){
+			return this.$t('message'); 
+		}
 	},
 	mounted() {
 		this.getSystemStatusBarHeight();

@@ -3,7 +3,8 @@ export const lang = {
 		"tabBar": {
 			"Nav_Report": "Report",
 			"Nav_Dash": "Statistical",
-			"Nav_User": "User"
+			"Nav_User": "User",
+			"Scan":"Scan"
 		},
 		"publicText": {
 			"app_name": "RateFactory",
@@ -81,7 +82,20 @@ export const lang = {
 		pageTitle:{
 			"User_Setting":"User Setting",
 			"Change_PassWorld" :"Change PassWorld",
-			"Person_Message":"Person Message"
+			"Person_Message":"Person Message",
+			"User_Operation":"User Operation",
+			"Res_List":"Resource List",
+			"Person_Message":"User Message",
+			"Change_Password":"Change PassWord"
+		},
+		messageBox:{
+			"Input_Res":"Please enter the resource name",
+			"Res_loading":"resource loading",
+			"Cancel":"Cancel",
+			"Finish":"Finish"
+		},
+		login:{
+			Remember_Mi:"remember me"
 		},
 		user: {
 			cellphoneNumber: 'phone:',
@@ -113,6 +127,9 @@ export const lang = {
 			userDescription:'User Description',
 			userGroup:'User Group',
 			system:'System',
+			Can_Report:'Can Report',
+			Set_Email:'Set Email',
+			Set_Phone:"Set Phone"
 		}
 	},
 }

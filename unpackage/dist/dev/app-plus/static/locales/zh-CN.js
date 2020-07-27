@@ -4,6 +4,7 @@ export const lang = {
 			"Nav_Report": "移动报工",
 			"Nav_Dash": "统计中心",
 			"Nav_User": "用户操作",
+			"Scan":"扫一扫"
 		},
 		publicText: {
 			"app_name": "移动报工",
@@ -79,12 +80,24 @@ export const lang = {
 			"Msg_OrderDetail_push_failed": "订单推送失败.",
 			"Button_Unable": "不可操作"
 		},
-		
 		pageTitle:{
 			"User_Setting":"用户设置",
 			"Change_PassWorld" :"修改密码",
 			"Person_Message":"个人信息",
-			"Statistics_Center":"统计中心"
+			"Statistics_Center":"统计中心",
+			"User_Operation":"用户操作记录",
+			"Res_List":"设备列表",
+			"Person_Message":"个人信息",
+			"Change_Password":"修改密码"
+		},
+		messageBox:{
+			"Input_Res":"请输入设备名称",
+			"Res_loading":"设备加载中",
+			"Cancel":"取消",
+			"Finish":"完成"
+		},
+		login:{
+			Remember_Mi:"记住我"
 		},
 		user:{
 			cellphoneNumber:'手机号码:',
@@ -112,6 +125,9 @@ export const lang = {
 			email:'邮箱',
 			userGroup:'用户组',
 			system:'系统名称',
+			Can_Report:'可报工的设备',
+			Set_Email:'设置邮箱',
+			Set_Phone:"设置电话"
 		}
 	}
 }

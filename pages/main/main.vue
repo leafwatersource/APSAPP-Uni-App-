@@ -15,7 +15,7 @@
 						<ul>
 							<li @tap="scan">
 								<text class="fa fa-qrcode" @tap="selectRes" />
-								<text v-text="i18n.publicText.Scancode" />
+								<text v-text="i18n.tabBar.Scan" />
 							</li>
 							<li @tap="selectRes">
 								<text class="fa fa-random" />
@@ -24,10 +24,6 @@
 							<li @tap="downLoadWork">
 								<text class="fa fa-download" />
 								<text v-text="i18n.publicText.Msg_DownOrder_Title" />
-							</li>
-							<li @tap="tryPage">
-								<text class="fa fa-download" />
-								<text v-text="'try'" />
 							</li>
 						</ul>
 					</view>

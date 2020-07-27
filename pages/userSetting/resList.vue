@@ -15,6 +15,16 @@
 			return {
 				resList:[]
 			}
+		},
+		computed:{
+			i18n() {
+				return this.$t('message');
+			}
+		},
+		onShow() {
+			uni.setNavigationBarTitle({
+				title: this.i18n.pageTitle.Res_List
+			});
 		}
 	}
 </script>

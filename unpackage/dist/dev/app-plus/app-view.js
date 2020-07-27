@@ -1769,30 +1769,6 @@ var render = function() {
                               })
                             ],
                             1
-                          ),
-                          _c(
-                            "li",
-                            {
-                              attrs: { _i: 21 },
-                              on: {
-                                click: function($event) {
-                                  return _vm.$handleViewEvent($event)
-                                }
-                              }
-                            },
-                            [
-                              _c("v-uni-text", {
-                                staticClass: _vm._$g(22, "sc"),
-                                attrs: { _i: 22 }
-                              }),
-                              _c("v-uni-text", {
-                                attrs: { _i: 23 },
-                                domProps: {
-                                  textContent: _vm._s(_vm._$g(23, "v-text"))
-                                }
-                              })
-                            ],
-                            1
                           )
                         ],
                         1
@@ -1808,11 +1784,11 @@ var render = function() {
           ),
           _c(
             "v-uni-view",
-            { staticClass: _vm._$g(24, "sc"), attrs: { _i: 24 } },
+            { staticClass: _vm._$g(21, "sc"), attrs: { _i: 21 } },
             [
               _c("uni-segmented-control", {
-                staticClass: _vm._$g(25, "sc"),
-                attrs: { _i: 25 },
+                staticClass: _vm._$g(22, "sc"),
+                attrs: { _i: 22 },
                 on: {
                   clickItem: function($event) {
                     return _vm.$handleViewEvent($event)
@@ -1824,14 +1800,14 @@ var render = function() {
           ),
           _c(
             "v-uni-view",
-            { staticClass: _vm._$g(26, "sc"), attrs: { _i: 26 } },
+            { staticClass: _vm._$g(23, "sc"), attrs: { _i: 23 } },
             [
               _c("v-uni-input", {
                 attrs: {
                   type: "text",
-                  placeholder: _vm._$g(27, "a-placeholder"),
+                  placeholder: _vm._$g(24, "a-placeholder"),
                   "placeholder-class": "hoder-cls",
-                  _i: 27
+                  _i: 24
                 },
                 on: {
                   input: function($event) {
@@ -1839,7 +1815,7 @@ var render = function() {
                   }
                 },
                 model: {
-                  value: _vm._$g(27, "v-model"),
+                  value: _vm._$g(24, "v-model"),
                   callback: function() {},
                   expression: "searchWord"
                 }
@@ -1853,14 +1829,14 @@ var render = function() {
       _c(
         "v-uni-view",
         {
-          staticClass: _vm._$g(28, "sc"),
-          style: _vm._$g(28, "s"),
-          attrs: { _i: 28 }
+          staticClass: _vm._$g(25, "sc"),
+          style: _vm._$g(25, "s"),
+          attrs: { _i: 25 }
         },
         [
           _c(
             "v-uni-view",
-            { staticClass: _vm._$g(29, "sc"), attrs: { _i: 29 } },
+            { staticClass: _vm._$g(26, "sc"), attrs: { _i: 26 } },
             [
               _c(
                 "ul",
@@ -1869,21 +1845,21 @@ var render = function() {
                     {
                       name: "show",
                       rawName: "v-show",
-                      value: _vm._$g(30, "v-show"),
-                      expression: "_$g(30,'v-show')"
+                      value: _vm._$g(27, "v-show"),
+                      expression: "_$g(27,'v-show')"
                     }
                   ],
-                  staticClass: _vm._$g(30, "sc"),
-                  attrs: { _i: 30 }
+                  staticClass: _vm._$g(27, "sc"),
+                  attrs: { _i: 27 }
                 },
-                _vm._l(_vm._$g(31, "f"), function(item, index, $20, $30) {
-                  return _vm._$g("31-" + $30, "i")
+                _vm._l(_vm._$g(28, "f"), function(item, index, $20, $30) {
+                  return _vm._$g("28-" + $30, "i")
                     ? _c(
                         "li",
                         {
                           key: item,
-                          staticClass: _vm._$g("31-" + $30, "sc"),
-                          attrs: { _i: "31-" + $30 },
+                          staticClass: _vm._$g("28-" + $30, "sc"),
+                          attrs: { _i: "28-" + $30 },
                           on: {
                             click: function($event) {
                               return _vm.$handleViewEvent($event)
@@ -1894,32 +1870,32 @@ var render = function() {
                           _c(
                             "v-uni-view",
                             {
-                              staticClass: _vm._$g("32-" + $30, "sc"),
-                              attrs: { _i: "32-" + $30 }
+                              staticClass: _vm._$g("29-" + $30, "sc"),
+                              attrs: { _i: "29-" + $30 }
                             },
                             [
+                              _vm._$g("30-" + $30, "i")
+                                ? _c("v-uni-text", {
+                                    staticClass: _vm._$g("30-" + $30, "sc"),
+                                    attrs: { _i: "30-" + $30 }
+                                  })
+                                : _vm._e(),
+                              _vm._$g("31-" + $30, "i")
+                                ? _c("v-uni-text", {
+                                    staticClass: _vm._$g("31-" + $30, "sc"),
+                                    attrs: { _i: "31-" + $30 }
+                                  })
+                                : _vm._e(),
+                              _vm._$g("32-" + $30, "i")
+                                ? _c("v-uni-text", {
+                                    staticClass: _vm._$g("32-" + $30, "sc"),
+                                    attrs: { _i: "32-" + $30 }
+                                  })
+                                : _vm._e(),
                               _vm._$g("33-" + $30, "i")
                                 ? _c("v-uni-text", {
                                     staticClass: _vm._$g("33-" + $30, "sc"),
                                     attrs: { _i: "33-" + $30 }
-                                  })
-                                : _vm._e(),
-                              _vm._$g("34-" + $30, "i")
-                                ? _c("v-uni-text", {
-                                    staticClass: _vm._$g("34-" + $30, "sc"),
-                                    attrs: { _i: "34-" + $30 }
-                                  })
-                                : _vm._e(),
-                              _vm._$g("35-" + $30, "i")
-                                ? _c("v-uni-text", {
-                                    staticClass: _vm._$g("35-" + $30, "sc"),
-                                    attrs: { _i: "35-" + $30 }
-                                  })
-                                : _vm._e(),
-                              _vm._$g("36-" + $30, "i")
-                                ? _c("v-uni-text", {
-                                    staticClass: _vm._$g("36-" + $30, "sc"),
-                                    attrs: { _i: "36-" + $30 }
                                   })
                                 : _vm._e()
                             ],
@@ -1928,40 +1904,40 @@ var render = function() {
                           _c(
                             "v-uni-view",
                             {
-                              staticClass: _vm._$g("37-" + $30, "sc"),
-                              attrs: { _i: "37-" + $30 }
+                              staticClass: _vm._$g("34-" + $30, "sc"),
+                              attrs: { _i: "34-" + $30 }
                             },
                             [
                               _c(
                                 "v-uni-view",
                                 {
-                                  staticClass: _vm._$g("38-" + $30, "sc"),
-                                  attrs: { _i: "38-" + $30 }
+                                  staticClass: _vm._$g("35-" + $30, "sc"),
+                                  attrs: { _i: "35-" + $30 }
                                 },
                                 [
                                   _c("v-uni-text", {
-                                    staticClass: _vm._$g("39-" + $30, "sc"),
+                                    staticClass: _vm._$g("36-" + $30, "sc"),
                                     staticStyle: { float: "left" },
-                                    attrs: { _i: "39-" + $30 },
+                                    attrs: { _i: "36-" + $30 },
                                     domProps: {
                                       textContent: _vm._s(
-                                        _vm._$g("39-" + $30, "v-text")
+                                        _vm._$g("36-" + $30, "v-text")
                                       )
                                     }
                                   }),
                                   _c(
                                     "v-uni-view",
                                     {
-                                      staticClass: _vm._$g("40-" + $30, "sc"),
+                                      staticClass: _vm._$g("37-" + $30, "sc"),
                                       staticStyle: { float: "right" },
-                                      attrs: { _i: "40-" + $30 }
+                                      attrs: { _i: "37-" + $30 }
                                     },
                                     [
                                       _c("v-uni-text", {
-                                        attrs: { _i: "41-" + $30 },
+                                        attrs: { _i: "38-" + $30 },
                                         domProps: {
                                           textContent: _vm._s(
-                                            _vm._$g("41-" + $30, "v-text")
+                                            _vm._$g("38-" + $30, "v-text")
                                           )
                                         }
                                       }),
@@ -1969,19 +1945,19 @@ var render = function() {
                                         "v-uni-view",
                                         {
                                           staticClass: _vm._$g(
-                                            "42-" + $30,
+                                            "39-" + $30,
                                             "sc"
                                           ),
-                                          attrs: { _i: "42-" + $30 }
+                                          attrs: { _i: "39-" + $30 }
                                         },
                                         [
                                           _c("v-uni-view", {
                                             staticClass: _vm._$g(
-                                              "43-" + $30,
+                                              "40-" + $30,
                                               "sc"
                                             ),
-                                            style: _vm._$g("43-" + $30, "s"),
-                                            attrs: { _i: "43-" + $30 }
+                                            style: _vm._$g("40-" + $30, "s"),
+                                            attrs: { _i: "40-" + $30 }
                                           })
                                         ],
                                         1
@@ -1993,36 +1969,36 @@ var render = function() {
                                 1
                               ),
                               _c("v-uni-text", {
-                                staticClass: _vm._$g("44-" + $30, "sc"),
+                                staticClass: _vm._$g("41-" + $30, "sc"),
+                                attrs: { _i: "41-" + $30 },
+                                domProps: {
+                                  textContent: _vm._s(
+                                    _vm._$g("41-" + $30, "v-text")
+                                  )
+                                }
+                              }),
+                              _c("v-uni-text", {
+                                staticClass: _vm._$g("42-" + $30, "sc"),
+                                attrs: { _i: "42-" + $30 },
+                                domProps: {
+                                  textContent: _vm._s(
+                                    _vm._$g("42-" + $30, "v-text")
+                                  )
+                                }
+                              }),
+                              _c("v-uni-text", {
+                                attrs: { _i: "43-" + $30 },
+                                domProps: {
+                                  textContent: _vm._s(
+                                    _vm._$g("43-" + $30, "v-text")
+                                  )
+                                }
+                              }),
+                              _c("v-uni-text", {
                                 attrs: { _i: "44-" + $30 },
                                 domProps: {
                                   textContent: _vm._s(
                                     _vm._$g("44-" + $30, "v-text")
-                                  )
-                                }
-                              }),
-                              _c("v-uni-text", {
-                                staticClass: _vm._$g("45-" + $30, "sc"),
-                                attrs: { _i: "45-" + $30 },
-                                domProps: {
-                                  textContent: _vm._s(
-                                    _vm._$g("45-" + $30, "v-text")
-                                  )
-                                }
-                              }),
-                              _c("v-uni-text", {
-                                attrs: { _i: "46-" + $30 },
-                                domProps: {
-                                  textContent: _vm._s(
-                                    _vm._$g("46-" + $30, "v-text")
-                                  )
-                                }
-                              }),
-                              _c("v-uni-text", {
-                                attrs: { _i: "47-" + $30 },
-                                domProps: {
-                                  textContent: _vm._s(
-                                    _vm._$g("47-" + $30, "v-text")
                                   )
                                 }
                               })
@@ -2032,13 +2008,13 @@ var render = function() {
                           _c(
                             "v-uni-view",
                             {
-                              staticClass: _vm._$g("48-" + $30, "sc"),
-                              attrs: { _i: "48-" + $30 }
+                              staticClass: _vm._$g("45-" + $30, "sc"),
+                              attrs: { _i: "45-" + $30 }
                             },
                             [
                               _c("v-uni-text", {
-                                staticClass: _vm._$g("49-" + $30, "sc"),
-                                attrs: { _i: "49-" + $30 }
+                                staticClass: _vm._$g("46-" + $30, "sc"),
+                                attrs: { _i: "46-" + $30 }
                               })
                             ],
                             1
@@ -2057,21 +2033,21 @@ var render = function() {
                     {
                       name: "show",
                       rawName: "v-show",
-                      value: _vm._$g(50, "v-show"),
-                      expression: "_$g(50,'v-show')"
+                      value: _vm._$g(47, "v-show"),
+                      expression: "_$g(47,'v-show')"
                     }
                   ],
-                  staticClass: _vm._$g(50, "sc"),
-                  attrs: { _i: 50 }
+                  staticClass: _vm._$g(47, "sc"),
+                  attrs: { _i: 47 }
                 },
-                _vm._l(_vm._$g(51, "f"), function(item, index, $21, $31) {
-                  return _vm._$g("51-" + $31, "i")
+                _vm._l(_vm._$g(48, "f"), function(item, index, $21, $31) {
+                  return _vm._$g("48-" + $31, "i")
                     ? _c(
                         "li",
                         {
                           key: item,
-                          staticClass: _vm._$g("51-" + $31, "sc"),
-                          attrs: { _i: "51-" + $31 },
+                          staticClass: _vm._$g("48-" + $31, "sc"),
+                          attrs: { _i: "48-" + $31 },
                           on: {
                             click: function($event) {
                               return _vm.$handleViewEvent($event)
@@ -2082,13 +2058,13 @@ var render = function() {
                           _c(
                             "v-uni-view",
                             {
-                              staticClass: _vm._$g("52-" + $31, "sc"),
-                              attrs: { _i: "52-" + $31 }
+                              staticClass: _vm._$g("49-" + $31, "sc"),
+                              attrs: { _i: "49-" + $31 }
                             },
                             [
                               _c("v-uni-text", {
-                                staticClass: _vm._$g("53-" + $31, "sc"),
-                                attrs: { _i: "53-" + $31 }
+                                staticClass: _vm._$g("50-" + $31, "sc"),
+                                attrs: { _i: "50-" + $31 }
                               })
                             ],
                             1
@@ -2096,40 +2072,40 @@ var render = function() {
                           _c(
                             "v-uni-view",
                             {
-                              staticClass: _vm._$g("54-" + $31, "sc"),
-                              attrs: { _i: "54-" + $31 }
+                              staticClass: _vm._$g("51-" + $31, "sc"),
+                              attrs: { _i: "51-" + $31 }
                             },
                             [
                               _c(
                                 "v-uni-view",
                                 {
-                                  staticClass: _vm._$g("55-" + $31, "sc"),
-                                  attrs: { _i: "55-" + $31 }
+                                  staticClass: _vm._$g("52-" + $31, "sc"),
+                                  attrs: { _i: "52-" + $31 }
                                 },
                                 [
                                   _c("v-uni-text", {
-                                    staticClass: _vm._$g("56-" + $31, "sc"),
+                                    staticClass: _vm._$g("53-" + $31, "sc"),
                                     staticStyle: { float: "left" },
-                                    attrs: { _i: "56-" + $31 },
+                                    attrs: { _i: "53-" + $31 },
                                     domProps: {
                                       textContent: _vm._s(
-                                        _vm._$g("56-" + $31, "v-text")
+                                        _vm._$g("53-" + $31, "v-text")
                                       )
                                     }
                                   }),
                                   _c(
                                     "v-uni-view",
                                     {
-                                      staticClass: _vm._$g("57-" + $31, "sc"),
+                                      staticClass: _vm._$g("54-" + $31, "sc"),
                                       staticStyle: { float: "right" },
-                                      attrs: { _i: "57-" + $31 }
+                                      attrs: { _i: "54-" + $31 }
                                     },
                                     [
                                       _c("v-uni-text", {
-                                        attrs: { _i: "58-" + $31 },
+                                        attrs: { _i: "55-" + $31 },
                                         domProps: {
                                           textContent: _vm._s(
-                                            _vm._$g("58-" + $31, "v-text")
+                                            _vm._$g("55-" + $31, "v-text")
                                           )
                                         }
                                       }),
@@ -2137,19 +2113,19 @@ var render = function() {
                                         "v-uni-view",
                                         {
                                           staticClass: _vm._$g(
-                                            "59-" + $31,
+                                            "56-" + $31,
                                             "sc"
                                           ),
-                                          attrs: { _i: "59-" + $31 }
+                                          attrs: { _i: "56-" + $31 }
                                         },
                                         [
                                           _c("v-uni-view", {
                                             staticClass: _vm._$g(
-                                              "60-" + $31,
+                                              "57-" + $31,
                                               "sc"
                                             ),
-                                            style: _vm._$g("60-" + $31, "s"),
-                                            attrs: { _i: "60-" + $31 }
+                                            style: _vm._$g("57-" + $31, "s"),
+                                            attrs: { _i: "57-" + $31 }
                                           })
                                         ],
                                         1
@@ -2161,36 +2137,36 @@ var render = function() {
                                 1
                               ),
                               _c("v-uni-text", {
-                                staticClass: _vm._$g("61-" + $31, "sc"),
+                                staticClass: _vm._$g("58-" + $31, "sc"),
+                                attrs: { _i: "58-" + $31 },
+                                domProps: {
+                                  textContent: _vm._s(
+                                    _vm._$g("58-" + $31, "v-text")
+                                  )
+                                }
+                              }),
+                              _c("v-uni-text", {
+                                staticClass: _vm._$g("59-" + $31, "sc"),
+                                attrs: { _i: "59-" + $31 },
+                                domProps: {
+                                  textContent: _vm._s(
+                                    _vm._$g("59-" + $31, "v-text")
+                                  )
+                                }
+                              }),
+                              _c("v-uni-text", {
+                                attrs: { _i: "60-" + $31 },
+                                domProps: {
+                                  textContent: _vm._s(
+                                    _vm._$g("60-" + $31, "v-text")
+                                  )
+                                }
+                              }),
+                              _c("v-uni-text", {
                                 attrs: { _i: "61-" + $31 },
                                 domProps: {
                                   textContent: _vm._s(
                                     _vm._$g("61-" + $31, "v-text")
-                                  )
-                                }
-                              }),
-                              _c("v-uni-text", {
-                                staticClass: _vm._$g("62-" + $31, "sc"),
-                                attrs: { _i: "62-" + $31 },
-                                domProps: {
-                                  textContent: _vm._s(
-                                    _vm._$g("62-" + $31, "v-text")
-                                  )
-                                }
-                              }),
-                              _c("v-uni-text", {
-                                attrs: { _i: "63-" + $31 },
-                                domProps: {
-                                  textContent: _vm._s(
-                                    _vm._$g("63-" + $31, "v-text")
-                                  )
-                                }
-                              }),
-                              _c("v-uni-text", {
-                                attrs: { _i: "64-" + $31 },
-                                domProps: {
-                                  textContent: _vm._s(
-                                    _vm._$g("64-" + $31, "v-text")
                                   )
                                 }
                               })
@@ -2200,13 +2176,13 @@ var render = function() {
                           _c(
                             "v-uni-view",
                             {
-                              staticClass: _vm._$g("65-" + $31, "sc"),
-                              attrs: { _i: "65-" + $31 }
+                              staticClass: _vm._$g("62-" + $31, "sc"),
+                              attrs: { _i: "62-" + $31 }
                             },
                             [
                               _c("v-uni-text", {
-                                staticClass: _vm._$g("66-" + $31, "sc"),
-                                attrs: { _i: "66-" + $31 }
+                                staticClass: _vm._$g("63-" + $31, "sc"),
+                                attrs: { _i: "63-" + $31 }
                               })
                             ],
                             1
@@ -5329,7 +5305,11 @@ var render = function() {
         { staticClass: _vm._$g(1, "sc"), attrs: { _i: 1 } },
         [
           _c("v-uni-input", {
-            attrs: { type: "text", placeholder: "请输入设备名称", _i: 2 },
+            attrs: {
+              type: "text",
+              placeholder: _vm._$g(2, "a-placeholder"),
+              _i: 2
+            },
             on: {
               input: function($event) {
                 return _vm.$handleViewEvent($event)

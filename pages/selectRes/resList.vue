@@ -1,6 +1,6 @@
 <template>
 	<view class="content">
-		<view class="searchBox"><input type="text" placeholder="请输入设备名称" v-model="searchWord" @input="search" /></view>
+		<view class="searchBox"><input type="text" :placeholder="i18n.messageBox.Input_Res" v-model="searchWord" @input="search" /></view>
 		<ul>
 			<li v-for="item in resList" :key="item.resourceName" @tap="resClick(item)">
 				<view :class="{'circleBox':true,'circle_green':item.resEventType=='U'?true:false,'circle_orange':item.resEventType=='Y'?true:false,'circle_red':item.resEventType=='S'?true:false}" />
@@ -29,6 +29,14 @@ export default {
 	
 	computed:{
 		...mapState(['userInfo']),
+		i18n() {
+			return this.$t('message');
+		}
+	},
+	onShow() {
+		uni.setNavigationBarTitle({
+			title: this.i18n.pageTitle.Res_List
+		});
 	},
 	onLoad(option) {
 		this.prevRes = option.resName;
@@ -39,7 +47,7 @@ export default {
 	methods: {
 		getResList(){
 			uni.showLoading({
-				title:'设备加载中'
+				title:this.i18n.messageBox.Res_loading
 			})
 			this.$HTTP({
 				url: 'ResList',

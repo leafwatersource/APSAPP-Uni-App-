@@ -32,8 +32,16 @@ export default {
 			logData: [[], [], [], []]
 		};
 	},
+	onShow() {
+		uni.setNavigationBarTitle({
+			title: this.i18n.pageTitle.User_Operation
+		});
+	},
 	computed: {
-		...mapState(['userInfo'])
+		...mapState(['userInfo']),
+		i18n() {
+			return this.$t('message');
+		}
 	},
 	mounted() {
 		this.getLog(0);

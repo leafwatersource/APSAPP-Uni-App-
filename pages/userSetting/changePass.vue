@@ -32,6 +32,11 @@ export default {
 			enterPass: ''
 		};
 	},
+	onShow() {
+		uni.setNavigationBarTitle({
+			title: this.i18n.pageTitle.Change_Password
+		});
+	},
 	computed:{
 		i18n () {
 			return this.$t('message'); 
@@ -45,18 +50,21 @@ export default {
 		finish() {
 			if(this.pass == ""){
 				uni.showToast({
+					icon:"none",
 					title:"请输入旧密码"
 				});
 				return
 			}
 			if(this.newPass == ""){
 				uni.showToast({
+					icon:"none",
 					title:"请输入新密码"
 				});
 				return
 			}
 			if(this.enterPass == ""){
 				uni.showToast({
+					icon:"none",
 					title:"请输入确认密码"
 				});
 				return
@@ -70,6 +78,7 @@ export default {
 			}
 			if (this.newPass != this.enterPass) {
 				uni.showToast({
+					icon:"none",
 					title: '两次填写的密码不一致'
 				});
 				return;

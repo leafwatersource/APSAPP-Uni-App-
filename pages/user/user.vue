@@ -74,6 +74,7 @@ export default {
 		this.getSystemStatusBarHeight();
 	},
 	methods: {
+		...mapMutations(['HasLogin']),
 		changePass() {
 			uni.navigateTo({
 				url: '../userSetting/changePass'

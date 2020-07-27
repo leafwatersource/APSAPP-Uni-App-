@@ -15,7 +15,7 @@
 			</view>
 			<label class="remember">
 				<checkbox :checked="remenber" @tap="checkboxClick" />
-				<text v-text="'记住我'" />
+				<text v-text="i18n.login.Remember_Mi" />
 			</label>
 			<button type="default" hover-class="btnClick" @tap="login">{{ i18n.publicText.Login_Login }}</button>
 		</view>
@@ -89,7 +89,6 @@ export default {
 						userGuid: uni.getStorageSync('userGuid')
 					}
 				}).then(status => {
-					console.log(92,status);
 					if (status.data) {
 						this.ForceOut();
 					}else {
@@ -168,7 +167,6 @@ export default {
 					empid: this.userName
 				}
 			}).then(userInfoData => {
-				console.log(userInfoData);
 				if (userInfoData) {
 					this.$store.state.userInfo = userInfoData.data;
 					let userGuid = userInfoData.data['userGuid'];
@@ -192,7 +190,6 @@ export default {
 						title: '登陆成功',
 						success() {
 							uni.hideToast();
-							console.log("yaoyao");
 							uni.switchTab({
 								url: '../main/main'
 							});
@@ -203,30 +200,7 @@ export default {
 			});
 		},
 		StartSocket() {
-			// const guid = uni.getStorageSync('UserGuid');
-			// uni.request({
-			// 	url: this.api + 'Socket',
-			// 	method: 'POST',
-			// 	data: {
-			// 		empId: this.userName,
-			// 		userGuid: guid
-			// 	},
-			// 	header: {
-			// 		'Content-type': 'application/x-www-form-urlencoded'
-			// 	},
-			// 	success(data) {
-			// 		console.log(data);
-			// 	}
-			// });
-			// console.log("diaoyongsocket")
-			// ws = new WebSocket("ws://pmser.szratetec.com:8865/");
-			// ws.onopen = function() {
-			//     ws.send('websocekt测试');
-			// };
-			// ws.onmessage = function(e) {
-			// 	console.log(e.data);
-			//     alert("收到服务端的消息：" + e.data);
-			// };
+			//开始监听socket
 		}
 	}
 };
