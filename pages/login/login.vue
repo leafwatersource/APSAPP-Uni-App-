@@ -89,6 +89,7 @@ export default {
 						userGuid: uni.getStorageSync('userGuid')
 					}
 				}).then(status => {
+					console.log(92,status);
 					if (status.data) {
 						this.ForceOut();
 					}else {
@@ -122,8 +123,8 @@ export default {
 						}
 					});
 				} else if (loginStatus.data.loginState == 1) {
-					this.userInfo['userGuid'] = loginStatus.data['userGuiD'];
-					// _this.$store.state.userInfo['userGuid'] = loginStatus.data['userGuiD'];
+					this.$store.state.userInfo = {};
+					this.$store.state.userInfo['userGuid'] = loginStatus.data['userGuiD'];
 					this.UserInfo();
 				} else if (loginStatus.data.loginState == 0) {
 					uni.hideToast();
@@ -144,8 +145,7 @@ export default {
 				}
 			}).then(ForceOutData => {
 				if (ForceOutData.data['loginState'] == 1) {
-					this.userInfo['userGuid'] = ForceOutData.data.userGuiD;
-					// this.$store.state.userInfo['userGuid'] = ForceOutData.data.userGuiD;
+					this.$store.state.userInfo['userGuid'] = ForceOutData.data.userGuiD;
 					this.UserInfo();
 				} else if (ForceOutData.data['loginState'] == 0) {
 					uni.hideLoading();
@@ -168,6 +168,7 @@ export default {
 					empid: this.userName
 				}
 			}).then(userInfoData => {
+				console.log(userInfoData);
 				if (userInfoData) {
 					this.$store.state.userInfo = userInfoData.data;
 					let userGuid = userInfoData.data['userGuid'];
@@ -191,6 +192,7 @@ export default {
 						title: '登陆成功',
 						success() {
 							uni.hideToast();
+							console.log("yaoyao");
 							uni.switchTab({
 								url: '../main/main'
 							});

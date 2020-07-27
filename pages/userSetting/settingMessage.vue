@@ -6,7 +6,9 @@
 				<text v-text="'完成'" />
 			</view>
 		</uni-nav-bar>
-		<view class="content"><input type="text" v-model="message" /></view>
+		<view class="content">
+			<input type="text" v-model="message" />
+			</view>
 	</view>
 </template>
 
@@ -69,15 +71,6 @@ export default {
 			}).then(res => {
 				if (res.data) {
 					this.userInfo[this.changeType] = this.message;
-					// if (this.changeType == 'empName') {
-					// 	this.userInfo['userName'] = this.message;
-					// } else if (this.changeType == 'dept') {
-					// 	this.userInfo['userDesc'] = this.message;
-					// } else if (this.changeType == 'phoneNum') {
-					// 	this.userInfo['phoneNumber'] = this.message;
-					// } else if (this.changeType == 'email') {
-					// 	this.userInfo['email'] = this.message;
-					// }
 					if(uni.getStorageSync('userInfo')!=""){
 						let newUserInfo = uni.uni.getStorageSync('userInfo');
 						newUserInfo[changeType] = this.message;
@@ -123,7 +116,7 @@ view {
 		box-sizing: border-box;
 		input {
 			padding: 20upx;
-			background-color: #ddd;
+			background-color: #FFFFFF;
 		}
 	}
 }

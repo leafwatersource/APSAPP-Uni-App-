@@ -250,7 +250,6 @@ export default {
 		},
 		showRing(canvasId, chartData, title, text) {
 			//设置环状统计图
-			let _this = this;
 			canvaRing = new uCharts({
 				$this: _self,
 				canvasId: canvasId,
@@ -440,7 +439,7 @@ export default {
 			position: relative;
 			border-top: 2upx solid $uni-btn-active-color;
 			border-bottom: 2upx solid $uni-btn-active-color;
-			height: 280upx;
+			min-height: 280upx;
 			width: 100%;
 			overflow: hidden;
 			ul {

@@ -135,7 +135,7 @@
 		display: flex;
 		flex: 1;
 		flex-direction: column;
-		background-color: #efeff4;
+		background-color: #e3e3e3;
 		padding: 10px;
 	}
 

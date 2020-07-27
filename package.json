@@ -1,0 +1,26 @@
+{
+  "name": "APSAPP",
+  "version": "1.0.0",
+  "description": "这是uniapp完成的手机app",
+  "main": "main.js",
+  "dependencies": {
+    "vue-i18n": "^8.17.7"
+  },
+  "devDependencies": {
+    "sass-loader": "^9.0.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leafwatersource/APSAPP.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/leafwatersource/APSAPP/issues"
+  },
+  "homepage": "https://github.com/leafwatersource/APSAPP#readme"
+}

@@ -243,15 +243,14 @@ export default {
 			this.showLeft = true;
 			const UserGuid = uni.getStorageSync('UserGuid');
 			const UserEmpID = uni.getStorageSync('UserEmpID');
-			const _this = this;
 			this.$HTTP({
 				url: 'GetCanChangeResList',
 				data: {
 					bean: JSON.stringify(this.workItem)
 				}
 			}).then(resList => {
-				_this.changeResArr = [];
-				_this.changeResArr.push(...resList.data);
+				this.changeResArr = [];
+				this.changeResArr.push(...resList.data);
 			});
 		},
 		getNowDateTime() {
@@ -401,7 +400,6 @@ export default {
 					}
 				}
 			})
-			
 		}
 	}
 };
@@ -451,7 +449,6 @@ export default {
 					font-size: 35upx;
 					font-weight: bolder;
 				}
-
 				.NumDesc {
 					position: absolute;
 					bottom: 0;
@@ -512,8 +509,6 @@ export default {
 					transform: translateY(-50%);
 				}
 			}
-
-			
 		}
 
 		.selectTime {

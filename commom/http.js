@@ -1,16 +1,10 @@
-// created by wangyong for uni-app request 2019.11.22
 import store from 'store/index';
-
 const process = 'development';
 // const process = 'product';
 var baseURL = 'http://api2.szrate.com:8088/api/'; //这里写接口名称就好啦
 if (process === 'development') {
-	console.log('开发环境/测试环境')
-	// baseURL = 'https://datacenterapi.szrate.com/api/';
-	 // baseURL = 'http://api2.szrate.com:8088/api/';
-	 baseURL ="http://192.168.1.49/api/";
-	// baseURL = 'http://192.168.50.108/api/';
-
+	console.log('开发环境/测试环境');
+	baseURL = "http://192.168.0.104/api/";
 } else {
 	console.log('生产环境/正式环境')
 	baseURL = 'http://phone.szrate.com/api/';
@@ -19,7 +13,7 @@ const http = (options) => {
 	return new Promise((resolve, reject) => {
 		uni.getNetworkType({
 			success: function(res) {
-				if (res.networkType == "none") { 
+				if (res.networkType == "none") {
 					uni.showToast({
 						title: "无网络",
 						icon: "none"
@@ -30,8 +24,6 @@ const http = (options) => {
 		});
 		// 监听网络状态变化
 		uni.onNetworkStatusChange(function(res) {
-			console.log(res.isConnected); //当前是否有网络连接
-			console.log(res.networkType); //网络类型
 			if (!res.isConnected) {
 				uni.showToast({
 					title: "无网络",
@@ -44,15 +36,16 @@ const http = (options) => {
 			// 从本地获取token 
 			const UserGuid = store.state.userInfo['userGuid'];
 			const UserEmpID = store.state.userInfo['empID'];
-			if(options.url.indexOf('login')==-1&& options.url.indexOf('ForceOut')==-1&& options.url.indexOf('GetUserInfo')==-1&&options.url.indexOf('UserHaveLogin')==-1){
-				if((!UserGuid||!UserEmpID)){
-						uni.showToast({
-							title:"账号在别处登录了",
-							icon:"none"
-						});
-						uni.reLaunch({
-							url:"/pages/login/login"
-						});
+			if (options.url.indexOf('login') == -1 && options.url.indexOf('ForceOut') == -1 && options.url.indexOf(
+					'GetUserInfo') == -1 && options.url.indexOf('UserHaveLogin') == -1) {
+				if ((!UserGuid || !UserEmpID)) {
+					uni.showToast({
+						title: "账号在别处登录了",
+						icon: "none"
+					});
+					uni.reLaunch({
+						url: "/pages/login/login"
+					});
 					return
 				}
 			}
@@ -68,61 +61,61 @@ const http = (options) => {
 					'Content-Type': 'application/x-www-form-urlencoded'
 				},
 				success: res => {
-					if(res.statusCode == 500){
+					if (res.statusCode == 500) {
 						uni.showToast({
-							title:"服务器异常",
-							icon:"none"
+							title: "服务器异常",
+							icon: "none"
 						});
 						uni.reLaunch({
-							url:"/pages/login/login"
+							url: "/pages/login/login"
 						})
 						return;
-					}else if(res.statusCode == 200){
-						if(res.data.LoginState == "0"){
+					} else if (res.statusCode == 200) {
+						if (res.data.LoginState == "0") {
 							uni.showToast({
-								title:"账号在别出登录了",
-								icon:"none"
+								title: "账号在别出登录了",
+								icon: "none"
 							});
 							uni.reLaunch({
-								url:"/pages/login/login"
+								url: "/pages/login/login"
 							});
 							return;
 						}
-						if(res.data==-1){
+						if (res.data == -1) {
 							uni.showToast({
-								title:"账号在别处登录了",
-								icon:"none"
+								title: "账号在别处登录了",
+								icon: "none"
 							});
 							uni.reLaunch({
-								url:"/pages/login/login"
+								url: "/pages/login/login"
 							})
 						}
 						resolve(res)
-					}else if(res.statusCode == 404){
+					} else if (res.statusCode == 404) {
 						uni.showToast({
-							title:"服务器地址错误",
-							icon:"none"
+							title: "服务器地址错误",
+							icon: "none"
 						});
 						reject(res)
 					}
 				},
 				fail: (err) => {
 					console.log(err);
-					if(err.errMsg.indexOf("timeout")!=-1){
+					if (err.errMsg.indexOf("timeout") != -1) {
 						uni.showToast({
-							title:"请求超时",
-							icon:"none",
-							duration:2000
+							title: "请求超时",
+							icon: "none",
+							duration: 2000
 						});
 						return
-					}else{
+					} else {
 						uni.showToast({
-							title:"请检查网络连接",
-							icon:"none",
+							title: "请检查网络连接",
+							icon: "none",
 							duration: 2000
 						})
-					}	
-					
+					}
+
 					// uni.showToast({
 					// 	title: '请求失败请检查网络连接',
 					// 	icon: 'none'
